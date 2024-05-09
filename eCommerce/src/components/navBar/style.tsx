@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const NavBarField = styled.nav`
   background-color: black;
@@ -7,7 +7,7 @@ export const NavBarField = styled.nav`
   justify-content: center;
   column-gap: 2rem;
   padding: 0 2rem;
-`
+`;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
@@ -23,11 +23,11 @@ export const StyledLink = styled(Link)`
     width: 0;
     height: 3px;
     background: white;
-    transition: .3s;
+    transition: 0.3s;
     left: 50%;
     transform: translate(-50%);
   }
   &:hover:after {
-  width: 100%;
-}
-`
+    width: 100%;
+  }
+`;
