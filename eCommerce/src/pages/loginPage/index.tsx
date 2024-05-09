@@ -4,10 +4,6 @@ import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label } from './style';
 
 export const LoginPage = () => {
-  const [clicks, changeClicks] = useState(0);
-  const pressBtn = () => {
-    changeClicks(clicks + 1);
-  };
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -96,11 +92,8 @@ export const LoginPage = () => {
           show
         </Label>
         <ErrorMsg>{passwordError}</ErrorMsg>
-        <Button type="submit" text="Log in" />
+        <Button type="submit" text="Login" />
       </FormField>
-
-      <button onClick={pressBtn}>click</button>
-      <p>{clicks}</p>
     </div>
   );
 };

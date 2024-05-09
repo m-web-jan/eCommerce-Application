@@ -19,6 +19,7 @@ export const Input = ({ ...props }) => {
       onChange={props.onChange}
       value={props.value}
       checked={props.checked}
+      required={props.required}
     />
   );
 };
