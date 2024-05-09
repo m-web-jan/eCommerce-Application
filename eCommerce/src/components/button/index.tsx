@@ -6,7 +6,7 @@ const ButtonField = styled.button`
   font-size: 1rem;
   background-color: white;
   outline: none;
-  border: 1px solid black;
+  border: 2px solid black;
   transition: .3s;
   width: fit-content;
   margin: 0 auto;
@@ -18,9 +18,13 @@ const ButtonField = styled.button`
   &:active {
     background-color: gray;
   }
+  &:disabled {
+    color: black;
+    pointer-events: none;
+  }
 `;
 
 export const Button = ({ ...props }) => {
-  return <ButtonField type={props.type} onClick={props.onClick}>{props.text}</ButtonField>;
+  return <ButtonField type={props.type} onClick={props.onClick} disabled={props.disabled}>{props.text}</ButtonField>;
 };
 
