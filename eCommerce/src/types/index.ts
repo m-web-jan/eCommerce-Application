@@ -5,16 +5,15 @@ export type ICustomerDraft = {
   lastName: string;
   dateOfBirth: string;
   addresses: IDraftAddress[];
-  defaultShippingAddress?: number;
-  defaultBillingAddress?: number;
-  shippingAddresses: number[];
-  billingAddresses: number[];
+  // defaultShippingAddress?: number;
+  // defaultBillingAddress?: number;
+  // shippingAddresses: number[];
+  // billingAddresses: number[];
 };
 
 export type IDraftAddress = {
-  country: keyof typeof COUNTRIES_DATA;
-  postalCode: string;
-  city: string;
   streetName: string;
-  key?: string;
+  city: string;
+  postalCode: string;
+  country: string;
 };

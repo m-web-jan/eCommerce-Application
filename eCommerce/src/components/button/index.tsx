@@ -25,6 +25,6 @@ const ButtonField = styled.button`
 `;
 
 export const Button = ({ ...props }) => {
-  return <ButtonField type={props.type} onClick={props.onClick} disabled={props.disabled}>{props.text}</ButtonField>;
+  return <ButtonField id={props.id} type={props.type} onClick={props.onClick} disabled={props.disabled}>{props.text}</ButtonField>;
 };
 

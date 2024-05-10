@@ -1,3 +1,4 @@
+import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
 const SelectField = styled.select`
@@ -17,13 +18,15 @@ interface SelectProps {
   id?: string;
   required?: boolean;
   children?: React.ReactNode;
+  onChange: ChangeEventHandler<HTMLSelectElement>;
 }
 
-export const Select: React.FC<SelectProps> = ({ children, id, required }) => {
+export const Select: React.FC<SelectProps> = ({ children, id, required, onChange }) => {
   return (
     <SelectField
     id={id}
     required={required}
+    onChange={onChange}
     >
       {children}
     </SelectField>

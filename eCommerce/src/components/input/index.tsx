@@ -20,6 +20,7 @@ export const Input = ({ ...props }) => {
       value={props.value}
       checked={props.checked}
       required={props.required}
+      id={props.id}
     />
   );
 };

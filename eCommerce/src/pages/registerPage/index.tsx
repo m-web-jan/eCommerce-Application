@@ -3,10 +3,21 @@ import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
 import { Select } from '../../components/select';
+import { registration } from '../../api/register';
+import { SuccessModal } from '../../components/alertModal';
+import { Link } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [country, setCountry] = useState('');
+
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [nameError, setNameError] = useState('');
@@ -17,7 +28,11 @@ export const RegisterPage = () => {
   const [dobError, setDobError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const countries = ['USA', 'Canada', 'UK', 'Germany', 'France', 'Australia'];
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState<ReactNode>(null);
+
+  const countries = ['BY', 'PL', 'RS', 'UK', 'US'];
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -94,6 +109,7 @@ export const RegisterPage = () => {
   };
 
   const validatePostalCode = (value: string) => {
+    setPostalCode(value);
     const postalCodePattern = /^\d{5}$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
     if (!postalCodePattern.test(value)) {
       return 'Postal code format is invalid';
@@ -102,6 +118,7 @@ export const RegisterPage = () => {
   };
 
   const validateDob = (value: string) => {
+    setDateOfBirth(value);
     const dob = new Date(value);
     const currentDate = new Date();
     const minAge = 13;
@@ -109,7 +126,10 @@ export const RegisterPage = () => {
     let age = currentDate.getFullYear() - dob.getFullYear();
     const monthDiff = currentDate.getMonth() - dob.getMonth();
 
-    if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < dob.getDate())) {
+    if (
+      monthDiff < 0 ||
+      (monthDiff === 0 && currentDate.getDate() < dob.getDate())
+    ) {
       age--;
     }
 
@@ -136,11 +156,45 @@ export const RegisterPage = () => {
     );
   };
 
-  const handleSubmit = () => {
-    console.log('submit form (not implemented)');
+  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+    try {
+      const response = await registration({
+        email: email,
+        password: password,
+        firstName: name,
+        lastName: lastname,
+        dateOfBirth: dateOfBirth,
+        addresses: [
+          {
+            streetName: street,
+            city: city,
+            postalCode: postalCode,
+            country: country,
+          },
+        ],
+      });
+      setModalTitle('Registration Successful!');
+      setModalMessage('Customer successfully created');
+      setShowSuccessModal(true);
+      // console.log(response.customer);
+    } catch (e: any) {
+      setModalTitle('Registration failed!');
+      setModalMessage(e.response.data.message);
+      setShowSuccessModal(true);
+    }
   };
+
   return (
     <div>
+      {showSuccessModal && (
+        <SuccessModal
+          onClose={() => setShowSuccessModal(false)}
+          title={modalTitle}
+          message={modalMessage}
+          buttonText="Close"
+        />
+      )}
       <FormField action="#" onSubmit={handleSubmit}>
         <h1>Register</h1>
         <p>
@@ -176,6 +230,7 @@ export const RegisterPage = () => {
               type="text"
               placeholder="name"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setName(event.target.value);
                 setNameError(handleChangeStringField(event));
               }}
               required={true}
@@ -187,6 +242,7 @@ export const RegisterPage = () => {
               type="text"
               placeholder="lastname"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setLastname(event.target.value);
                 setLastnameError(handleChangeStringField(event));
               }}
               required={true}
@@ -213,6 +269,7 @@ export const RegisterPage = () => {
               type="text"
               placeholder="street"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setStreet(event.target.value);
                 setStreetError(handleChangeStringField(event));
               }}
               required={true}
@@ -224,6 +281,7 @@ export const RegisterPage = () => {
               type="text"
               placeholder="city"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                setCity(event.target.value);
                 setcityError(handleChangeStringField(event));
               }}
               required={true}
@@ -243,7 +301,13 @@ export const RegisterPage = () => {
             />
             {postalCodeError}
           </ErrorMsg>
-          <Select id="country" required={true}>
+          <Select
+            id="country"
+            required={true}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+              setCountry(event.target.value);
+            }}
+          >
             <option value="">Select a country...</option>
             {countries.map((country) => (
               <option key={country} value={country}>

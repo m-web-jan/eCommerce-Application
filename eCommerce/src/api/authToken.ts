@@ -6,7 +6,7 @@ const CTP_CLIENT_SECRET = import.meta.env.VITE_REACT_CTP_CLIENT_SECRET;
 
 export const getAuthToken = async () => {
   const accessToken = getCookie('accessToken');
-  console.log(`value - ${accessToken}`);
+
   if (!accessToken) {
     const { data } = await authInstance.post(
       '/token',
