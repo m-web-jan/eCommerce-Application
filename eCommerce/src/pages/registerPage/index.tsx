@@ -5,6 +5,8 @@ import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
 import { Select } from '../../components/select';
 import { registration } from '../../api/register';
 import { SuccessModal } from '../../components/alertModal';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../api/login';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -30,6 +32,7 @@ export const RegisterPage = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [modalMessage, setModalMessage] = useState('');
+  const navigate = useNavigate();
 
   const countries = ['BY', 'PL', 'RU', 'UK', 'US'];
 
@@ -184,11 +187,22 @@ export const RegisterPage = () => {
     }
   };
 
+  const automaticLogin = async () => {
+    await login({
+      email: email,
+      password: password,
+    });
+    navigate('/');
+  }
+
   return (
     <div>
       {showSuccessModal && (
         <SuccessModal
-          onClose={() => setShowSuccessModal(false)}
+          onClose={() => {
+            setShowSuccessModal(false);
+            automaticLogin();
+          }}
           title={modalTitle}
           message={modalMessage}
           buttonText="Close"
