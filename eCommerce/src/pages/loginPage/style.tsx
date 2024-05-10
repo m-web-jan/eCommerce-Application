@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const FormField = styled.form`
@@ -26,3 +27,9 @@ export const Label = styled.label`
   user-select: none;
   cursor: pointer;
 `
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: #990000;
+  margin-left: 0.5rem;
+`;

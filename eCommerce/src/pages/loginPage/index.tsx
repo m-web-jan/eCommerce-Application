@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
-import { ErrorMsg, FormField, Label } from './style';
+import { ErrorMsg, FormField, Label, StyledLink } from './style';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -70,6 +70,9 @@ export const LoginPage = () => {
     <div>
       <FormField action="#" onSubmit={handleSubmit}>
         <h1>login</h1>
+        <p>
+        I don't have an account.<StyledLink to={'/register'}>Register</StyledLink>
+        </p>
         <Input
           type="email"
           placeholder="email"
