@@ -84,7 +84,7 @@ export const LoginPage = () => {
         password: password,
       });
       navigate('/');
-      // console.log(response.customer);
+      console.log(response.customer);
     } catch(e: any) {
       setModalTitle('Login failed!');
       setModalMessage(e.response.data.message);

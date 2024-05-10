@@ -176,7 +176,7 @@ export const RegisterPage = () => {
       setModalTitle('Registration Successful!');
       setModalMessage('Customer successfully created');
       setShowSuccessModal(true);
-      // console.log(response.customer);
+      console.log(response.customer);
     } catch (e: any) {
       setModalTitle('Registration failed!');
       setModalMessage(e.response.data.message);
