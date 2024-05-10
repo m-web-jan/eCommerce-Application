@@ -4,10 +4,10 @@ export const NotFound = () => {
   return (
     <div>
       <Block>
-        <BlockImg src="/src/assets/images/404Image.png" alt="Image" />
+        <BlockImg src="../images/404Image.png" alt="Image" />
         <BlockContent>
           <Logo>
-            <img src="/src/assets/icons/cart.png" alt="cart-icon" />
+            <img src="../icons/cart.png" alt="cart-icon" />
             <h2>eComm</h2>
           </Logo>
           <Title>Opps! It’s seems you have been lost!</Title>
