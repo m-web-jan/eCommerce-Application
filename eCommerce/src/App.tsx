@@ -4,7 +4,7 @@ import { MainPage } from './pages/main';
 import { NavBar } from './components/navBar';
 import { RegisterPage } from './pages/registerPage';
 import { NotFound } from './pages/notFound';
-import './app.css'
+import './app.css';
 
 function App() {
   return (
