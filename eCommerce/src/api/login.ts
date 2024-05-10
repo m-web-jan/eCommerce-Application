@@ -1,13 +1,13 @@
 import { publicInstance } from ".";
-import { INewCustomer } from "../types";
+import { ICustomer } from "../types";
 import { getAuthToken } from "./authToken"
 
-export const registration = async (newUserRequestData: INewCustomer) => {
+export const login = async (userRequestData: ICustomer) => {
   const authToken = await getAuthToken();
 
   const response = await publicInstance.post(
-    '/me/signup',
-    newUserRequestData,
+    '/me/login',
+    userRequestData,
     {
       headers: {
         'Content-Type': 'application/json',

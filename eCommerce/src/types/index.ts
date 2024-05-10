@@ -1,4 +1,9 @@
-export type ICustomerDraft = {
+export type ICustomer = {
+  email: string;
+  password: string;
+}
+
+export type INewCustomer = {
   email: string;
   password: string;
   firstName: string;

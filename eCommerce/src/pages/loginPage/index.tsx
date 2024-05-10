@@ -1,7 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink } from './style';
+import { login } from '../../api/login';
+import { useNavigate } from 'react-router-dom';
+import { SuccessModal } from '../../components/alertModal';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +12,11 @@ export const LoginPage = () => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalMessage, setModalMessage] = useState('');
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -48,13 +56,18 @@ export const LoginPage = () => {
   const validatePassword = (value: string) => {
     const trimmedValue = value.trim();
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
     if (trimmedValue.length < 8) {
       setPasswordError('Password must be at least 8 characters long');
     } else if (!passwordPattern.test(trimmedValue)) {
-      setPasswordError('Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)');
+      setPasswordError(
+        'Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)'
+      );
     } else if (value !== trimmedValue) {
-      setPasswordError('Password must not contain leading or trailing whitespace');
+      setPasswordError(
+        'Password must not contain leading or trailing whitespace'
+      );
     } else {
       setPasswordError('');
     }
@@ -63,15 +76,37 @@ export const LoginPage = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = () => {
-    // Логика для отправки формы
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await login({
+        email: email,
+        password: password,
+      });
+      navigate('/');
+      // console.log(response.customer);
+    } catch(e: any) {
+      setModalTitle('Login failed!');
+      setModalMessage(e.response.data.message);
+      setShowSuccessModal(true);
+    }
   };
+
   return (
     <div>
+      {showSuccessModal && (
+        <SuccessModal
+          onClose={() => setShowSuccessModal(false)}
+          title={modalTitle}
+          message={modalMessage}
+          buttonText="Close"
+        />
+      )}
       <FormField action="#" onSubmit={handleSubmit}>
         <h1>login</h1>
         <p>
-        I don't have an account.<StyledLink to={'/register'}>Register</StyledLink>
+          I don't have an account.
+          <StyledLink to={'/register'}>Register</StyledLink>
         </p>
         <Input
           type="email"

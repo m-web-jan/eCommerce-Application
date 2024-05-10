@@ -38,8 +38,7 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({ onClose, title, mess
     <StyleModal>
       <div>
         <h2>{title}</h2>
-        {/* <p>{message}</p> */}
-        <p dangerouslySetInnerHTML={{ __html: message }} />
+        <p>{message}</p>
         <Button onClick={onClose} text={buttonText} />
       </div>
     </StyleModal>

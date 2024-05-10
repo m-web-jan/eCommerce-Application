@@ -1,11 +1,10 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
 import { Select } from '../../components/select';
 import { registration } from '../../api/register';
 import { SuccessModal } from '../../components/alertModal';
-import { Link } from 'react-router-dom';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -30,9 +29,9 @@ export const RegisterPage = () => {
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModalMessage] = useState<ReactNode>(null);
+  const [modalMessage, setModalMessage] = useState('');
 
-  const countries = ['BY', 'PL', 'RS', 'UK', 'US'];
+  const countries = ['BY', 'PL', 'RU', 'UK', 'US'];
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -156,7 +155,7 @@ export const RegisterPage = () => {
     );
   };
 
-  const handleSubmit = async (event: ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const response = await registration({
