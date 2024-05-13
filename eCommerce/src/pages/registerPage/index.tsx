@@ -7,6 +7,7 @@ import { registration } from '../../api/register';
 import { SuccessModal } from '../../components/alertModal';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/login';
+import { getEmailToken } from '../../api/emailToken';
 
 export const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -192,6 +193,7 @@ export const RegisterPage = () => {
       email: email,
       password: password,
     });
+    await getEmailToken(email, password);
     navigate('/');
   }
 

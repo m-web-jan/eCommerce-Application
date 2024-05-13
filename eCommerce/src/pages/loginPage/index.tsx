@@ -5,6 +5,7 @@ import { ErrorMsg, FormField, Label, StyledLink } from './style';
 import { login } from '../../api/login';
 import { useNavigate } from 'react-router-dom';
 import { SuccessModal } from '../../components/alertModal';
+import { getEmailToken } from '../../api/emailToken';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -79,12 +80,12 @@ export const LoginPage = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await login({
+      await login({
         email: email,
         password: password,
       });
+      await getEmailToken(email, password);
       navigate('/');
-      console.log(response.customer);
     } catch(e: any) {
       setModalTitle('Login failed!');
       setModalMessage(e.response.data.message);
