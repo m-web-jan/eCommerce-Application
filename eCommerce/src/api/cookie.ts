@@ -4,8 +4,16 @@ export const setCookie = (name: string, token: string, expiresIn: number) => {
 };
 
 export function getCookie(name: string) {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
+  let matches = document.cookie.match(
+    new RegExp(
+      '(?:^|; )' +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+        '=([^;]*)'
+    )
+  );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export const deleteMailToken = (name: string) => {
+  document.cookie = `${name}=; max-age=-1`;
+};

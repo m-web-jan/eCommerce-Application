@@ -1,19 +1,25 @@
-import { publicInstance } from ".";
-import { ICustomer } from "../types";
-import { getAuthToken } from "./authToken"
+import { publicInstance } from '.';
+// import { ICustomer } from '../types';
+import { getAuthToken } from './authToken';
 
-export const login = async (userRequestData: ICustomer) => {
+type LoginData = { username: string; password: string };
+
+export const login = async (loginData: LoginData) => {
   const authToken = await getAuthToken();
 
-  const response = await publicInstance.post(
+  const { data } = await publicInstance.post(
     '/me/login',
-    userRequestData,
+    {
+      email: loginData.username,
+      password: loginData.password,
+    },
     {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${authToken}`,
       },
-  });
+    }
+  );
 
-  return response.data;
-}
+  return data;
+};

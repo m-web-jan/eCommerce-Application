@@ -4,7 +4,8 @@ import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
 import { getAuthToken } from './api/authToken.ts';
 import { getCookie } from './api/cookie.ts';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
+import store from './store/store.ts';
 
 const RootComponent = () => {
   useEffect(() => {
@@ -15,15 +16,13 @@ const RootComponent = () => {
 
   return (
     <React.StrictMode>
-      {/* <Provider store={store}> */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-      {/* </Provider> */}
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
     </React.StrictMode>
   );
-}
+};
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <RootComponent />
-);
+ReactDOM.createRoot(document.getElementById('root')!).render(<RootComponent />);

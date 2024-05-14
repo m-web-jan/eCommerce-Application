@@ -190,12 +190,12 @@ export const RegisterPage = () => {
 
   const automaticLogin = async () => {
     await login({
-      email: email,
+      username: email,
       password: password,
     });
     await getEmailToken(email, password);
     navigate('/');
-  }
+  };
 
   return (
     <div>
