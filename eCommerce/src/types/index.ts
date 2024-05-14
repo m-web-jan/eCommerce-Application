@@ -22,3 +22,20 @@ export type IDraftAddress = {
   postalCode: string;
   country: string;
 };
+
+
+// store
+export interface RootState {
+  auth: AuthState;
+}
+
+interface AuthState {
+  email: string;
+  password: string;
+  emailError: string;
+  passwordError: string;
+  showPassword: boolean;
+  showSuccessModal: boolean;
+  modalTitle: string;
+  modalMessage: string;
+}

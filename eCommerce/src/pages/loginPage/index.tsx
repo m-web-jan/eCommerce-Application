@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink } from './style';
@@ -7,27 +7,39 @@ import { useNavigate } from 'react-router-dom';
 import { SuccessModal } from '../../components/alertModal';
 import { getEmailToken } from '../../api/emailToken';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../types';
+
 export const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+
+  const authSelector = (state: RootState) => state.auth;
+
+  const {
+    email,
+    password,
+    emailError,
+    passwordError,
+    showPassword,
+    showSuccessModal,
+    modalTitle,
+    modalMessage,
+  } = useSelector((state: RootState) => authSelector(state));
+
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
 
   const navigate = useNavigate();
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [modalTitle, setModalTitle] = useState('');
-  const [modalMessage, setModalMessage] = useState('');
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setEmail(value);
+    changeState('setEmail', value);
     validateEmail(value);
   };
-
   const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setPassword(value);
+    changeState('setPassword', value);
     validatePassword(value);
   };
 
@@ -35,24 +47,27 @@ export const LoginPage = () => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!value.includes('@')) {
-      setEmailError(
+      changeState(
+        'setEmailError',
         'Email address must contain an "@" symbol separating local part and domain name'
       );
       return;
     }
     if (value.split('@').length !== 2) {
-      setEmailError(
+      changeState(
+        'setEmailError',
         'Email address must contain exactly one "@" symbol separating local part and domain name'
       );
       return;
     }
     if (!emailPattern.test(value)) {
-      setEmailError(
+      changeState(
+        'setEmailError',
         'Email address must be properly formatted (e.g., user@example.com)'
       );
       return;
     }
-    setEmailError('');
+    changeState('setEmailError', '');
   };
   const validatePassword = (value: string) => {
     const trimmedValue = value.trim();
@@ -60,21 +75,26 @@ export const LoginPage = () => {
     const passwordPattern =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
     if (trimmedValue.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
+      changeState(
+        'setPasswordError',
+        'Password must be at least 8 characters long'
+      );
     } else if (!passwordPattern.test(trimmedValue)) {
-      setPasswordError(
+      changeState(
+        'setPasswordError',
         'Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)'
       );
     } else if (value !== trimmedValue) {
-      setPasswordError(
+      changeState(
+        'setPasswordError',
         'Password must not contain leading or trailing whitespace'
       );
     } else {
-      setPasswordError('');
+      changeState('setPasswordError', '');
     }
   };
   const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    changeState('setShowPassword', !showPassword);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -86,10 +106,10 @@ export const LoginPage = () => {
       });
       await getEmailToken(email, password);
       navigate('/');
-    } catch(e: any) {
-      setModalTitle('Login failed!');
-      setModalMessage(e.response.data.message);
-      setShowSuccessModal(true);
+    } catch (e: any) {
+      changeState('setModalTitle', 'Login failed!');
+      changeState('setModalMessage', e.response.data.message);
+      changeState('setShowSuccessModal', true);
     }
   };
 
@@ -97,7 +117,7 @@ export const LoginPage = () => {
     <div>
       {showSuccessModal && (
         <SuccessModal
-          onClose={() => setShowSuccessModal(false)}
+          onClose={() => changeState('setShowSuccessModal', false)}
           title={modalTitle}
           message={modalMessage}
           buttonText="Close"
