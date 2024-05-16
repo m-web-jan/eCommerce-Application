@@ -9,10 +9,10 @@ import { getEmailToken } from '../../api/emailToken';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
+import { validateEmail, validatePassword } from './validations';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
-
   const authSelector = (state: RootState) => state.auth;
 
   const {
@@ -35,66 +35,12 @@ export const LoginPage = () => {
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     changeState('setEmail', value);
-    validateEmail(value);
+    validateEmail(value, dispatch);
   };
   const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     changeState('setPassword', value);
-    validatePassword(value);
-  };
-
-  const validateEmail = (value: string) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!value.includes('@')) {
-      changeState(
-        'setEmailError',
-        'Email address must contain an "@" symbol separating local part and domain name'
-      );
-      return;
-    }
-    if (value.split('@').length !== 2) {
-      changeState(
-        'setEmailError',
-        'Email address must contain exactly one "@" symbol separating local part and domain name'
-      );
-      return;
-    }
-    if (!emailPattern.test(value)) {
-      changeState(
-        'setEmailError',
-        'Email address must be properly formatted (e.g., user@example.com)'
-      );
-      return;
-    }
-    changeState('setEmailError', '');
-  };
-  const validatePassword = (value: string) => {
-    const trimmedValue = value.trim();
-
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
-    if (trimmedValue.length < 8) {
-      changeState(
-        'setPasswordError',
-        'Password must be at least 8 characters long'
-      );
-    } else if (!passwordPattern.test(trimmedValue)) {
-      changeState(
-        'setPasswordError',
-        'Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)'
-      );
-    } else if (value !== trimmedValue) {
-      changeState(
-        'setPasswordError',
-        'Password must not contain leading or trailing whitespace'
-      );
-    } else {
-      changeState('setPasswordError', '');
-    }
-  };
-  const handleTogglePasswordVisibility = () => {
-    changeState('setShowPassword', !showPassword);
+    validatePassword(value, dispatch);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -146,7 +92,7 @@ export const LoginPage = () => {
           <Input
             type="checkbox"
             checked={showPassword}
-            onChange={handleTogglePasswordVisibility}
+            onChange={() => {changeState('setShowPassword', !showPassword)}}
           />
           show
         </Label>
