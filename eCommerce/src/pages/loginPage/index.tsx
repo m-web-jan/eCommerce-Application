@@ -80,6 +80,7 @@ export const LoginPage = () => {
           placeholder="email"
           value={email}
           onChange={handleChangeEmail}
+          required={true}
         />
         <ErrorMsg>{emailError}</ErrorMsg>
         <Input
@@ -87,12 +88,14 @@ export const LoginPage = () => {
           placeholder="password"
           value={password}
           onChange={handleChangePassword}
+          required={true}
         />
         <Label>
           <Input
             type="checkbox"
             checked={showPassword}
             onChange={() => {changeState('setShowPassword', !showPassword)}}
+            required={true}
           />
           show
         </Label>

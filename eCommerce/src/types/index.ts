@@ -26,15 +26,40 @@ export type IDraftAddress = {
 
 // store
 export interface RootState {
-  auth: AuthState;
+  auth: IAuthState;
+  register: IRegisterState;
 }
 
-interface AuthState {
+interface IAuthState {
   email: string;
   password: string;
   emailError: string;
   passwordError: string;
   showPassword: boolean;
+  showSuccessModal: boolean;
+  modalTitle: string;
+  modalMessage: string;
+}
+
+interface IRegisterState {
+  email: string;
+  password: string;
+  name: string;
+  lastname: string;
+  dateOfBirth: string;
+  street: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  emailError: string;
+  passwordError: string;
+  showPassword: boolean;
+  nameError: string;
+  lastnameError: string;
+  streetError: string;
+  cityError: string;
+  postalCodeError: string;
+  dobError: string;
   showSuccessModal: boolean;
   modalTitle: string;
   modalMessage: string;
