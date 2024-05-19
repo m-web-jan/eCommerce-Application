@@ -53,3 +53,48 @@ export const validatePassword = (value: string, dispatch: any) => {
     changeState('setPasswordError', '');
   }
 };
+
+export const validateField = (value: string) => {
+  const stringPattern = /^[A-Za-z]+$/;
+  if (!value.trim()) {
+    return 'This field is required';
+  }
+  if (value.length < 1) {
+    return 'Must contain at least one character';
+  }
+  if (!stringPattern.test(value)) {
+    return 'Must contain only letters';
+  }
+  return '';
+};
+
+export const validatePostalCode = (value: string, dispatch: any) => {
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
+  changeState('setPostalCode', value);
+  const postalCodePattern = /^\d{5}$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
+  if (!postalCodePattern.test(value)) {
+    return 'Postal code format is invalid';
+  }
+  return '';
+};
+
+export const validateDob = (value: string, dispatch: any) => {
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
+  changeState('setDateOfBirth', value);
+  const dob = new Date(value);
+  const currentDate = new Date();
+  const minAge = 13;
+  let age = currentDate.getFullYear() - dob.getFullYear();
+  const monthDiff = currentDate.getMonth() - dob.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < dob.getDate())) {
+    age--;
+  }
+  if (age < minAge) {
+    return `At least ${minAge} years old`;
+  }
+  return '';
+};

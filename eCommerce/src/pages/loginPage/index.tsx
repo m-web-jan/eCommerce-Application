@@ -9,22 +9,13 @@ import { getEmailToken } from '../../api/emailToken';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
-import { validateEmail, validatePassword } from './validations';
+import { validateEmail, validatePassword } from '../registerPage/validations';
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
   const authSelector = (state: RootState) => state.auth;
 
-  const {
-    email,
-    password,
-    emailError,
-    passwordError,
-    showPassword,
-    showSuccessModal,
-    modalTitle,
-    modalMessage,
-  } = useSelector((state: RootState) => authSelector(state));
+  const states = useSelector((state: RootState) => authSelector(state));
 
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
@@ -47,10 +38,10 @@ export const LoginPage = () => {
     event.preventDefault();
     try {
       await login({
-        email: email,
-        password: password,
+        email: states.email,
+        password: states.password,
       });
-      await getEmailToken(email, password);
+      await getEmailToken(states.email, states.password);
       navigate('/');
     } catch (e: any) {
       changeState('setModalTitle', 'Login failed!');
@@ -61,11 +52,11 @@ export const LoginPage = () => {
 
   return (
     <div>
-      {showSuccessModal && (
+      {states.showSuccessModal && (
         <SuccessModal
           onClose={() => changeState('setShowSuccessModal', false)}
-          title={modalTitle}
-          message={modalMessage}
+          title={states.modalTitle}
+          message={states.modalMessage}
           buttonText="Close"
         />
       )}
@@ -78,28 +69,27 @@ export const LoginPage = () => {
         <Input
           type="email"
           placeholder="email"
-          value={email}
+          value={states.email}
           onChange={handleChangeEmail}
           required={true}
         />
-        <ErrorMsg>{emailError}</ErrorMsg>
+        <ErrorMsg>{states.emailError}</ErrorMsg>
         <Input
-          type={showPassword ? 'text' : 'password'}
+          type={states.showPassword ? 'text' : 'password'}
           placeholder="password"
-          value={password}
+          value={states.password}
           onChange={handleChangePassword}
           required={true}
         />
         <Label>
           <Input
             type="checkbox"
-            checked={showPassword}
-            onChange={() => {changeState('setShowPassword', !showPassword)}}
-            required={true}
+            checked={states.showPassword}
+            onChange={() => {changeState('setShowPassword', !states.showPassword)}}
           />
           show
         </Label>
-        <ErrorMsg>{passwordError}</ErrorMsg>
+        <ErrorMsg>{states.passwordError}</ErrorMsg>
         <Button type="submit" text="Login" />
       </FormField>
     </div>
