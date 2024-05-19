@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react'; // 339
+import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
@@ -8,7 +8,6 @@ import { SuccessModal } from '../../components/alertModal';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/login';
 import { getEmailToken } from '../../api/emailToken';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 import { validateDob, validateEmail, validateField, validatePassword, validatePostalCode } from './validations';
