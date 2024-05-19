@@ -4,12 +4,12 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "jsx": "react-jsx",
-    "module": "commonjs",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
 
     /* Bundler mode */
-    // "moduleResolution": "bundler",
+    "module": "es2022",
+    "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,

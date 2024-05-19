@@ -1,146 +1,104 @@
-import { useState, ChangeEvent } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
 import { Select } from '../../components/select';
+import { registration } from '../../api/register';
+import { SuccessModal } from '../../components/alertModal';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../api/login';
+import { getEmailToken } from '../../api/emailToken';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../types';
+import { validateDob, validateEmail, validateField, validatePassword, validatePostalCode } from './validations';
 
 export const RegisterPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [nameError, setNameError] = useState('');
-  const [lastnameError, setLastnameError] = useState('');
-  const [streetError, setStreetError] = useState('');
-  const [cityError, setcityError] = useState('');
-  const [postalCodeError, setPostalCodeError] = useState('');
-  const [dobError, setDobError] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const authSelector = (state: RootState) => state.register;
+  const states = useSelector((state: RootState) => authSelector(state));
 
-  const countries = ['USA', 'Canada', 'UK', 'Germany', 'France', 'Australia'];
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
+
+  const navigate = useNavigate();
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setEmail(value);
-    validateEmail(value);
+    changeState('setEmail', value);
+    validateEmail(value, dispatch);
   };
 
   const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    setPassword(value);
-    validatePassword(value);
-  };
-
-  const handleChangeStringField = (event: ChangeEvent<HTMLInputElement>) => {
-    const error = validateField(event.target.value);
-    return error;
-  };
-
-  const validateField = (value: string) => {
-    const stringPattern = /^[A-Za-z]+$/;
-    if (!value.trim()) {
-      return 'This field is required';
-    }
-    if (value.length < 1) {
-      return 'Must contain at least one character';
-    }
-    if (!stringPattern.test(value)) {
-      return 'Must contain only letters';
-    }
-    return '';
-  };
-
-  const validateEmail = (value: string) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!value.includes('@')) {
-      setEmailError(
-        'Email address must contain an "@" symbol separating local part and domain name'
-      );
-      return;
-    }
-    if (value.split('@').length !== 2) {
-      setEmailError(
-        'Email address must contain exactly one "@" symbol separating local part and domain name'
-      );
-      return;
-    }
-    if (!emailPattern.test(value)) {
-      setEmailError(
-        'Email address must be properly formatted (e.g., user@example.com)'
-      );
-      return;
-    }
-    setEmailError('');
-  };
-  const validatePassword = (value: string) => {
-    const trimmedValue = value.trim();
-
-    const passwordPattern =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
-    if (trimmedValue.length < 8) {
-      setPasswordError('Password must be at least 8 characters long');
-    } else if (!passwordPattern.test(trimmedValue)) {
-      setPasswordError(
-        'Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)'
-      );
-    } else if (value !== trimmedValue) {
-      setPasswordError(
-        'Password must not contain leading or trailing whitespace'
-      );
-    } else {
-      setPasswordError('');
-    }
-  };
-
-  const validatePostalCode = (value: string) => {
-    const postalCodePattern = /^\d{5}$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
-    if (!postalCodePattern.test(value)) {
-      return 'Postal code format is invalid';
-    }
-    return '';
-  };
-
-  const validateDob = (value: string) => {
-    const dob = new Date(value);
-    const currentDate = new Date();
-    const minAge = 13;
-
-    let age = currentDate.getFullYear() - dob.getFullYear();
-    const monthDiff = currentDate.getMonth() - dob.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < dob.getDate())) {
-      age--;
-    }
-
-    if (age < minAge) {
-      return `At least ${minAge} years old`;
-    }
-    return '';
-  };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+    changeState('setPassword', value);
+    validatePassword(value, dispatch);
   };
 
   const isFormValid = () => {
     return (
-      emailError === '' &&
-      passwordError === '' &&
-      nameError === '' &&
-      lastnameError === '' &&
-      streetError === '' &&
-      cityError === '' &&
-      postalCodeError === '' &&
-      dobError === ''
+      states.emailError === '' &&
+      states.passwordError === '' &&
+      states.nameError === '' &&
+      states.lastnameError === '' &&
+      states.streetError === '' &&
+      states.cityError === '' &&
+      states.postalCodeError === '' &&
+      states.dobError === ''
     );
   };
 
-  const handleSubmit = () => {
-    console.log('submit form (not implemented)');
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    try {
+      const response = await registration({
+        email: states.email,
+        password: states.password,
+        firstName: states.name,
+        lastName: states.lastname,
+        dateOfBirth: states.dateOfBirth,
+        addresses: [
+          {
+            streetName: states.street,
+            city: states.city,
+            postalCode: states.postalCode,
+            country: states.country,
+          },
+        ],
+      });
+      changeState('setModalTitle', 'Registration Successful!');
+      changeState('setModalMessage', 'Customer successfully created');
+      changeState('setShowSuccessModal', true);
+      console.log(response.customer);
+    } catch (e: any) {
+      changeState('setModalTitle', 'Registration failed!');
+      changeState('setModalMessage', e.response.data.message);
+      changeState('setShowSuccessModal', true);
+    }
   };
+
+  const automaticLogin = async () => {
+    await login({
+      email: states.email,
+      password: states.password,
+    });
+    await getEmailToken(states.email, states.password);
+    navigate('/');
+  };
+
   return (
     <div>
+      {states.showSuccessModal && (
+        <SuccessModal
+          onClose={() => {
+            changeState('setShowSuccessModal', false);
+            automaticLogin();
+          }}
+          title={states.modalTitle}
+          message={states.modalMessage}
+          buttonText="Close"
+        />
+      )}
       <FormField action="#" onSubmit={handleSubmit}>
         <h1>Register</h1>
         <p>
@@ -149,49 +107,53 @@ export const RegisterPage = () => {
         <Input
           type="email"
           placeholder="email"
-          value={email}
+          value={states.email}
           onChange={handleChangeEmail}
           required={true}
         />
-        <ErrorMsg>{emailError}</ErrorMsg>
+        <ErrorMsg>{states.emailError}</ErrorMsg>
         <Input
-          type={showPassword ? 'text' : 'password'}
+          type={states.showPassword ? 'text' : 'password'}
           placeholder="password"
-          value={password}
+          value={states.password}
           onChange={handleChangePassword}
           required={true}
         />
         <Label>
           <Input
             type="checkbox"
-            checked={showPassword}
-            onChange={handleTogglePasswordVisibility}
+            checked={states.showPassword}
+            onChange={() => {
+              changeState('setShowPassword', !states.showPassword);
+            }}
           />
           show
         </Label>
-        <ErrorMsg>{passwordError}</ErrorMsg>
+        <ErrorMsg>{states.passwordError}</ErrorMsg>
         <TwoInRow>
           <ErrorMsg>
             <Input
               type="text"
               placeholder="name"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setNameError(handleChangeStringField(event));
+                changeState('setName', event.target.value);
+                changeState('setNameError', validateField(event.target.value));
               }}
               required={true}
             />
-            {nameError}
+            {states.nameError}
           </ErrorMsg>
           <ErrorMsg>
             <Input
               type="text"
               placeholder="lastname"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setLastnameError(handleChangeStringField(event));
+                changeState('setLastname', event.target.value);
+                changeState('setLastnameError', validateField(event.target.value));
               }}
               required={true}
             />
-            {lastnameError}
+            {states.lastnameError}
           </ErrorMsg>
         </TwoInRow>
         <TwoInRow>
@@ -201,10 +163,10 @@ export const RegisterPage = () => {
               type="date"
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setDobError(validateDob(event.target.value));
+                changeState('setDobError', validateDob(event.target.value, dispatch));
               }}
             />
-            {dobError}
+            {states.dobError}
           </ErrorMsg>
         </TwoInRow>
         <TwoInRow>
@@ -213,22 +175,24 @@ export const RegisterPage = () => {
               type="text"
               placeholder="street"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setStreetError(handleChangeStringField(event));
+                changeState('setStreet', event.target.value);
+                changeState('setStreetError', validateField(event.target.value));
               }}
               required={true}
             />
-            {streetError}
+            {states.streetError}
           </ErrorMsg>
           <ErrorMsg>
             <Input
               type="text"
               placeholder="city"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setcityError(handleChangeStringField(event));
+                changeState('setCity', event.target.value);
+                changeState('setcityError', validateField(event.target.value));
               }}
               required={true}
             />
-            {cityError}
+            {states.cityError}
           </ErrorMsg>
         </TwoInRow>
         <TwoInRow>
@@ -238,14 +202,20 @@ export const RegisterPage = () => {
               placeholder="postal code"
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                setPostalCodeError(validatePostalCode(event.target.value));
+                changeState('setPostalCodeError', validatePostalCode(event.target.value, dispatch));
               }}
             />
-            {postalCodeError}
+            {states.postalCodeError}
           </ErrorMsg>
-          <Select id="country" required={true}>
+          <Select
+            id="country"
+            required={true}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+              changeState('setCountry', event.target.value);
+            }}
+          >
             <option value="">Select a country...</option>
-            {countries.map((country) => (
+            {['BY', 'PL', 'RU', 'UK', 'US'].map((country) => (
               <option key={country} value={country}>
                 {country}
               </option>
