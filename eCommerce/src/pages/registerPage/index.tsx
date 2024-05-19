@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink, TwoInRow } from './style';
@@ -11,17 +11,25 @@ import { getEmailToken } from '../../api/emailToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 import { validateDob, validateEmail, validateField, validatePassword, validatePostalCode } from './validations';
+import { getCookie } from '../../api/cookie';
 
 export const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const authSelector = (state: RootState) => state.register;
-  const states = useSelector((state: RootState) => authSelector(state));
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const emailToken = getCookie('emailToken');
+    if (emailToken) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  const dispatch = useDispatch();
+  const registerSelector = (state: RootState) => state.register;
+  const states = useSelector((state: RootState) => registerSelector(state));
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
   }
 
-  const navigate = useNavigate();
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -69,11 +77,13 @@ export const RegisterPage = () => {
       changeState('setModalTitle', 'Registration Successful!');
       changeState('setModalMessage', 'Customer successfully created');
       changeState('setShowSuccessModal', true);
+      changeState('setRegistration', true);
       console.log(response.customer);
     } catch (e: any) {
       changeState('setModalTitle', 'Registration failed!');
       changeState('setModalMessage', e.response.data.message);
       changeState('setShowSuccessModal', true);
+      changeState('setRegistration', false);
     }
   };
 
@@ -92,7 +102,7 @@ export const RegisterPage = () => {
         <SuccessModal
           onClose={() => {
             changeState('setShowSuccessModal', false);
-            automaticLogin();
+            if (states.successfulRegistration) automaticLogin();
           }}
           title={states.modalTitle}
           message={states.modalMessage}

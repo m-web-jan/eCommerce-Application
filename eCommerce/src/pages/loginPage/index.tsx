@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { ErrorMsg, FormField, Label, StyledLink } from './style';
@@ -6,12 +6,20 @@ import { login } from '../../api/login';
 import { useNavigate } from 'react-router-dom';
 import { SuccessModal } from '../../components/alertModal';
 import { getEmailToken } from '../../api/emailToken';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 import { validateEmail, validatePassword } from '../registerPage/validations';
+import { getCookie } from '../../api/cookie';
 
 export const LoginPage = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const emailToken = getCookie('emailToken');
+    if (emailToken) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   const dispatch = useDispatch();
   const authSelector = (state: RootState) => state.auth;
 
@@ -21,7 +29,6 @@ export const LoginPage = () => {
     dispatch({ type: type, payload: value });
   }
 
-  const navigate = useNavigate();
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

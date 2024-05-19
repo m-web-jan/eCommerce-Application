@@ -63,4 +63,5 @@ interface IRegisterState {
   showSuccessModal: boolean;
   modalTitle: string;
   modalMessage: string;
+  successfulRegistration: boolean;
 }
