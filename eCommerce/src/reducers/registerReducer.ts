@@ -2,11 +2,25 @@ const initialState = {
   email: '',
   password: '',
   name: '',
-
+  lastname: '',
+  dateOfBirth: '',
+  street: '',
+  city: '',
+  postalCode: '',
+  country: '',
   emailError: '',
   passwordError: '',
+  nameError: '',
+  lastnameError: '',
+  streetError: '',
+  cityError: '',
+  postalCodeError: '',
+  dobError: '',
   showPassword: false,
+  successfulRegistration: false,
   showSuccessModal: false,
+  modalTitle: '',
+  modalMessage: '',
 };
 
 const registerReducer = (
@@ -56,6 +70,8 @@ const registerReducer = (
       return { ...state, modalTitle: action.payload };
     case 'setModalMessage':
       return { ...state, modalMessage: action.payload };
+    case 'setRegistration':
+      return { ...state, successfulRegistration: action.payload };
     default:
       return state;
   }
