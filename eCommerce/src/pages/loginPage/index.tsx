@@ -50,6 +50,8 @@ export const LoginPage = () => {
       });
       await getEmailToken(states.email, states.password);
       navigate('/');
+      changeState('setEmail', '');
+      changeState('setPassword', '');
     } catch (e: any) {
       changeState('setModalTitle', 'Login failed!');
       changeState('setModalMessage', e.response.data.message);

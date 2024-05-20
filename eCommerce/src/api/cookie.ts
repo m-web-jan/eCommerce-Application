@@ -9,3 +9,7 @@ export function getCookie(name: string) {
   ));
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export function delCookie(name: string) {
+  document.cookie = `${name}=; max-age=-1`;
+}
