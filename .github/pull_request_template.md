@@ -1,10 +1,10 @@
-**PR Details**
+## PR Details
 
-Description
+### Description:
 
-Related Issue
+### Related Issue:
 
-Context
+### Context:
 
 Types of changes
   - [ ] Docs change / refactoring / dependency upgrade
