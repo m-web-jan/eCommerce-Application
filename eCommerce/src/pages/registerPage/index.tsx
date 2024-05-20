@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { login } from '../../api/login';
 import { getEmailToken } from '../../api/emailToken';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../types';
+import { INewCustomer, RootState } from '../../types';
 import { validateDob, validateEmail, validateField, validatePassword, validatePostalCode } from './validations';
 import { getCookie } from '../../api/cookie';
 
@@ -59,7 +59,7 @@ export const RegisterPage = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await registration({
+      const newCustomer: INewCustomer = {
         email: states.email,
         password: states.password,
         firstName: states.name,
@@ -73,11 +73,14 @@ export const RegisterPage = () => {
             country: states.country,
           },
         ],
-      });
+      };
+      if (states.asDefaultShipping) newCustomer.defaultShippingAddress = 0;
+      const response = await registration(newCustomer);
       changeState('setModalTitle', 'Registration Successful!');
       changeState('setModalMessage', 'Customer successfully created');
       changeState('setShowSuccessModal', true);
       changeState('setRegistration', true);
+      changeState('setDefaultShippingAddress', false);
       console.log(response.customer);
     } catch (e: any) {
       changeState('setModalTitle', 'Registration failed!');
@@ -181,6 +184,7 @@ export const RegisterPage = () => {
             {states.dobError}
           </ErrorMsg>
         </TwoInRow>
+        <h2>Shipping address</h2>
         <TwoInRow>
           <ErrorMsg>
             <Input
@@ -234,6 +238,16 @@ export const RegisterPage = () => {
             ))}
           </Select>
         </TwoInRow>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={states.asDefaultShipping}
+            onChange={() => {
+              changeState('setDefaultShippingAddress', !states.asDefaultShipping);
+            }}
+          />
+          Set as default Shipping address
+        </Label>
         <Button type="submit" text="Create account" disabled={!isFormValid()} />
       </FormField>
     </div>

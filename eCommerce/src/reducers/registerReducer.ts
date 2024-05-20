@@ -21,6 +21,7 @@ const initialState = {
   showSuccessModal: false,
   modalTitle: '',
   modalMessage: '',
+  asDefaultShipping: false,
 };
 
 const registerReducer = (
@@ -72,6 +73,8 @@ const registerReducer = (
       return { ...state, modalMessage: action.payload };
     case 'setRegistration':
       return { ...state, successfulRegistration: action.payload };
+    case 'setDefaultShippingAddress':
+      return { ...state, asDefaultShipping: action.payload };
     default:
       return state;
   }
