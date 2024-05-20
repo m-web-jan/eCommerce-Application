@@ -1,4 +1,3 @@
-import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 
 const SelectField = styled.select`
@@ -14,21 +13,16 @@ const SelectField = styled.select`
   }
 `;
 
-interface SelectProps {
-  id?: string;
-  required?: boolean;
-  children?: React.ReactNode;
-  onChange: ChangeEventHandler<HTMLSelectElement>;
-}
-
-export const Select: React.FC<SelectProps> = ({ children, id, required, onChange }) => {
+export const Select = ({ ...props }) => {
   return (
     <SelectField
-    id={id}
-    required={required}
-    onChange={onChange}
+      id={props.id}
+      disabled={props.disabled}
+      required={props.required}
+      onChange={props.onChange}
+      value={props.value}
     >
-      {children}
+      {props.children}
     </SelectField>
   );
 };

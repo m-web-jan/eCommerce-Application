@@ -4,7 +4,7 @@ import { Button } from '../button';
 import styled from 'styled-components';
 
 const StyleModal = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

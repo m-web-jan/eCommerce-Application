@@ -7,7 +7,7 @@ export const FormField = styled.form`
   max-width: 20rem;
   padding: 2rem 1rem;
   border: 1px solid black;
-  margin: 3rem auto 0 auto;
+  margin: 3rem auto 3rem auto;
   input:not([type='checkbox']) {
     margin-top: 1rem;
   }

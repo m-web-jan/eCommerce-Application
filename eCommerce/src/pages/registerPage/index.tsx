@@ -10,7 +10,13 @@ import { login } from '../../api/login';
 import { getEmailToken } from '../../api/emailToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { INewCustomer, RootState } from '../../types';
-import { validateDob, validateEmail, validateField, validatePassword, validatePostalCode } from './validations';
+import {
+  validateDob,
+  validateEmail,
+  validateField,
+  validatePassword,
+  validatePostalCode,
+} from './validations';
 import { getCookie } from '../../api/cookie';
 
 export const RegisterPage = () => {
@@ -29,7 +35,6 @@ export const RegisterPage = () => {
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
   }
-
 
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -72,9 +77,16 @@ export const RegisterPage = () => {
             postalCode: states.postalCode,
             country: states.country,
           },
+          {
+            streetName: states.street2,
+            city: states.city2,
+            postalCode: states.postalCode2,
+            country: states.country2,
+          },
         ],
       };
       if (states.asDefaultShipping) newCustomer.defaultShippingAddress = 0;
+      if (states.asDefaultBilling) newCustomer.defaultBillingAddress = 1;
       const response = await registration(newCustomer);
       changeState('setModalTitle', 'Registration Successful!');
       changeState('setModalMessage', 'Customer successfully created');
@@ -100,6 +112,17 @@ export const RegisterPage = () => {
     changeState('setEmail', '');
     changeState('setPassword', '');
   };
+
+  function changeBillingAddres() {
+    if (states.sameAddresses) {
+      console.log('not same');
+    } else {
+      changeState('setStreet2', states.street);
+      changeState('setCity2', states.city);
+      changeState('setPostalCode2', states.postalCode);
+      changeState('setCountry2', states.country);
+    }
+  }
 
   return (
     <div>
@@ -193,6 +216,7 @@ export const RegisterPage = () => {
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setStreet', event.target.value);
                 changeState('setStreetError', validateField(event.target.value));
+                if (states.sameAddresses) changeState('setStreet2', event.target.value);
               }}
               required={true}
             />
@@ -205,6 +229,7 @@ export const RegisterPage = () => {
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setCity', event.target.value);
                 changeState('setcityError', validateField(event.target.value));
+                if (states.sameAddresses) changeState('setCity2', event.target.value);
               }}
               required={true}
             />
@@ -218,16 +243,18 @@ export const RegisterPage = () => {
               placeholder="postal code"
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                changeState('setPostalCodeError', validatePostalCode(event.target.value, dispatch));
+                validatePostalCode(event.target.value, dispatch);
+                changeState('setPostalCode', event.target.value);
+                if (states.sameAddresses) changeState('setPostalCode2', event.target.value);
               }}
             />
             {states.postalCodeError}
           </ErrorMsg>
           <Select
-            id="country"
             required={true}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               changeState('setCountry', event.target.value);
+              if (states.sameAddresses) changeState('setCountry2', event.target.value);
             }}
           >
             <option value="">Select a country...</option>
@@ -246,7 +273,90 @@ export const RegisterPage = () => {
               changeState('setDefaultShippingAddress', !states.asDefaultShipping);
             }}
           />
-          Set as default Shipping address
+          Default shipping address
+        </Label>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={states.sameAddresses}
+            onChange={() => {
+              changeState('setSameAddresses', !states.sameAddresses);
+              changeBillingAddres();
+            }}
+          />
+          Same address for billing and shipping
+        </Label>
+        <h2>Billing address</h2>
+        <TwoInRow>
+          <ErrorMsg>
+            <Input
+              disabled={states.sameAddresses}
+              type="text"
+              placeholder="street"
+              value={states.street2}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                changeState('setStreet2', event.target.value);
+                changeState('setStreetError', validateField(event.target.value));
+              }}
+              required={true}
+            />
+            {states.streetError}
+          </ErrorMsg>
+          <ErrorMsg>
+            <Input
+              disabled={states.sameAddresses}
+              type="text"
+              placeholder="city"
+              value={states.city2}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                changeState('setCity2', event.target.value);
+                changeState('setcityError', validateField(event.target.value));
+              }}
+              required={true}
+            />
+            {states.cityError}
+          </ErrorMsg>
+        </TwoInRow>
+        <TwoInRow>
+          <ErrorMsg>
+            <Input
+              disabled={states.sameAddresses}
+              type="text"
+              placeholder="postal code"
+              value={states.postalCode2}
+              required={true}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                changeState('setPostalCode2', event.target.value);
+                validatePostalCode(event.target.value, dispatch);
+              }}
+            />
+            {states.postalCodeError}
+          </ErrorMsg>
+          <Select
+            disabled={states.sameAddresses}
+            value={states.country2}
+            required={true}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+              changeState('setCountry2', event.target.value);
+            }}
+          >
+            <option>Select a country...</option>
+            {['BY', 'PL', 'RU', 'UK', 'US'].map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
+          </Select>
+        </TwoInRow>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={states.asDefaultBilling}
+            onChange={() => {
+              changeState('setDefaultBillingAddress', !states.asDefaultBilling);
+            }}
+          />
+          Default billing address
         </Label>
         <Button type="submit" text="Create account" disabled={!isFormValid()} />
       </FormField>
