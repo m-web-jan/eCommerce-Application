@@ -11,7 +11,7 @@ export type INewCustomer = {
   dateOfBirth: string;
   addresses: IDraftAddress[];
   defaultShippingAddress?: number;
-  // defaultBillingAddress?: number;
+  defaultBillingAddress?: number;
   // shippingAddresses: number[];
   // billingAddresses: number[];
 };
@@ -64,4 +64,11 @@ interface IRegisterState {
   modalMessage: string;
   successfulRegistration: boolean;
   asDefaultShipping: boolean;
+  asDefaultBilling: boolean;
+  sameAddresses: boolean;
+
+  street2: string;
+  city2: string;
+  postalCode2: string;
+  country2: string;
 }

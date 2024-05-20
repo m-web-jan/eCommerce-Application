@@ -72,12 +72,10 @@ export const validatePostalCode = (value: string, dispatch: any) => {
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
   }
-  changeState('setPostalCode', value);
   const postalCodePattern = /^\d{5}$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
   if (!postalCodePattern.test(value)) {
-    return 'Postal code format is invalid';
-  }
-  return '';
+    changeState('setPostalCodeError', 'Postal code format is invalid');
+  } else changeState('setPostalCodeError', '');
 };
 
 export const validateDob = (value: string, dispatch: any) => {

@@ -21,6 +21,7 @@ export const Input = ({ ...props }) => {
       checked={props.checked}
       required={props.required}
       id={props.id}
+      disabled={props.disabled}
     />
   );
 };

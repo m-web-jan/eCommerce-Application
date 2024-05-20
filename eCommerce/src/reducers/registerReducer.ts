@@ -22,12 +22,16 @@ const initialState = {
   modalTitle: '',
   modalMessage: '',
   asDefaultShipping: false,
+  asDefaultBilling: false,
+  sameAddresses: true,
+
+  street2: '',
+  city2: '',
+  postalCode2: '',
+  country2: '',
 };
 
-const registerReducer = (
-  state = initialState,
-  action: { type: string; payload: string }
-) => {
+const registerReducer = (state = initialState, action: { type: string; payload: string }) => {
   switch (action.type) {
     case 'setEmail':
       return { ...state, email: action.payload };
@@ -75,6 +79,19 @@ const registerReducer = (
       return { ...state, successfulRegistration: action.payload };
     case 'setDefaultShippingAddress':
       return { ...state, asDefaultShipping: action.payload };
+    case 'setSameAddresses':
+      return { ...state, sameAddresses: action.payload };
+    case 'setDefaultBillingAddress':
+      return { ...state, asDefaultBilling: action.payload };
+
+    case 'setStreet2':
+      return { ...state, street2: action.payload };
+    case 'setCity2':
+      return { ...state, city2: action.payload };
+    case 'setPostalCode2':
+      return { ...state, postalCode2: action.payload };
+    case 'setCountry2':
+      return { ...state, country2: action.payload };
     default:
       return state;
   }
