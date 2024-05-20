@@ -14,6 +14,10 @@ export const FormField = styled.form`
   button {
     margin-top: 1rem;
   }
+  h2 {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
 `;
 
 export const TwoInRow = styled.div`
@@ -48,4 +52,5 @@ export const Label = styled.label`
   column-gap: 0.5rem;
   user-select: none;
   cursor: pointer;
+  margin-top: 0.5rem;
 `;
