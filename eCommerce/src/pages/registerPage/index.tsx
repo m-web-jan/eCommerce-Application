@@ -94,6 +94,8 @@ export const RegisterPage = () => {
     });
     await getEmailToken(states.email, states.password);
     navigate('/');
+    changeState('setEmail', '');
+    changeState('setPassword', '');
   };
 
   return (
