@@ -75,14 +75,19 @@ export const validateField = (value: string) => {
   return '';
 };
 
-export const validatePostalCode = (value: string, dispatch: any) => {
-  function changeState(type: string, value: string | boolean) {
-    dispatch({ type: type, payload: value });
+export const validateStreet = (value: string) => {
+  if (value.length < 1) {
+    return 'Must contain at least one character';
   }
-  const postalCodePattern = /^\d{5}$|^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/;
-  if (!postalCodePattern.test(value)) {
-    changeState('setPostalCodeError', 'Postal code format is invalid');
-  } else changeState('setPostalCodeError', '');
+  return '';
+};
+
+export const validatePostalCode = (value: string, country: string) => {
+  const postalCodePatern = country === 'UK' ? /^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0AA)$/ : /^\d{6}$/;
+  if (!postalCodePatern.test(value)) {
+    return 'Postal code format is invalid';
+  }
+  return '';
 };
 
 export const validateDob = (value: string, dispatch: any) => {

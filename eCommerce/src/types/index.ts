@@ -58,6 +58,7 @@ interface IRegisterState {
   streetError: string;
   cityError: string;
   postalCodeError: string;
+  postalCodeError2: string;
   dobError: string;
   showSuccessModal: boolean;
   modalTitle: string;
