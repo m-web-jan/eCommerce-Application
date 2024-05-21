@@ -3,6 +3,13 @@ export const validateEmail = (value: string, dispatch: any) => {
     dispatch({ type: type, payload: value });
   }
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (value.trim() !== value) {
+    changeState(
+      'setEmailError',
+      'Email must not contain leading or trailing whitespace'
+    );
+    return;
+  }
   if (!value.includes('@')) {
     changeState(
       'setEmailError',
