@@ -143,7 +143,7 @@ export const RegisterPage = () => {
           Already have an account?<StyledLink to={'/login'}>Login</StyledLink>
         </p>
         <Input
-          type="email"
+          type="text"
           placeholder="email"
           value={states.email}
           onChange={handleChangeEmail}

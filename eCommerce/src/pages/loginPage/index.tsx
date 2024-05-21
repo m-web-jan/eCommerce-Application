@@ -29,7 +29,6 @@ export const LoginPage = () => {
     dispatch({ type: type, payload: value });
   }
 
-
   const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     changeState('setEmail', value);
@@ -94,7 +93,9 @@ export const LoginPage = () => {
           <Input
             type="checkbox"
             checked={states.showPassword}
-            onChange={() => {changeState('setShowPassword', !states.showPassword)}}
+            onChange={() => {
+              changeState('setShowPassword', !states.showPassword);
+            }}
           />
           show
         </Label>

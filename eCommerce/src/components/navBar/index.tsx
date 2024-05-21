@@ -35,7 +35,7 @@ export const NavBar = () => {
 
   function closeModal(element: HTMLElement) {
     const burgerIcon = document.querySelector('#burgerIcon') as HTMLImageElement;
-    if (!element.classList.contains('content')) showModal(burgerIcon);
+    if (!element.classList.contains('content') && isMenuOpen) showModal(burgerIcon);
   }
 
   return (
