@@ -75,6 +75,13 @@ export const validateField = (value: string) => {
   return '';
 };
 
+export const validateStreet = (value: string) => {
+  if (value.length < 1) {
+    return 'Must contain at least one character';
+  }
+  return '';
+};
+
 export const validatePostalCode = (value: string, dispatch: any) => {
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });

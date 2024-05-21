@@ -16,6 +16,7 @@ import {
   validateField,
   validatePassword,
   validatePostalCode,
+  validateStreet,
 } from './validations';
 import { getCookie } from '../../api/cookie';
 
@@ -215,7 +216,7 @@ export const RegisterPage = () => {
               placeholder="street"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setStreet', event.target.value);
-                changeState('setStreetError', validateField(event.target.value));
+                changeState('setStreetError', validateStreet(event.target.value));
                 if (states.sameAddresses) changeState('setStreet2', event.target.value);
               }}
               required={true}
@@ -296,7 +297,7 @@ export const RegisterPage = () => {
               value={states.street2}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setStreet2', event.target.value);
-                changeState('setStreetError', validateField(event.target.value));
+                changeState('setStreetError', validateStreet(event.target.value));
               }}
               required={true}
             />
