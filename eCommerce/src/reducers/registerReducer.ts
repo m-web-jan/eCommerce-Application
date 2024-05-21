@@ -7,7 +7,7 @@ const initialState = {
   street: '',
   city: '',
   postalCode: '',
-  country: '',
+  country: 'BY',
   emailError: '',
   passwordError: '',
   nameError: '',
@@ -15,6 +15,7 @@ const initialState = {
   streetError: '',
   cityError: '',
   postalCodeError: '',
+  postalCodeError2: '',
   dobError: '',
   showPassword: false,
   successfulRegistration: false,
@@ -28,7 +29,7 @@ const initialState = {
   street2: '',
   city2: '',
   postalCode2: '',
-  country2: '',
+  country2: 'BY',
 };
 
 const registerReducer = (state = initialState, action: { type: string; payload: string }) => {
@@ -67,6 +68,8 @@ const registerReducer = (state = initialState, action: { type: string; payload: 
       return { ...state, cityError: action.payload };
     case 'setPostalCodeError':
       return { ...state, postalCodeError: action.payload };
+    case 'setPostalCodeError2':
+      return { ...state, postalCodeError2: action.payload };
     case 'setDobError':
       return { ...state, dobError: action.payload };
     case 'setShowSuccessModal':

@@ -115,9 +115,7 @@ export const RegisterPage = () => {
   };
 
   function changeBillingAddres() {
-    if (states.sameAddresses) {
-      console.log('not same');
-    } else {
+    if (!states.sameAddresses) {
       changeState('setStreet2', states.street);
       changeState('setCity2', states.city);
       changeState('setPostalCode2', states.postalCode);
@@ -244,7 +242,10 @@ export const RegisterPage = () => {
               placeholder="postal code"
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                validatePostalCode(event.target.value, dispatch);
+                changeState(
+                  'setPostalCodeError',
+                  validatePostalCode(event.target.value, states.country)
+                );
                 changeState('setPostalCode', event.target.value);
                 if (states.sameAddresses) changeState('setPostalCode2', event.target.value);
               }}
@@ -252,14 +253,18 @@ export const RegisterPage = () => {
             {states.postalCodeError}
           </ErrorMsg>
           <Select
+            value={states.country}
             required={true}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               changeState('setCountry', event.target.value);
               if (states.sameAddresses) changeState('setCountry2', event.target.value);
+              changeState(
+                'setPostalCodeError',
+                validatePostalCode(states.postalCode, event.target.value)
+              );
             }}
           >
-            <option value="">Select a country...</option>
-            {['BY', 'PL', 'RU', 'UK', 'US'].map((country) => (
+            {['RU', 'BY', 'UK'].map((country) => (
               <option key={country} value={country}>
                 {country}
               </option>
@@ -328,10 +333,13 @@ export const RegisterPage = () => {
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setPostalCode2', event.target.value);
-                validatePostalCode(event.target.value, dispatch);
+                changeState(
+                  'setPostalCodeError2',
+                  validatePostalCode(event.target.value, states.country2)
+                );
               }}
             />
-            {states.postalCodeError}
+            {states.sameAddresses ? states.postalCodeError : states.postalCodeError2}
           </ErrorMsg>
           <Select
             disabled={states.sameAddresses}
@@ -339,10 +347,13 @@ export const RegisterPage = () => {
             required={true}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               changeState('setCountry2', event.target.value);
+              changeState(
+                'setPostalCodeError2',
+                validatePostalCode(states.postalCode2, event.target.value)
+              );
             }}
           >
-            <option>Select a country...</option>
-            {['BY', 'PL', 'RU', 'UK', 'US'].map((country) => (
+            {['RU', 'BY', 'UK'].map((country) => (
               <option key={country} value={country}>
                 {country}
               </option>
