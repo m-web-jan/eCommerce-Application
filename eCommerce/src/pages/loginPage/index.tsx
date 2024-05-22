@@ -75,7 +75,7 @@ export const LoginPage = () => {
           <StyledLink to={'/register'}>Register</StyledLink>
         </p>
         <Input
-          type="email"
+          type="text"
           placeholder="email"
           value={states.email}
           onChange={handleChangeEmail}
