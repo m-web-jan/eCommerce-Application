@@ -14,16 +14,25 @@ import {
 } from './style';
 import { delCookie, getCookie } from '../../api/cookie';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../types';
 
 export const NavBar = () => {
+  const authSelector = (state: RootState) => state.auth;
+  const states = useSelector((state: RootState) => authSelector(state));
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
 
   function logoutCustomer() {
     const emailToken = getCookie('emailToken');
     if (emailToken) {
       delCookie('emailToken');
       navigate('/');
+      changeState('setLogged', false);
     }
   }
 
@@ -47,8 +56,10 @@ export const NavBar = () => {
         </StyledLogo>
         <NavBarField>
           <StyledLink to={'/'}>Main</StyledLink>
-          <StyledLink to={'/login'}>Login</StyledLink>
-          <StyledLink to={'/register'}>Register</StyledLink>
+          <StyledLink hidden={states.isLogged} to={'/login'}>Login</StyledLink>
+          <StyledLink hidden={states.isLogged} to={'/register'}>Register</StyledLink>
+          <StyledLink hidden={!states.isLogged} to={'/catalog'}>Catalog</StyledLink>
+          <StyledLink hidden={!states.isLogged} to={'/profile'}>Profile</StyledLink>
         </NavBarField>
         <LogoutButton onClick={logoutCustomer}>
           <img src="../../icons/logout.png" alt="logoutIcon" />

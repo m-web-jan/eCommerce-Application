@@ -75,6 +75,7 @@ export const NavBarField = styled.nav`
 `;
 
 export const StyledLink = styled(Link)`
+display: ${(props) => (props.hidden ? 'none' : 'inline')};
   padding: 1rem 0;
   text-decoration: none;
   color: white;
