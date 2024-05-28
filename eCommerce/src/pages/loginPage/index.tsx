@@ -51,6 +51,7 @@ export const LoginPage = () => {
       navigate('/');
       changeState('setEmail', '');
       changeState('setPassword', '');
+      changeState('setLogged', true);
     } catch (e: any) {
       changeState('setModalTitle', 'Login failed!');
       changeState('setModalMessage', e.response.data.message);

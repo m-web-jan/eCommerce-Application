@@ -38,6 +38,7 @@ interface IAuthState {
   showSuccessModal: boolean;
   modalTitle: string;
   modalMessage: string;
+  isLogged: boolean;
 }
 
 interface IRegisterState {

@@ -112,6 +112,7 @@ export const RegisterPage = () => {
     navigate('/');
     changeState('setEmail', '');
     changeState('setPassword', '');
+    changeState('setLogged', true);
   };
 
   function changeBillingAddres() {

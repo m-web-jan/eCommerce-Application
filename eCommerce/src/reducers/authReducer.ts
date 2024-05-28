@@ -5,6 +5,7 @@ const initialState = {
   passwordError: '',
   showPassword: false,
   showSuccessModal: false,
+  isLogged: false,
 };
 
 const authReducer = (
@@ -12,6 +13,8 @@ const authReducer = (
   action: { type: string; payload: string }
 ) => {
   switch (action.type) {
+    case 'setLogged':
+      return { ...state, isLogged: action.payload };
     case 'setEmail':
       return { ...state, email: action.payload };
     case 'setPassword':

@@ -75,6 +75,7 @@ export const NavBarField = styled.nav`
 `;
 
 export const StyledLink = styled(Link)`
+display: ${(props) => (props.hidden ? 'inline' : 'none')};
   padding: 1rem 0;
   text-decoration: none;
   color: white;
@@ -119,7 +120,7 @@ export const MobMenu = styled.div`
   .content {
     position: fixed;
     top: 0;
-    width: 26rem;
+    width: 20rem;
     height: 100vh;
     background-color: #000000;
     color: white;
