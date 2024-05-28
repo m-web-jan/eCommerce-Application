@@ -119,7 +119,7 @@ export const MobMenu = styled.div`
   .content {
     position: fixed;
     top: 0;
-    width: 26rem;
+    width: 20rem;
     height: 100vh;
     background-color: #000000;
     color: white;

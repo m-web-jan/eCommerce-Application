@@ -7,10 +7,21 @@ export const Block = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  @media (max-width: 768px) {
+    display: block;
+    border-radius: 20px;
+    overflow: hidden;
+  }
 `;
 
 export const BlockImg = styled.img`
   border-radius: 20px 0 0 20px;
+  @media (max-width: 768px) {
+    width: 325px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 0;
+  }
 `;
 
 export const BlockContent = styled.div`
@@ -19,6 +30,10 @@ export const BlockContent = styled.div`
   background-color: #d3d3d3;
   text-align: center;
   padding: 1rem 2rem;
+  @media (max-width: 768px) {
+    border-radius: 0;
+    margin-top: -5px;
+  }
 `;
 
 export const Logo = styled.div`
@@ -39,6 +54,9 @@ export const Title = styled.h1`
   text-align: center;
   margin-top: 6rem;
   width: 16rem;
+  @media (max-width: 768px) {
+    margin-top: 6px;
+  }
 `;
 
 export const SubTitle = styled.p`
@@ -70,13 +88,18 @@ export const StyledLink = styled(Link)`
     left: 50%;
     transform: translate(-50%);
   }
-  &:hover:after {
-    width: 100%;
+  @media (hover: hover) {
+    &:hover:after {
+      width: 100%;
+    }
   }
 `;
 
 export const MarginTop = styled.div`
   margin-top: 2rem;
+  @media (max-width: 768px) {
+    margin: 1.5rem 0;
+  }
 `;
 
 export const Code = styled.p`
