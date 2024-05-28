@@ -47,6 +47,14 @@ export const NavBar = () => {
     if (!element.classList.contains('content') && isMenuOpen) showModal(burgerIcon);
   }
 
+  const links = [
+    { to: '/', text: 'Main', hidden: false },
+    { to: '/login', text: 'Login', hidden: states.isLogged },
+    { to: '/register', text: 'Register', hidden: states.isLogged },
+    { to: '/catalog', text: 'Catalog', hidden: !states.isLogged },
+    { to: '/profile', text: 'Profile', hidden: !states.isLogged },
+  ];
+
   return (
     <StyledHeader>
       <Container>
@@ -55,18 +63,18 @@ export const NavBar = () => {
           <h2>eComm</h2>
         </StyledLogo>
         <NavBarField>
-          <StyledLink to={'/'}>Main</StyledLink>
-          <StyledLink hidden={states.isLogged} to={'/login'}>Login</StyledLink>
-          <StyledLink hidden={states.isLogged} to={'/register'}>Register</StyledLink>
-          <StyledLink hidden={!states.isLogged} to={'/catalog'}>Catalog</StyledLink>
-          <StyledLink hidden={!states.isLogged} to={'/profile'}>Profile</StyledLink>
+          {links.map((link, index) => (
+            <StyledLink key={index} hidden={!link.hidden} to={link.to}>
+              {link.text}
+            </StyledLink>
+          ))}
         </NavBarField>
         <LogoutButton onClick={logoutCustomer}>
           <img src="../../icons/logout.png" alt="logoutIcon" />
           <h2>Logout</h2>
         </LogoutButton>
         <BurgerIcon
-          id='burgerIcon'
+          id="burgerIcon"
           onClick={(e) => {
             showModal(e.target as HTMLImageElement);
           }}
@@ -74,7 +82,12 @@ export const NavBar = () => {
         ></BurgerIcon>
       </Container>
 
-      <MobMenu onClick={(e) => {closeModal(e.target as HTMLElement)}} className={isMenuOpen ? 'open' : 'close'}>
+      <MobMenu
+        onClick={(e) => {
+          closeModal(e.target as HTMLElement);
+        }}
+        className={isMenuOpen ? 'open' : 'close'}
+      >
         <div className="content">
           <MobMenuLogo to={'/'}>
             <img src="../../icons/lightCart.png" alt="logoIcon" />
