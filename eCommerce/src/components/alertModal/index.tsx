@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '../button';
 
 import styled from 'styled-components';
@@ -26,20 +25,13 @@ const StyleModal = styled.div`
   }
 `;
 
-interface SuccessModalProps {
-  onClose: () => void;
-  title: string;
-  message: string;
-  buttonText: string;
-}
-
-export const SuccessModal: React.FC<SuccessModalProps> = ({ onClose, title, message, buttonText }) => {
+export const SuccessModal = ({ ...props }) => {
   return (
     <StyleModal>
       <div>
-        <h2>{title}</h2>
-        <p>{message}</p>
-        <Button onClick={onClose} text={buttonText} />
+        <h2>{props.title}</h2>
+        <p>{props.message}</p>
+        <Button onClick={props.onClose} text={props.buttonText} />
       </div>
     </StyleModal>
   );

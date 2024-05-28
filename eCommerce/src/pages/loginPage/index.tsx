@@ -9,20 +9,17 @@ import { getEmailToken } from '../../api/emailToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 import { validateEmail, validatePassword } from '../registerPage/validations';
-import { getCookie } from '../../api/cookie';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const emailToken = getCookie('emailToken');
-    if (emailToken) {
+    if (states.isLogged) {
       navigate('/');
     }
   }, [navigate]);
 
   const dispatch = useDispatch();
   const authSelector = (state: RootState) => state.auth;
-
   const states = useSelector((state: RootState) => authSelector(state));
 
   function changeState(type: string, value: string | boolean) {
