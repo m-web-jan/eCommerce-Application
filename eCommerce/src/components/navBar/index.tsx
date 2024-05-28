@@ -48,11 +48,11 @@ export const NavBar = () => {
   }
 
   const links = [
-    { to: '/', text: 'Main', hidden: false },
-    { to: '/login', text: 'Login', hidden: states.isLogged },
-    { to: '/register', text: 'Register', hidden: states.isLogged },
-    { to: '/catalog', text: 'Catalog', hidden: !states.isLogged },
-    { to: '/profile', text: 'Profile', hidden: !states.isLogged },
+    { to: '/', text: 'Главная', hidden: false },
+    { to: '/login', text: 'Авторизоваться', hidden: states.isLogged },
+    { to: '/register', text: 'Зарегистрироваться', hidden: states.isLogged },
+    { to: '/catalog', text: 'Каталог', hidden: !states.isLogged },
+    { to: '/profile', text: 'Профиль', hidden: !states.isLogged },
   ];
 
   return (
@@ -60,7 +60,7 @@ export const NavBar = () => {
       <Container>
         <StyledLogo to={'/'}>
           <img src="../../icons/lightCart.png" alt="logoIcon" />
-          <h2>eComm</h2>
+          <h2>MotoMax</h2>
         </StyledLogo>
         <NavBarField>
           {links.map((link, index) => (
@@ -71,7 +71,7 @@ export const NavBar = () => {
         </NavBarField>
         <LogoutButton onClick={logoutCustomer}>
           <img src="../../icons/logout.png" alt="logoutIcon" />
-          <h2>Logout</h2>
+          <h2>Выйти</h2>
         </LogoutButton>
         <BurgerIcon
           id="burgerIcon"
@@ -91,10 +91,10 @@ export const NavBar = () => {
         <div className="content">
           <MobMenuLogo to={'/'}>
             <img src="../../icons/lightCart.png" alt="logoIcon" />
-            <h2>eComm</h2>
+            <h2>MotoMax</h2>
           </MobMenuLogo>
           <div className="mob-menu__links">
-            <StyledMobLink to={'/'}>
+            {/* <StyledMobLink to={'/'}>
               Main
               <img src="../../icons/arrow.png" alt="arrowIcon" />
             </StyledMobLink>
@@ -105,11 +105,16 @@ export const NavBar = () => {
             <StyledMobLink to={'/register'}>
               Register
               <img src="../../icons/arrow.png" alt="arrowIcon" />
+            </StyledMobLink> */}
+            {links.map((link, index) => (
+            <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
+              {link.text}
             </StyledMobLink>
+          ))}
           </div>
           <StyledMobLogout onClick={logoutCustomer}>
             <img src="../../icons/logout.png" alt="logoutIcon" />
-            <p>Logout</p>
+            <p>Выйти</p>
           </StyledMobLogout>
         </div>
       </MobMenu>
