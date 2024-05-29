@@ -1,14 +1,26 @@
 import { useSelector } from 'react-redux';
 import { ICatlogCards, RootState } from '../../types';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ProductCard } from '../../components/catalogCard';
 import { Catalog, CatalogCards } from './style';
 import { allProducts } from '../../api/getAllProducts';
 
-const catalogData: ICatlogCards = await allProducts();
 
 export const CatalogPage = () => {
+  const [catalogData, setCatalogData] = useState<ICatlogCards | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await allProducts();
+        setCatalogData(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const navigate = useNavigate();
   const authSelector = (state: RootState) => state.auth;
@@ -32,7 +44,7 @@ export const CatalogPage = () => {
           подойдут именно вам.
         </p>
         <CatalogCards>
-          {catalogData.results.map((card, index) => (
+          {catalogData && catalogData.results.map((card, index) => (
             <ProductCard
               key={index}
               link="/"
