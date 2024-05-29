@@ -5,7 +5,7 @@ export const Catalog = styled.div`
   padding: 0 2rem;
   max-width: 90rem;
   margin: 0 auto;
-  h2 {
+  h1 {
     margin-top: 3rem;
     font-size: 40px;
     text-transform: uppercase;
@@ -20,6 +20,7 @@ export const Catalog = styled.div`
 `;
 
 export const CatalogCards = styled.div`
+  margin-bottom: 2rem;
   gap: 2rem;
   display: flex;
   flex-wrap: wrap;

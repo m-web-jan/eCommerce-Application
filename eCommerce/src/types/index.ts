@@ -1,7 +1,7 @@
 export type ICustomer = {
   email: string;
   password: string;
-}
+};
 
 export type INewCustomer = {
   email: string;
@@ -73,4 +73,83 @@ interface IRegisterState {
   city2: string;
   postalCode2: string;
   country2: string;
+}
+
+export interface ICatlogCards {
+  count: number;
+  limit: number;
+  offset: number;
+  results: IResult[];
+  total: number;
+}
+
+interface IResult {
+  createdAt: string;
+  createdBy: ICreatedBy;
+  id: string;
+  lastMessageSequenceNumber: number;
+  lastModifiedAt: string;
+  lastModifiedBy: IUser;
+  lastVariantId: number;
+  masterData: IMasterData;
+  priceMode: string;
+  productType: IProductType;
+  version: number;
+  versionModifiedAt: string;
+}
+
+interface ICreatedBy {
+  isPlatformClient: boolean;
+  user: IUser;
+}
+
+interface IUser {
+  id: string;
+  typeId: string;
+}
+
+interface IProductType {
+  id: string;
+  typeId: string;
+}
+
+interface IMasterData {
+  current: ICurrent;
+  hasStagedChanges: boolean;
+  published: boolean;
+}
+
+interface ICurrent {
+  name: IText;
+  categories: [];
+  description: IText;
+  masterVariant: IVariants;
+  metaDescription: IText;
+  metaTitle: IText;
+  slug: IText;
+  variants: IVariants[];
+}
+
+interface IText {
+  'en-GB': string;
+  ru: string;
+  pl: string;
+}
+
+interface IVariants {
+  prices: IPrices[];
+  images: IImages[];
+}
+interface IPrices {
+  discount: IValue;
+  value: IValue;
+}
+interface IValue {
+  centAmount: number;
+  currencyCode: string;
+}
+
+interface IImages {
+  dimensions: { w: number; h: number };
+  url: string;
 }

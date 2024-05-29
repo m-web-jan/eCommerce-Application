@@ -2,13 +2,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Card = styled(Link)`
+  &:hover {
+    transition: .3s;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
+  }
+  transition: .3s;
   display: block;
   width: 17rem;
   text-decoration: none;
   color: black;
-  box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
   img {
     width: 100%;
+    height: 50%;
   }
 `;
 const CardContent = styled.div`
@@ -38,21 +44,25 @@ const Price = styled.p`
   }
 `;
 
-export const ProductCard = ({ ...props }) => {
+export const ProductCard = ( {...props} ) => {
+  let price = (props.cardData.masterVariant.prices[0].value.centAmount / 100).toFixed(2);
+  let newPrice = (props.cardData.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
+  let currency = props.cardData.masterVariant.prices[0].value.currencyCode;
+
   return (
     <Card to={props.link}>
-      <img src={props.image} alt="productImage" />
-      {props.newPrice.length ? (
+      <img src={props.cardData.masterVariant.images[0]?.url} alt="productImage" />
+      {newPrice !== 'NaN' ? (
         <Price>
-          <span>{props.price}</span>
-          <span>{props.newPrice}</span>
+          <span>{`${price}${currency}`}</span>
+          <span>{`${newPrice}${currency}`}</span>
         </Price>
       ) : (
-        <Price>{props.price}</Price>
+        <Price>{`${price}${currency}`}</Price>
       )}
       <CardContent>
-        <h1>{props.title}</h1>
-        <p>{props.description}</p>
+        <h2>{props.cardData.name.ru}</h2>
+        <p>{props.cardData.description.ru}</p>
       </CardContent>
     </Card>
   );

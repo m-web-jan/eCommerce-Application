@@ -1,15 +1,14 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../types';
+import { ICatlogCards, RootState } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ProductCard } from '../../components/catalogCard';
 import { Catalog, CatalogCards } from './style';
+import { allProducts } from '../../api/getAllProducts';
+
+const catalogData: ICatlogCards = await allProducts();
 
 export const CatalogPage = () => {
-  // const dispatch = useDispatch();
-  // function changeState(type: string, value: string | boolean) {
-  //   dispatch({ type: type, payload: value });
-  // }
 
   const navigate = useNavigate();
   const authSelector = (state: RootState) => state.auth;
@@ -20,10 +19,11 @@ export const CatalogPage = () => {
     }
   }, [navigate]);
 
+
   return (
     <Catalog>
       <div className="container">
-        <h2>Шлемы для мотоциклистов</h2>
+        <h1>Шлемы для мотоциклистов</h1>
         <p>
           Найдите идеальный шлем для вашего стиля езды. Защита и комфорт от ведущих производителей
           для безопасных и приятных поездок. От интегралов до модульных шлемов – все модели созданы
@@ -32,86 +32,13 @@ export const CatalogPage = () => {
           подойдут именно вам.
         </p>
         <CatalogCards>
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
-          <ProductCard
-            link="/"
-            title="Bogotto FF391"
-            description="Мотоциклетный шлем FF391 является идеальным компаньоном для каждой поездки и идеальной моделью начального уровня."
-            image="../images/productImg1.png"
-            price="150byn"
-            newPrice=""
-          />
+          {catalogData.results.map((card, index) => (
+            <ProductCard
+              key={index}
+              link="/"
+              cardData={card.masterData.current}
+              />
+          ))}
         </CatalogCards>
       </div>
     </Catalog>
