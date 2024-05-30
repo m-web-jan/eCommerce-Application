@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { ICatlogCards, RootState } from '../../types';
+import { IResult, RootState } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ProductCard } from '../../components/catalogCard';
@@ -8,7 +8,7 @@ import { allProducts } from '../../api/getAllProducts';
 
 
 export const CatalogPage = () => {
-  const [catalogData, setCatalogData] = useState<ICatlogCards | null>(null);
+  const [catalogData, setCatalogData] = useState<IResult[] | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -44,7 +44,7 @@ export const CatalogPage = () => {
           подойдут именно вам.
         </p>
         <CatalogCards>
-          {catalogData && catalogData.results.map((card, index) => (
+          {catalogData && catalogData.map((card, index) => (
             <ProductCard
               key={index}
               link="/"

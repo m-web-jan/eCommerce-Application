@@ -83,7 +83,7 @@ export interface ICatlogCards {
   total: number;
 }
 
-interface IResult {
+export interface IResult {
   createdAt: string;
   createdBy: ICreatedBy;
   id: string;
