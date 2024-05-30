@@ -15,5 +15,5 @@ export const allProducts = async () => {
       },
   });
 
-  return response.data;
+  return response.data.results;
 }
