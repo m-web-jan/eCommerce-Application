@@ -9,6 +9,7 @@ import { CatalogPage } from './pages/catalog';
 import { ProfilePage } from './pages/profile';
 import { getCookie } from './api/cookie';
 import { useDispatch } from 'react-redux';
+import { ProductPage } from './pages/product';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -16,6 +17,7 @@ const links = [
   { path: '/register', element: <RegisterPage /> },
   { path: '/profile', element: <ProfilePage /> },
   { path: '/catalog', element: <CatalogPage /> },
+  { path: '/catalog/:productKey', element: <ProductPage /> },
   { path: '*', element: <NotFound /> },
 ];
 

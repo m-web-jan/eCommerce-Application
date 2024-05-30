@@ -18,7 +18,6 @@ export const CatalogPage = () => {
         console.error("Error fetching products:", error);
       }
     };
-
     fetchData();
   }, []);
 
@@ -47,7 +46,7 @@ export const CatalogPage = () => {
           {catalogData && catalogData.results.map((card, index) => (
             <ProductCard
               key={index}
-              link="/"
+              link={`/catalog/${card.key}`}
               cardData={card.masterData.current}
               />
           ))}
