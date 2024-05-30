@@ -1,4 +1,14 @@
-import { Block, BlockContent, BlockImg, Code, Logo, MarginTop, StyledLink, SubTitle, Title } from './style';
+import {
+  Block,
+  BlockContent,
+  BlockImg,
+  Code,
+  Logo,
+  MarginTop,
+  StyledLink,
+  SubTitle,
+  Title,
+} from './style';
 
 export const NotFound = () => {
   return (
@@ -8,17 +18,16 @@ export const NotFound = () => {
         <BlockContent>
           <Logo>
             <img src="../icons/cart.png" alt="cart-icon" />
-            <h2>eComm</h2>
+            <h2>MotoMax</h2>
           </Logo>
-          <Title>Opps! It’s seems you have been lost!</Title>
+          <Title>Упс! Кажется, ты заблудился!</Title>
           <SubTitle>
-            Home is just a click away. Let’s go back and continue our regular
-            life
+          Дом находится на расстоянии одного клика. Давайте вернемся и продолжим нашу обычную жизнь
           </SubTitle>
           <MarginTop>
-            <StyledLink to={'/'}>GO TO HOME</StyledLink>
+            <StyledLink to={'/'}>Главная</StyledLink>
           </MarginTop>
-          <Code>Error code 404</Code>
+          <Code>Код ошибки 404</Code>
         </BlockContent>
       </Block>
     </div>

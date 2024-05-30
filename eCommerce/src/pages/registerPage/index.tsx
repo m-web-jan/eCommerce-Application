@@ -138,13 +138,13 @@ export const RegisterPage = () => {
         />
       )}
       <FormField action="#" onSubmit={handleSubmit}>
-        <h1>Register</h1>
+        <h1>Зарегистрироваться</h1>
         <p>
-          Already have an account?<StyledLink to={'/login'}>Login</StyledLink>
+          У вас уже есть аккаунт?<StyledLink to={'/login'}>Авторизироваться</StyledLink>
         </p>
         <Input
           type="text"
-          placeholder="email"
+          placeholder="почта"
           value={states.email}
           onChange={handleChangeEmail}
           required={true}
@@ -152,7 +152,7 @@ export const RegisterPage = () => {
         <ErrorMsg>{states.emailError}</ErrorMsg>
         <Input
           type={states.showPassword ? 'text' : 'password'}
-          placeholder="password"
+          placeholder="пароль"
           value={states.password}
           onChange={handleChangePassword}
           required={true}
@@ -165,14 +165,14 @@ export const RegisterPage = () => {
               changeState('setShowPassword', !states.showPassword);
             }}
           />
-          show
+          показать
         </Label>
         <ErrorMsg>{states.passwordError}</ErrorMsg>
         <TwoInRow>
           <ErrorMsg>
             <Input
               type="text"
-              placeholder="name"
+              placeholder="имя"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setName', event.target.value);
                 changeState('setNameError', validateField(event.target.value));
@@ -184,7 +184,7 @@ export const RegisterPage = () => {
           <ErrorMsg>
             <Input
               type="text"
-              placeholder="lastname"
+              placeholder="фамилия"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setLastname', event.target.value);
                 changeState('setLastnameError', validateField(event.target.value));
@@ -195,7 +195,7 @@ export const RegisterPage = () => {
           </ErrorMsg>
         </TwoInRow>
         <TwoInRow>
-          <p>Date of birth:</p>
+          <p>Дата рождения:</p>
           <ErrorMsg>
             <Input
               type="date"
@@ -207,12 +207,12 @@ export const RegisterPage = () => {
             {states.dobError}
           </ErrorMsg>
         </TwoInRow>
-        <h2>Shipping address</h2>
+        <h2>Адрес доставки</h2>
         <TwoInRow>
           <ErrorMsg>
             <Input
               type="text"
-              placeholder="street"
+              placeholder="улица"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setStreet', event.target.value);
                 changeState('setStreetError', validateStreet(event.target.value));
@@ -225,7 +225,7 @@ export const RegisterPage = () => {
           <ErrorMsg>
             <Input
               type="text"
-              placeholder="city"
+              placeholder="город"
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setCity', event.target.value);
                 changeState('setcityError', validateField(event.target.value));
@@ -240,7 +240,7 @@ export const RegisterPage = () => {
           <ErrorMsg>
             <Input
               type="text"
-              placeholder="postal code"
+              placeholder="почтовый индекс"
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState(
@@ -280,7 +280,7 @@ export const RegisterPage = () => {
               changeState('setDefaultShippingAddress', !states.asDefaultShipping);
             }}
           />
-          Default shipping address
+          Основной адрес доставки
         </Label>
         <Label>
           <Input
@@ -291,15 +291,15 @@ export const RegisterPage = () => {
               changeBillingAddres();
             }}
           />
-          Same address for billing and shipping
+          Одинаковый адрес для счетов и доставки.
         </Label>
-        <h2>Billing address</h2>
+        <h2>Адрес для счетов</h2>
         <TwoInRow>
           <ErrorMsg>
             <Input
               disabled={states.sameAddresses}
               type="text"
-              placeholder="street"
+              placeholder="улица"
               value={states.street2}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setStreet2', event.target.value);
@@ -313,7 +313,7 @@ export const RegisterPage = () => {
             <Input
               disabled={states.sameAddresses}
               type="text"
-              placeholder="city"
+              placeholder="город"
               value={states.city2}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 changeState('setCity2', event.target.value);
@@ -329,7 +329,7 @@ export const RegisterPage = () => {
             <Input
               disabled={states.sameAddresses}
               type="text"
-              placeholder="postal code"
+              placeholder="почтовый индекс"
               value={states.postalCode2}
               required={true}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -369,9 +369,9 @@ export const RegisterPage = () => {
               changeState('setDefaultBillingAddress', !states.asDefaultBilling);
             }}
           />
-          Default billing address
+          Основной адрес счетов
         </Label>
-        <Button type="submit" text="Create account" disabled={!isFormValid()} />
+        <Button type="submit" text="Создать аккаунт" disabled={!isFormValid()} />
       </FormField>
     </div>
   );

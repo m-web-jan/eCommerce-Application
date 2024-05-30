@@ -1,5 +1,5 @@
 export const ProfilePage = () => {
   return (
-    <h1>Profile page</h1>
+    <h1>Страница профиля</h1>
   )
 }
