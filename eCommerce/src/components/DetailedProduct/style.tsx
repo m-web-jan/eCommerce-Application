@@ -5,9 +5,15 @@ export const DetailedProductBlock = styled.div`
   margin: 0 auto;
   display: flex;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const ProductSlider = styled.div`
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   width: 50%;
   display: flex;
   justify-content: center;
@@ -60,6 +66,10 @@ export const SliderImage = styled.img`
 `;
 
 export const ProductContent = styled.div`
+  @media (max-width: 768px) {
+    width: calc(100% - 2rem);
+    padding: 1rem;
+  }
   width: 50%;
   background-color: black;
   color: white;
@@ -96,12 +106,28 @@ export const OldPrice = styled.span`
   color: gray;
   text-decoration: line-through;
 `;
+export const RadioLabel = styled.label`
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  display: flex;
+
+  background-color: ${(props) => props.color};
+  color: ${(props) => props.color};
+`;
 export const ProductOptions = styled.div`
   width: 250px;
   background-color: white;
   margin-top: 1.5rem;
   padding: 1rem 0.5rem;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
   .colors {
     display: flex;
     align-items: center;
@@ -112,34 +138,23 @@ export const ProductOptions = styled.div`
       font-weight: 500;
       margin-right: 3rem;
     }
-    label {
-      width: 20px;
-      height: 20px;
-      border-radius: 20px;
-      box-shadow: inset 0 0 4px 0 rgba(0, 0, 0, 0.5);
-      cursor: pointer;
-      position: relative;
-      z-index: 2;
+    span {
+      display: flex;
     }
     input[type='radio'] {
       opacity: 0;
       width: 12px;
     }
-    input[type='radio']:checked + label::before {
-      content: '';
-      width: 100%;
-      height: 3px;
-      position: absolute;
-      background-color: black;
-      bottom: -8px;
-      left: 0;
-      /* z-index: 1; */
+    input[type='radio']:checked + label {
+      background-color: ${(props) => props.color};
+      box-shadow:
+        0 0 0 2px white,
+        0 0 0 4px;
     }
   }
   .sizes {
     display: flex;
     align-items: center;
-    margin-top: 1rem;
     h2 {
       color: black;
       margin: 0;
