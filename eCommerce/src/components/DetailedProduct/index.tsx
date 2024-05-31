@@ -14,15 +14,19 @@ import {
   SliderNav,
 } from './style';
 import { getProductImages } from './getImages';
+import { getTypeById } from '../../api/getTypeById';
 
 export const DetailedProduct = ({ ...props }) => {
   const [productData, setProductData] = useState<ICurrent | null>(null);
+  const [productType, setProductType] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getProductByKey(props.productKey);
+        const [data, id] = await getProductByKey(props.productKey);
         setProductData(data);
+        const typeData = await getTypeById(id);
+        setProductType(typeData);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -62,7 +66,6 @@ export const DetailedProduct = ({ ...props }) => {
   const productCurrency = productData?.masterVariant.prices[0]?.value.currencyCode;
 
   const imagesUrls = getProductImages(productData);
-
   return (
     <DetailedProductBlock>
       <ProductSlider>
@@ -80,7 +83,7 @@ export const DetailedProduct = ({ ...props }) => {
         <img onClick={() => {turnSlides('right')}} src="../icons/arrow.png" alt="arrowIcon" className='rightArrow' />
       </ProductSlider>
       <ProductContent>
-        <p>Шлема</p>
+        <p>{productType}</p>
         <h1>{productData?.name.ru}</h1>
         <h2>Цена:</h2>
         <ProductPrice>

@@ -11,6 +11,6 @@ export const getProductByKey = async (productKey: string) => {
       Authorization: `Bearer ${authToken}`,
     },
   });
-  return response.data.masterData.current;
+  return [response.data.masterData.current, response.data.productType.id];
 };
 
