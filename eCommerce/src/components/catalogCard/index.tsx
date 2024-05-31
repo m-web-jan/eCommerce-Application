@@ -15,12 +15,15 @@ const Card = styled(Link)`
   img {
     width: 100%;
     height: 50%;
+    object-fit: contain;
   }
 `;
 const CardContent = styled.div`
   padding: 1rem;
   p {
     margin-top: 1rem;
+    max-height: 110px;
+    overflow: hidden;
   }
 `;
 const Price = styled.p`
@@ -45,9 +48,9 @@ const Price = styled.p`
 `;
 
 export const ProductCard = ( {...props} ) => {
-  let price = (props.cardData.masterVariant.prices[0].value.centAmount / 100).toFixed(2);
-  let newPrice = (props.cardData.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
-  let currency = props.cardData.masterVariant.prices[0].value.currencyCode;
+  let price = (props.cardData?.masterVariant.prices[0]?.value.centAmount / 100).toFixed(2);
+  let newPrice = (props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
+  let currency = props.cardData?.masterVariant.prices[0]?.value.currencyCode;
 
   return (
     <Card to={props.link}>

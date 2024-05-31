@@ -120,7 +120,7 @@ interface IMasterData {
   published: boolean;
 }
 
-interface ICurrent {
+export interface ICurrent {
   name: IText;
   categories: [];
   description: IText;
@@ -142,7 +142,7 @@ interface IVariants {
   images: IImages[];
 }
 interface IPrices {
-  discount: IValue;
+  discounted: {value: IValue};
   value: IValue;
 }
 interface IValue {
