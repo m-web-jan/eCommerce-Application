@@ -37,10 +37,10 @@ export const DetailedProduct = ({ ...props }) => {
     const imageCount = imagesUrls.length - 1;
 
     if (direction ==='left') {
-      currentImg = currentImg == 0 ? 0 : currentImg + 1;
+      currentImg = currentImg == 0 ? -imageCount : currentImg + 1;
       firstImg.style.marginLeft = `${currentImg * 280}px`;
     } else {
-      currentImg = currentImg == -imageCount ? -imageCount : currentImg - 1;
+      currentImg = currentImg == -imageCount ? 0 : currentImg - 1;
       firstImg.style.marginLeft = `${currentImg * 280}px`;
     }
     changeActiveImg();
