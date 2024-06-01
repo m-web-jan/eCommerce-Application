@@ -115,7 +115,6 @@ export const RadioLabel = styled.label`
   position: relative;
   z-index: 2;
   display: flex;
-
   background-color: ${(props) => props.color};
   color: ${(props) => props.color};
 `;
@@ -181,27 +180,6 @@ export const ProductOptions = styled.div`
       background-color: black;
       bottom: -5px;
       left: -25%;
-    }
-  }
-`;
-
-export const AddButton = styled.div`
-  margin-top: 3rem;
-  text-align: center;
-  padding: 10px 0;
-  font-size: 16px;
-  font-weight: 500;
-  background-color: white;
-  border-radius: 50px;
-  color: black;
-  border: 2px solid white;
-  transition: 0.3s;
-  cursor: pointer;
-  @media (hover: hover) {
-    &:hover {
-      color: white;
-      background-color: black;
-      transition: 0.3s;
     }
   }
 `;

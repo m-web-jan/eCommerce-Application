@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { getProductByKey } from '../../api/getProductByKey';
 import { ICurrent } from '../../types';
 import {
-  AddButton,
   DetailedProductBlock,
   OldPrice,
   ProductContent,
@@ -18,6 +17,7 @@ import { getProductImages } from './getImages';
 import { getTypeById } from '../../api/getTypeById';
 import { turnSlides } from './turnSlider';
 import { getProductColors, getProductSizes } from './getAttributes';
+import { AddCartButton } from '../addButton';
 
 export const DetailedProduct = ({ ...props }) => {
   const [productData, setProductData] = useState<ICurrent | null>(null);
@@ -123,7 +123,7 @@ export const DetailedProduct = ({ ...props }) => {
             ))}
           </div>
         </ProductOptions>
-        <AddButton>Добавить в корзину</AddButton>
+        <AddCartButton text="Добавить в корзину" />
       </ProductContent>
     </DetailedProductBlock>
   );
