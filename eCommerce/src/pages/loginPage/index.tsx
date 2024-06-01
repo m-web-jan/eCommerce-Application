@@ -74,7 +74,7 @@ export const LoginPage = () => {
         </p>
         <Input
           type="text"
-          placeholder="email"
+          placeholder="почта"
           value={states.email}
           onChange={handleChangeEmail}
           required={true}
@@ -82,7 +82,7 @@ export const LoginPage = () => {
         <ErrorMsg>{states.emailError}</ErrorMsg>
         <Input
           type={states.showPassword ? 'text' : 'password'}
-          placeholder="password"
+          placeholder="пароль"
           value={states.password}
           onChange={handleChangePassword}
           required={true}

@@ -1,10 +1,15 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { AddCartButton } from '../addButton';
 
 const Card = styled(Link)`
   &:hover {
     transition: .3s;
     box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
+    button {
+      background-color: white;
+      color: black;
+    }
   }
   transition: .3s;
   display: block;
@@ -15,12 +20,25 @@ const Card = styled(Link)`
   img {
     width: 100%;
     height: 50%;
+    object-fit: contain;
+  }
+  position: relative;
+  button {
+    margin-top: 0;
+    background-color: black;
+    color: white;
+    border-color: black;
+    position: absolute;
+    bottom: 16px;
+    width: calc(100% - 32px);
   }
 `;
 const CardContent = styled.div`
   padding: 1rem;
   p {
     margin-top: 1rem;
+    max-height: 110px;
+    overflow: hidden;
   }
 `;
 const Price = styled.p`
@@ -45,9 +63,9 @@ const Price = styled.p`
 `;
 
 export const ProductCard = ( {...props} ) => {
-  let price = (props.cardData.masterVariant.prices[0].value.centAmount / 100).toFixed(2);
-  let newPrice = (props.cardData.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
-  let currency = props.cardData.masterVariant.prices[0].value.currencyCode;
+  let price = (props.cardData?.masterVariant.prices[0]?.value.centAmount / 100).toFixed(2);
+  let newPrice = (props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
+  let currency = props.cardData?.masterVariant.prices[0]?.value.currencyCode;
 
   return (
     <Card to={props.link}>
@@ -63,6 +81,7 @@ export const ProductCard = ( {...props} ) => {
       <CardContent>
         <h2>{props.cardData.name.ru}</h2>
         <p>{props.cardData.description.ru}</p>
+      <AddCartButton text="Добавить в корзину" />
       </CardContent>
     </Card>
   );

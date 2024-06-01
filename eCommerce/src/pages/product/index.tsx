@@ -1,5 +1,13 @@
+import { useParams } from "react-router-dom";
+import { StyledContainer } from "./style";
+import { DetailedProduct } from "../../components/DetailedProduct";
+
 export const ProductPage = () => {
+  const { productKey } = useParams<{ productKey: string }>();
+
   return (
-    <h1>Product page</h1>
+    <StyledContainer>
+      <DetailedProduct productKey={productKey} />
+    </StyledContainer>
   )
 }
