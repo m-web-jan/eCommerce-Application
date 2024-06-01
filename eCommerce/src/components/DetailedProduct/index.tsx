@@ -17,7 +17,7 @@ import {
 import { getProductImages } from './getImages';
 import { getTypeById } from '../../api/getTypeById';
 import { turnSlides } from './turnSlider';
-import { getProductColors } from './getAttributes';
+import { getProductColors, getProductSizes } from './getAttributes';
 
 export const DetailedProduct = ({ ...props }) => {
   const [productData, setProductData] = useState<ICurrent | null>(null);
@@ -45,7 +45,8 @@ export const DetailedProduct = ({ ...props }) => {
   const productCurrency = productData?.masterVariant.prices[0]?.value.currencyCode;
   const imagesUrls = getProductImages(productData);
   const colors = getProductColors(productData);
-  console.log(colors);
+  const sizes = getProductSizes(productData);
+  console.log(sizes);
 
   return (
     <DetailedProductBlock>
@@ -102,7 +103,7 @@ export const DetailedProduct = ({ ...props }) => {
         </ProductPrice>
         <h2>Описание товара:</h2>
         <h3>{productData?.description.ru}</h3>
-        <ProductOptions>
+        <ProductOptions style={{ display: `${(sizes[0] && colors[0]) ? 'flex' : 'none'}` }}>
           <div className="colors" style={{ display: `${colors[0] ? 'flex' : 'none'}` }}>
             <h2>Цвет:</h2>
             {colors.map((color, index) => (
@@ -112,16 +113,14 @@ export const DetailedProduct = ({ ...props }) => {
               </span>
             ))}
           </div>
-          <div className="sizes">
+          <div className="sizes" style={{ display: `${sizes[0] ? 'flex' : 'none'}` }}>
             <h2>Размер:</h2>
-            <input name="size" type="radio" id="s1" />
-            <label htmlFor="s1">S</label>
-            <input name="size" type="radio" id="s2" />
-            <label htmlFor="s2">M</label>
-            <input name="size" type="radio" id="s3" />
-            <label htmlFor="s3">L</label>
-            <input name="size" type="radio" id="s4" />
-            <label htmlFor="s4">XL</label>
+            {sizes.map((size, index) => (
+              <span key={index}>
+                <input name="size" type="radio" id={`s${index}`} />
+                <label htmlFor={`s${index}`}>{size}</label>
+              </span>
+            ))}
           </div>
         </ProductOptions>
         <AddButton>Добавить в корзину</AddButton>
