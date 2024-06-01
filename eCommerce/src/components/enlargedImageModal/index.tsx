@@ -32,8 +32,9 @@ const StyledModal = styled.div`
       display: flex;
       img {
         transition: 0.3s;
-        width: 100%;
-        height: fit-content;
+        width: 450px;
+        height: auto;
+        flex-shrink: 0;
       }
     }
   }
