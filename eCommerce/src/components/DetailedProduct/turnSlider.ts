@@ -1,5 +1,4 @@
-let currentImg = 0;
-export const turnSlides = (imagesUrls: string[], direction: 'left' | 'right') => {
+export const turnSlides = (imagesUrls: string[], direction: 'left' | 'right', currentImg = 0) => {
   const sliderImages = document.querySelector('#sliderImages') as HTMLElement;
   const firstImg = sliderImages.querySelector('img') as HTMLImageElement;
   const imageCount = imagesUrls.length - 1;
@@ -11,13 +10,12 @@ export const turnSlides = (imagesUrls: string[], direction: 'left' | 'right') =>
     currentImg = currentImg == -imageCount ? 0 : currentImg - 1;
     firstImg.style.marginLeft = `${currentImg * 280}px`;
   }
-  changeActiveImg();
-};
 
-const changeActiveImg = () => {
   const indicates = document.querySelectorAll('li');
   for (let i = 0; i < indicates.length; i++) {
     indicates[i].classList.remove('active');
   }
   indicates[-currentImg].classList.add('active');
+
+  return currentImg;
 };

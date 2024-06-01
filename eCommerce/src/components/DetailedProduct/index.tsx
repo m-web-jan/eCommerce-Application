@@ -18,10 +18,13 @@ import { getTypeById } from '../../api/getTypeById';
 import { turnSlides } from './turnSlider';
 import { getProductColors, getProductSizes } from './getAttributes';
 import { AddCartButton } from '../addButton';
+import { ImageModal } from '../enlargedImageModal';
 
 export const DetailedProduct = ({ ...props }) => {
   const [productData, setProductData] = useState<ICurrent | null>(null);
   const [productType, setProductType] = useState('');
+  const [currentImage, setCurrentImage] = useState(0);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,12 +49,12 @@ export const DetailedProduct = ({ ...props }) => {
   const imagesUrls = getProductImages(productData);
   const colors = getProductColors(productData);
   const sizes = getProductSizes(productData);
-  console.log(sizes);
 
   return (
     <DetailedProductBlock>
+      <ImageModal images={imagesUrls} open={openModal} setOpenModal={setOpenModal} />
       <ProductSlider>
-        <SliderImages id="sliderImages">
+        <SliderImages id="sliderImages" onClick={() => {setOpenModal(!openModal)}}>
           {imagesUrls.map((url, index) => (
             <SliderImage key={index} src={url} />
           ))}
@@ -63,7 +66,7 @@ export const DetailedProduct = ({ ...props }) => {
         </SliderNav>
         <img
           onClick={() => {
-            turnSlides(imagesUrls, 'left');
+            setCurrentImage(turnSlides(imagesUrls, 'left', currentImage));
           }}
           src="../icons/arrow.png"
           alt="arrowIcon"
@@ -71,7 +74,7 @@ export const DetailedProduct = ({ ...props }) => {
         />
         <img
           onClick={() => {
-            turnSlides(imagesUrls, 'right');
+            setCurrentImage(turnSlides(imagesUrls, 'right', currentImage));
           }}
           src="../icons/arrow.png"
           alt="arrowIcon"

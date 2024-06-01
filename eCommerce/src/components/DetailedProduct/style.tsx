@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 export const DetailedProductBlock = styled.div`
   width: 75%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
   margin: 0 auto;
   display: flex;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
@@ -42,6 +45,9 @@ export const SliderNav = styled.ol`
   display: flex;
   column-gap: 1rem;
   margin: 5rem auto 0 auto;
+  @media (max-width: 768px) {
+    margin: 2rem auto 2rem auto;
+  }
   li {
     width: 35px;
     height: 5px;
@@ -52,6 +58,7 @@ export const SliderNav = styled.ol`
   }
 `;
 export const SliderImages = styled.div`
+  cursor: pointer;
   display: flex;
   overflow: hidden;
   max-width: 250px;
@@ -119,7 +126,7 @@ export const RadioLabel = styled.label`
   color: ${(props) => props.color};
 `;
 export const ProductOptions = styled.div`
-  width: 250px;
+  max-width: 250px;
   background-color: white;
   margin-top: 1.5rem;
   padding: 1rem 0.5rem;
@@ -160,6 +167,12 @@ export const ProductOptions = styled.div`
       align-self: center;
       font-weight: 500;
       margin-right: 1.5rem;
+      @media (max-width: 768px) {
+        margin: 0;
+      }
+    }
+    span {
+      display: flex;
     }
     label {
       font-size: 16px;
