@@ -11,16 +11,19 @@ export const updateCustomerData = async (
 ) => {
   const emailToken = getCookie('emailToken');
 
-  const response = await publicInstance.post(
-    `${CTP_API_URL}/${CTP_PROJECT_KEY}/customers/${id}`,
-    requestData,
-    {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${emailToken}`,
-      },
-    }
-  );
-
-  return response.data;
+  try {
+    const response = await publicInstance.post(
+      `${CTP_API_URL}/${CTP_PROJECT_KEY}/customers/${id}`,
+      requestData,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${emailToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch(e) {
+    return e;
+  }
 };

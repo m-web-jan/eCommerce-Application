@@ -5,6 +5,7 @@ import { RootState } from '../../types';
 import { MouseEvent, useState } from 'react';
 import { validateDob, validateEmail, validateField } from '../../pages/registerPage/validations';
 import { updatePersonalData } from './updateData.tsx';
+import { SuccessModal } from '../alertModal/index.tsx';
 
 export const UserPageContainer = ({ ...props }) => {
   const [isChanging1, setIsChanging1] = useState(false);
@@ -48,6 +49,9 @@ export const UserPageContainer = ({ ...props }) => {
 
   return (
     <UserPageStyled>
+      {states.showModal && (
+        <SuccessModal title='MotoMax' message={states.modalMessage} onClose={() => {changeState('setShowModal', !states.showModal)}} buttonText='Закрыть' />
+      )}
       <StyledTitle>Мой Профиль</StyledTitle>
       <ContentBlock>
         <div className="row">

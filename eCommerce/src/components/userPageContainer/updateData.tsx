@@ -31,6 +31,7 @@ export async function updatePersonalData(
       },
     ],
   };
+
   const response = await updateCustomerData(id, requestData);
 
   const requestEmailData = {
@@ -42,9 +43,17 @@ export async function updatePersonalData(
       },
     ],
   };
+
   const emailResponse = await updateEmail(id, requestEmailData);
 
   changeState('setVersion', emailResponse?.version);
+  if (response?.version > 0 && emailResponse?.version > 0) {
+    changeState('setModalMessage', 'Данные успешно обновлены');
+    changeState('setShowModal', true);
+  } else {
+    changeState('setModalMessage', emailResponse?.message);
+    changeState('setShowModal', true);
+  }
 }
 
 export interface IRequestData {
