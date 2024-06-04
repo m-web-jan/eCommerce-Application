@@ -1,16 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ContentBlock, StyledText, StyledTitle, UserPageStyled } from './style';
 import { RootState } from '../../types';
 
-export const UserPageContainer = ({ ...props }) => {
+export const UserPageContainer = () => {
   const countries = ['RU', 'BY', 'UK'];
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const profileSelector = (state: RootState) => state.profile;
 
   const states = useSelector((state: RootState) => profileSelector(state));
-  function changeState(type: string, value: string | boolean) {
-    dispatch({ type: type, payload: value });
-  }
+  // function changeState(type: string, value: string | boolean) {
+  //   dispatch({ type: type, payload: value });
+  // }
 
   console.log(states);
 

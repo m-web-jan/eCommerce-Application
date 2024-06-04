@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { getCustomerData } from '../../api/getCustomerDetails';
 import { UserPageContainer } from '../../components/userPageContainer';
-import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../../types';
+import { useDispatch } from 'react-redux';
 
 export const ProfilePage = () => {
   useEffect(() => {
@@ -32,8 +31,6 @@ export const ProfilePage = () => {
   }, []);
 
   const dispatch = useDispatch();
-  // const profileSelector = (state: RootState) => state.profile;
-  // const states = useSelector((state: RootState) => profileSelector(state));
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
   }

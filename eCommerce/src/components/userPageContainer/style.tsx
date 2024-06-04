@@ -4,6 +4,9 @@ export const UserPageStyled = styled.div`
   max-width: 600px;
   padding: 3rem 2rem;
   margin: 0 auto;
+  @media (max-width: 768px) {
+    padding: 2rem 1rem;
+  }
 `;
 
 export const StyledTitle = styled.h2`
@@ -22,6 +25,11 @@ export const ContentBlock = styled.div`
   border-radius: 10px;
   margin-top: 2rem;
   .row {
+    @media (max-width: 768px) {
+      &:not(:nth-child(1)) {
+        flex-direction: column;
+      }
+    }
     display: flex;
     column-gap: 2rem;
     &:not(:nth-child(1)) {
@@ -39,10 +47,14 @@ export const ContentBlock = styled.div`
         row-gap: 0.5rem;
         font-size: 1rem;
       }
-      input, select {
+      input,
+      select {
         padding: 5px 10px;
         outline: none;
         min-width: 220px;
+        @media (max-width: 768px) {
+          min-width: 120px;
+        }
       }
     }
   }
@@ -58,6 +70,13 @@ export const ContentBlock = styled.div`
       cursor: pointer;
       padding-right: 20px;
       user-select: none;
+    }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      label {
+        align-self: auto;
+        padding: 0;
+      }
     }
   }
 `;
