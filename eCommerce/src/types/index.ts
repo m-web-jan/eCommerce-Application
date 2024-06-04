@@ -157,6 +157,7 @@ interface IImages {
 }
 
 export interface IUserData {
+  version: string;
   firstName: string;
   lastName: string;
   email: string;

@@ -1,19 +1,50 @@
 // import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ContentBlock, StyledText, StyledTitle, UserPageStyled } from './style';
 import { RootState } from '../../types';
+import { MouseEvent, useState } from 'react';
+import { validateDob, validateEmail, validateField } from '../../pages/registerPage/validations';
+import { updatePersonalData } from './updateData.tsx';
 
-export const UserPageContainer = () => {
+export const UserPageContainer = ({ ...props }) => {
+  const [isChanging1, setIsChanging1] = useState(false);
   const countries = ['RU', 'BY', 'UK'];
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const profileSelector = (state: RootState) => state.profile;
+  const registerSelector = (state: RootState) => state.register;
 
   const states = useSelector((state: RootState) => profileSelector(state));
-  // function changeState(type: string, value: string | boolean) {
-  //   dispatch({ type: type, payload: value });
-  // }
+  const stateErrors = useSelector((state: RootState) => registerSelector(state));
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
 
-  console.log(states);
+  function changeData(e: MouseEvent<HTMLButtonElement>) {
+    const buttonElement = e.target as HTMLButtonElement;
+    if (!isChanging1) {
+      buttonElement.innerText = 'Сохранить';
+      setIsChanging1(!isChanging1);
+    } else {
+      if (
+        !stateErrors.nameError &&
+        !stateErrors.emailError &&
+        !stateErrors.lastnameError &&
+        !stateErrors.dobError
+      ) {
+        buttonElement.innerText = 'Изменить';
+        updatePersonalData(
+          states?.email,
+          states?.firstName,
+          states?.lastName,
+          states?.dateOfBirth,
+          props.id,
+          states?.version,
+          dispatch
+        );
+        setIsChanging1(!isChanging1);
+      }
+    }
+  }
 
   return (
     <UserPageStyled>
@@ -30,33 +61,82 @@ export const UserPageContainer = () => {
       </ContentBlock>
 
       <ContentBlock>
-        <StyledTitle>Личные данные</StyledTitle>
+        <div className="top-row">
+          <StyledTitle>Личные данные</StyledTitle>
+          <button
+            onClick={(e) => {
+              changeData(e);
+            }}
+          >
+            Изменить
+          </button>
+        </div>
         <div className="row">
           <div className="content">
             <label htmlFor="name">
               Имя
-              <input type="text" id="name" value={states?.firstName} />
+              <input
+                disabled={isChanging1 ? false : true}
+                type="text"
+                id="name"
+                value={states?.firstName}
+                onChange={(e) => {
+                  changeState('setProfileName', e.target.value);
+                  changeState('setNameError', validateField(e.target.value));
+                }}
+              />
+              <span className="error">{stateErrors.nameError}</span>
             </label>
             <label htmlFor="mail">
               Почта
-              <input type="email" id="mail" value={states?.email} />
+              <input
+                disabled={isChanging1 ? false : true}
+                type="email"
+                id="mail"
+                value={states?.email}
+                onChange={(e) => {
+                  changeState('setProfileEmail', e.target.value);
+                  validateEmail(e.target.value, dispatch);
+                }}
+              />
+              <span className="error">{stateErrors.emailError}</span>
             </label>
           </div>
           <div className="content">
             <label htmlFor="lastName">
               Фамилия
-              <input type="text" id="lastName" value={states?.lastName} />
+              <input
+                disabled={isChanging1 ? false : true}
+                type="text"
+                id="lastName"
+                value={states?.lastName}
+                onChange={(e) => {
+                  changeState('setProfileLastname', e.target.value);
+                  changeState('setLastnameError', validateField(e.target.value));
+                }}
+              />
+              <span className="error">{stateErrors.lastnameError}</span>
             </label>
             <label htmlFor="dateOfBirth">
               Дата рождения
-              <input type="date" id="dateOfBirth" value={states?.dateOfBirth} />
+              <input
+                disabled={isChanging1 ? false : true}
+                type="date"
+                id="dateOfBirth"
+                value={states?.dateOfBirth}
+                onChange={(e) => {
+                  changeState('setProfileDOB', e.target.value);
+                  changeState('setDobError', validateDob(e.target.value, dispatch));
+                }}
+              />
+              <span className="error">{stateErrors.dobError}</span>
             </label>
           </div>
         </div>
       </ContentBlock>
 
       <ContentBlock>
-        <div className="main-address">
+        <div className="top-row">
           <StyledTitle>Адрес доставки</StyledTitle>
           <label htmlFor="mainAddress1">
             <input type="checkbox" id="mainAddress1" checked={states?.default1} />
@@ -105,7 +185,7 @@ export const UserPageContainer = () => {
       </ContentBlock>
 
       <ContentBlock>
-        <div className="main-address">
+        <div className="top-row">
           <StyledTitle>Адрес для счетов</StyledTitle>
           <label htmlFor="mainAddress1">
             <input type="checkbox" id="mainAddress1" checked={states?.default2} />

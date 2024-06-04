@@ -1,4 +1,5 @@
 const initialState = {
+  version: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -21,6 +22,8 @@ const profileReducer = (
   action: { type: string; payload: string }
 ) => {
   switch (action.type) {
+    case 'setVersion':
+      return { ...state, version: action.payload };
     case 'setProfileName':
       return { ...state, firstName: action.payload };
     case 'setProfileLastname':

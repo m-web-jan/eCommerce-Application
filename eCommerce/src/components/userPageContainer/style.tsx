@@ -58,9 +58,33 @@ export const ContentBlock = styled.div`
       }
     }
   }
-  .main-address {
+  .error {
+    color: red;
+    font-size: 0.8rem;
+    max-width: 220px;
+  }
+  .top-row {
     display: flex;
     justify-content: space-between;
+    button {
+      align-self: flex-end;
+      background-color: black;
+      padding: 5px 32px;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 1px solid black;
+      @media (hover: hover) {
+        &:hover {
+          background-color: white;
+          color: black;
+          transition: 0.3s;
+        }
+      }
+    }
     label {
       min-width: 220px;
       display: flex;
