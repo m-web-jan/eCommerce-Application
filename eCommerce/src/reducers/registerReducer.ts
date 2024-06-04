@@ -53,6 +53,7 @@ const registerReducer = (state = initialState, action: { type: string; payload: 
     case 'setCountry':
       return { ...state, country: action.payload };
     case 'setEmailError':
+
       return { ...state, emailError: action.payload };
     case 'setPasswordError':
       return { ...state, passwordError: action.payload };

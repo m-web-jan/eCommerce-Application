@@ -1,14 +1,15 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { getCustomerData } from '../../api/getCustomerDetails';
 import { UserPageContainer } from '../../components/userPageContainer';
 import { useDispatch } from 'react-redux';
 
 export const ProfilePage = () => {
+  const [customerData, setCustomerData] = useState({ id: '', version: '' });
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getCustomerData();
-
+        setCustomerData(data);
         changeState('setProfileName', data.firstName);
         changeState('setProfileLastname', data.lastName);
         changeState('setProfileEmail', data.email);
@@ -23,6 +24,7 @@ export const ProfilePage = () => {
         changeState('setCountry2', data.addresses[1].country);
         changeState('setDefault1', data?.defaultShippingAddressId ? true : false);
         changeState('setDefault2', data?.defaultBillingAddressId ? true : false);
+        changeState('setVersion', data?.version);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -35,5 +37,7 @@ export const ProfilePage = () => {
     dispatch({ type: type, payload: value });
   }
 
-  return <UserPageContainer></UserPageContainer>;
+  return (
+    <UserPageContainer id={customerData.id}></UserPageContainer>
+  );
 };

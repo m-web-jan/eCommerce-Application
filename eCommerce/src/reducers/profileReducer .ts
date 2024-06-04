@@ -1,4 +1,5 @@
 const initialState = {
+  version: '',
   firstName: '',
   lastName: '',
   email: '',
@@ -14,6 +15,8 @@ const initialState = {
   country2: '',
   default1: false,
   default2: false,
+  showModal: false,
+  modalMessage: '',
 };
 
 const profileReducer = (
@@ -21,6 +24,12 @@ const profileReducer = (
   action: { type: string; payload: string }
 ) => {
   switch (action.type) {
+    case 'setModalMessage':
+      return { ...state, modalMessage: action.payload };
+    case 'setShowModal':
+      return { ...state, showModal: action.payload };
+    case 'setVersion':
+      return { ...state, version: action.payload };
     case 'setProfileName':
       return { ...state, firstName: action.payload };
     case 'setProfileLastname':
