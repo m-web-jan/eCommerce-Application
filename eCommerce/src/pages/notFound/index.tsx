@@ -17,7 +17,7 @@ export const NotFound = () => {
         <BlockImg src="../images/404Image.png" alt="Image" />
         <BlockContent>
           <Logo>
-            <img src="../icons/cart.png" alt="cart-icon" />
+            <img src="../icons/darkLogo.png" alt="cart-icon" />
             <h2>MotoMax</h2>
           </Logo>
           <Title>Упс! Кажется, ты заблудился!</Title>

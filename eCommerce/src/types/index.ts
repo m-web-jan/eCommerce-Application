@@ -27,6 +27,7 @@ export type IDraftAddress = {
 export interface RootState {
   auth: IAuthState;
   register: IRegisterState;
+  profile: IUserData;
 }
 
 interface IAuthState {
@@ -153,4 +154,30 @@ interface IValue {
 interface IImages {
   dimensions: { w: number; h: number };
   url: string;
+}
+
+export interface IUserData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  addresses: IAddress[];
+  dateOfBirth: string;
+  city1: string;
+  city2: string;
+  street1: string;
+  street2: string;
+  postalCode1: string;
+  postalCode2: string;
+  country1: string;
+  country2: string;
+  default1: boolean;
+  default2: boolean;
+}
+
+interface IAddress {
+  city: string;
+  country: string;
+  postalCode: string;
+  streetName: string;
+  id: string;
 }
