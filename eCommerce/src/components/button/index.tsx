@@ -10,10 +10,12 @@ const ButtonField = styled.button`
   transition: .3s;
   width: fit-content;
   margin: 0 auto;
-  &:hover {
-    background-color: black;
-    color: white;
-    transition: .3s;
+  @media (hover: hover) {
+    &:hover {
+      background-color: black;
+      color: white;
+      transition: .3s;
+    }
   }
   &:active {
     background-color: gray;

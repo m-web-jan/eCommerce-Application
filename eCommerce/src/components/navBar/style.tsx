@@ -93,8 +93,10 @@ export const StyledLink = styled(Link)`
     left: 50%;
     transform: translate(-50%);
   }
-  &:hover:after {
-    width: 100%;
+  @media (hover: hover) {
+    &:hover:after {
+      width: 100%;
+    }
   }
 `;
 

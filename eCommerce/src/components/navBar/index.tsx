@@ -59,7 +59,7 @@ export const NavBar = () => {
     <StyledHeader>
       <Container>
         <StyledLogo to={'/'}>
-          <img src="../../icons/lightCart.png" alt="logoIcon" />
+          <img src="../../icons/lightLogo.png" alt="logoIcon" />
           <h2>MotoMax</h2>
         </StyledLogo>
         <NavBarField>

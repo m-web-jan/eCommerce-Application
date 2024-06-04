@@ -39,18 +39,19 @@ export const BlockContent = styled.div`
 export const Logo = styled.div`
   display: flex;
   justify-content: center;
-  column-gap: 0.625rem;
+  column-gap: 0.5rem;
   img {
     align-self: center;
+    width: 30px;
   }
   h2 {
     align-self: center;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
   }
 `;
 
 export const Title = styled.h1`
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   text-align: center;
   margin-top: 6rem;
   width: 16rem;
@@ -60,16 +61,16 @@ export const Title = styled.h1`
 `;
 
 export const SubTitle = styled.p`
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 300;
   text-align: center;
-  margin-top: 1rem;
+  margin-top: .5rem;
   width: 16rem;
 `;
 
 export const StyledLink = styled(Link)`
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 1.5rem;
+  font-weight: 700;
   text-align: center;
   color: black;
   text-decoration: none;
@@ -104,7 +105,7 @@ export const MarginTop = styled.div`
 
 export const Code = styled.p`
   font-weight: 300;
-  font-size: 0.625rem;
+  font-size: 0.8rem;
   position: absolute;
   bottom: 1rem;
   left: 0;
