@@ -16,6 +16,7 @@ const initialState = {
   default1: false,
   default2: false,
   showModal: false,
+  showModalPassword: false,
   modalMessage: '',
 };
 
@@ -24,6 +25,8 @@ const profileReducer = (
   action: { type: string; payload: string }
 ) => {
   switch (action.type) {
+    case 'setShowModalPassword':
+      return { ...state, showModalPassword: action.payload };
     case 'setModalMessage':
       return { ...state, modalMessage: action.payload };
     case 'setShowModal':

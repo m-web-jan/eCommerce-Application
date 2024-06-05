@@ -157,6 +157,7 @@ interface IImages {
 }
 
 export interface IUserData {
+  showModalPassword: boolean;
   showModal: boolean;
   modalMessage: string;
   version: string;
