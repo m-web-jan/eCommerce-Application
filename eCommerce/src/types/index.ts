@@ -59,6 +59,8 @@ interface IRegisterState {
   lastnameError: string;
   streetError: string;
   cityError: string;
+  streetError2: string;
+  cityError2: string;
   postalCodeError: string;
   postalCodeError2: string;
   dobError: string;
