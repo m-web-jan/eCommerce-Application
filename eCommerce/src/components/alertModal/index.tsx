@@ -1,8 +1,8 @@
 import { Button } from '../button';
-
 import styled from 'styled-components';
 
 const StyleModal = styled.div`
+  z-index: 99;
   position: fixed;
   top: 0;
   left: 0;

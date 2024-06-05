@@ -19,11 +19,16 @@ export const StyledText = styled.p`
 `;
 
 export const ContentBlock = styled.div`
+  position: relative;
   font-size: 26px;
   padding: 1.5rem 1rem;
   box-shadow: 2.5px 2.5px 10px 2px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
   margin-top: 2rem;
+  button {
+    position: absolute;
+    right: 1rem;
+  }
   .row {
     @media (max-width: 768px) {
       &:not(:nth-child(1)) {
@@ -64,26 +69,12 @@ export const ContentBlock = styled.div`
     max-width: 220px;
   }
   .top-row {
+    margin-top: 0.5rem;
     display: flex;
     justify-content: space-between;
     button {
       align-self: flex-end;
-      background-color: black;
-      padding: 5px 32px;
-      border: none;
-      border-radius: 50px;
-      color: white;
-      font-size: 12px;
-      cursor: pointer;
-      transition: 0.3s;
-      border: 1px solid black;
-      @media (hover: hover) {
-        &:hover {
-          background-color: white;
-          color: black;
-          transition: 0.3s;
-        }
-      }
+      position: static;
     }
     label {
       min-width: 220px;

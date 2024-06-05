@@ -28,23 +28,29 @@ export const validateEmail = (value: string, dispatch: any) => {
   changeState('setEmailError', '');
 };
 
-export const validatePassword = (value: string, dispatch: any) => {
+export const validatePassword = (value: string, dispatch?: any) => {
   function changeState(type: string, value: string | boolean) {
-    dispatch({ type: type, payload: value });
+    if (dispatch) {
+      dispatch({ type: type, payload: value });
+    }
   }
   const trimmedValue = value.trim();
   const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
   if (trimmedValue.length < 8) {
     changeState('setPasswordError', 'Пароль должен быть длиной не менее 8 символов');
+    return 'Пароль должен быть длиной не менее 8 символов';
   } else if (!passwordPattern.test(trimmedValue)) {
     changeState(
       'setPasswordError',
       'Пароль должен содержать хотя бы одну заглавную букву (A–Z), одну строчную букву (a–z), одну цифру (0–9) и может содержать специальные символы (!@#$%^&*).'
     );
+    return 'Пароль должен содержать хотя бы одну заглавную букву (A–Z), одну строчную букву (a–z), одну цифру (0–9) и может содержать специальные символы (!@#$%^&*).';
   } else if (value !== trimmedValue) {
     changeState('setPasswordError', 'Пароль не должен содержать пробелов в начале или в конце.');
+    return 'Пароль не должен содержать пробелов в начале или в конце.';
   } else {
     changeState('setPasswordError', '');
+    return '';
   }
 };
 

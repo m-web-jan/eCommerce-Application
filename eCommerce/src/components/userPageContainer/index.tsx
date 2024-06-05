@@ -1,4 +1,3 @@
-// import { useDispatch } from 'react-redux';
 import { useDispatch, useSelector } from 'react-redux';
 import { ContentBlock, StyledText, StyledTitle, UserPageStyled } from './style';
 import { RootState } from '../../types';
@@ -6,6 +5,8 @@ import { MouseEvent, useState } from 'react';
 import { validateDob, validateEmail, validateField } from '../../pages/registerPage/validations';
 import { updatePersonalData } from './updateData.tsx';
 import { SuccessModal } from '../alertModal/index.tsx';
+import { RoundedButton } from '../roundedButton/index.tsx';
+import { PasswordModal } from './changrPassword.tsx';
 
 export const UserPageContainer = ({ ...props }) => {
   const [isChanging1, setIsChanging1] = useState(false);
@@ -49,8 +50,16 @@ export const UserPageContainer = ({ ...props }) => {
 
   return (
     <UserPageStyled>
+      {states.showModalPassword && (<PasswordModal id={props.id} />)}
       {states.showModal && (
-        <SuccessModal title='MotoMax' message={states.modalMessage} onClose={() => {changeState('setShowModal', !states.showModal)}} buttonText='Закрыть' />
+        <SuccessModal
+          title="MotoMax"
+          message={states.modalMessage}
+          onClose={() => {
+            changeState('setShowModal', !states.showModal);
+          }}
+          buttonText="Закрыть"
+        />
       )}
       <StyledTitle>Мой Профиль</StyledTitle>
       <ContentBlock>
@@ -61,19 +70,24 @@ export const UserPageContainer = ({ ...props }) => {
             <StyledText>{states?.email}</StyledText>
             <StyledText>{states?.city1}</StyledText>
           </div>
+          <RoundedButton
+            onClick={() => {
+              changeState('setShowModalPassword', !states.showModalPassword);
+            }}
+            text="Изменить пароль"
+          />
         </div>
       </ContentBlock>
 
       <ContentBlock>
         <div className="top-row">
           <StyledTitle>Личные данные</StyledTitle>
-          <button
-            onClick={(e) => {
+          <RoundedButton
+            onClick={(e: MouseEvent<HTMLButtonElement>) => {
               changeData(e);
             }}
-          >
-            Изменить
-          </button>
+            text="Изменить"
+          />
         </div>
         <div className="row">
           <div className="content">
@@ -140,6 +154,12 @@ export const UserPageContainer = ({ ...props }) => {
       </ContentBlock>
 
       <ContentBlock>
+        <RoundedButton
+          onClick={(e: MouseEvent<HTMLButtonElement>) => {
+            changeData(e);
+          }}
+          text="Изменить"
+        />
         <div className="top-row">
           <StyledTitle>Адрес доставки</StyledTitle>
           <label htmlFor="mainAddress1">
