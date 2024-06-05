@@ -18,7 +18,7 @@ export const StyledText = styled.p`
   margin-bottom: 8px;
 `;
 
-export const ContentBlock = styled.div`
+export const ContentBlock = styled.form`
   position: relative;
   font-size: 26px;
   padding: 1.5rem 1rem;

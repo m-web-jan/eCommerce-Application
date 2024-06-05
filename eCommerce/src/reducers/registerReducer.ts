@@ -14,6 +14,8 @@ const initialState = {
   lastnameError: '',
   streetError: '',
   cityError: '',
+  streetError2: '',
+  cityError2: '',
   postalCodeError: '',
   postalCodeError2: '',
   dobError: '',
@@ -67,6 +69,10 @@ const registerReducer = (state = initialState, action: { type: string; payload: 
       return { ...state, streetError: action.payload };
     case 'setcityError':
       return { ...state, cityError: action.payload };
+    case 'setStreetError2':
+      return { ...state, streetError2: action.payload };
+    case 'setcityError2':
+      return { ...state, cityError2: action.payload };
     case 'setPostalCodeError':
       return { ...state, postalCodeError: action.payload };
     case 'setPostalCodeError2':
