@@ -49,10 +49,10 @@ export const NavBar = () => {
 
   const links = [
     { to: '/', text: 'Главная', hidden: false },
-    { to: '/login', text: 'Авторизоваться', hidden: states.isLogged },
-    { to: '/register', text: 'Зарегистрироваться', hidden: states.isLogged },
-    { to: '/catalog', text: 'Каталог', hidden: !states.isLogged },
+    { to: '/catalog', text: 'Каталог', hidden: false },
     { to: '/profile', text: 'Профиль', hidden: !states.isLogged },
+    { to: '/login', text: 'Войти', hidden: states.isLogged },
+    { to: '/register', text: 'Регистрация', hidden: states.isLogged },
   ];
 
   return (
@@ -90,22 +90,10 @@ export const NavBar = () => {
       >
         <div className="content">
           <MobMenuLogo to={'/'}>
-            <img src="../../icons/lightCart.png" alt="logoIcon" />
+            <img src="../../icons/lightLogo.png" alt="logoIcon" />
             <h2>MotoMax</h2>
           </MobMenuLogo>
           <div className="mob-menu__links">
-            {/* <StyledMobLink to={'/'}>
-              Main
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
-            <StyledMobLink to={'/login'}>
-              Login
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
-            <StyledMobLink to={'/register'}>
-              Register
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink> */}
             {links.map((link, index) => (
             <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
               {link.text}

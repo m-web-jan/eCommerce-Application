@@ -45,7 +45,7 @@ export const LogoutButton = styled.div`
     width: 2rem;
     height: 2rem;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 999px) {
     display: none;
   }
 `;
@@ -55,7 +55,6 @@ export const StyledLogo = styled(Link)`
   text-decoration: none;
   color: white;
   align-self: center;
-  padding: 1rem 0;
   h2 {
     align-self: center;
   }
@@ -69,7 +68,7 @@ export const NavBarField = styled.nav`
   display: flex;
   justify-content: center;
   column-gap: 2rem;
-  @media (max-width: 768px) {
+  @media (max-width: 999px) {
     display: none;
   }
 `;
@@ -107,7 +106,8 @@ export const BurgerIcon = styled.img`
   align-self: center;
   display: none;
   z-index: 11;
-  @media (max-width: 768px) {
+  padding: 1rem 0;
+  @media (max-width: 999px) {
     display: block;
   }
 `;
