@@ -48,7 +48,7 @@ export const CatalogPage = () => {
   ];
 
   return (
-    <Catalog isOpen={openCategoryMenu}>
+    <Catalog>
       <CatalogMenu isOpen={openCategoryMenu} onClick={() => {setOpenCategoryMenu(!openCategoryMenu)}}>
         <MenuLogo to="/">
           <img src="../../icons/lightLogo.png" alt="logoIcon" />

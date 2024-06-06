@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Catalog = styled.div<{ isOpen: boolean }>`
+export const Catalog = styled.div`
   .container {
     padding: 0 2rem;
     max-width: 90rem;
     margin: 0 auto;
     margin-left: 250px;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
     .categories {
       cursor: pointer;
+      user-select: none;
       display: none;
       margin-top: 20px;
       border-radius: 50px;
@@ -23,7 +27,6 @@ export const Catalog = styled.div<{ isOpen: boolean }>`
       .categories {
         display: block;
       }
-      margin-left: ${(props) => (props.isOpen ? '-252px' : '0')};
     }
     h1 {
       margin-top: 3rem;
