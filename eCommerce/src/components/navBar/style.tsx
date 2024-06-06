@@ -55,7 +55,6 @@ export const StyledLogo = styled(Link)`
   text-decoration: none;
   color: white;
   align-self: center;
-  padding: 1rem 0;
   h2 {
     align-self: center;
   }

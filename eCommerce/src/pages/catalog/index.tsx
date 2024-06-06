@@ -1,9 +1,9 @@
 import { IResult } from '../../types';
 import { useEffect, useState } from 'react';
 import { ProductCard } from '../../components/catalogCard';
-import { Catalog, CatalogCards } from './style';
+import { Catalog, CatalogCards, CatalogMenu, MenuLogo } from './style';
 import { allProducts } from '../../api/getAllProducts';
-
+import { getProductsByCategory } from '../../api/getCategory';
 
 export const CatalogPage = () => {
   const [catalogData, setCatalogData] = useState<IResult[] | null>(null);
@@ -13,7 +13,7 @@ export const CatalogPage = () => {
         const data = await allProducts();
         setCatalogData(data);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
       }
     };
     fetchData();
@@ -21,6 +21,19 @@ export const CatalogPage = () => {
 
   return (
     <Catalog>
+      <CatalogMenu>
+        <MenuLogo to="/">
+          <img src="../../icons/lightLogo.png" alt="logoIcon" />
+          <h2>MotoMax</h2>
+        </MenuLogo>
+        <p>Категории:</p>
+        <ul>
+          <li onClick={() => {getProductsByCategory('9b08692b-b2ec-4506-b0a1-8a2b759ba500')}}>Шлема</li>
+          <li>Комбинезоны</li>
+          <li>Боты</li>
+          <li>Аксессуары</li>
+        </ul>
+      </CatalogMenu>
       <div className="container">
         <h1>Шлемы для мотоциклистов</h1>
         <p>
@@ -31,13 +44,14 @@ export const CatalogPage = () => {
           подойдут именно вам.
         </p>
         <CatalogCards>
-          {catalogData && catalogData.map((card, index) => (
-            <ProductCard
-              key={index}
-              link={`/catalog/${card.key}`}
-              cardData={card.masterData.current}
+          {catalogData &&
+            catalogData.map((card, index) => (
+              <ProductCard
+                key={index}
+                link={`/catalog/${card.key}`}
+                cardData={card.masterData.current}
               />
-          ))}
+            ))}
         </CatalogCards>
       </div>
     </Catalog>
