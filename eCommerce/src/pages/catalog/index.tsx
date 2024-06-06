@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
-import { IResult, RootState } from '../../types';
-import { useNavigate } from 'react-router-dom';
+import { IResult } from '../../types';
 import { useEffect, useState } from 'react';
 import { ProductCard } from '../../components/catalogCard';
 import { Catalog, CatalogCards } from './style';
@@ -20,16 +18,6 @@ export const CatalogPage = () => {
     };
     fetchData();
   }, []);
-
-  const navigate = useNavigate();
-  const authSelector = (state: RootState) => state.auth;
-  const states = useSelector((state: RootState) => authSelector(state));
-  useEffect(() => {
-    if (!states.isLogged) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
 
   return (
     <Catalog>

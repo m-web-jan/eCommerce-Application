@@ -72,11 +72,11 @@ export const ProductCard = ( {...props} ) => {
       <img src={props.cardData.masterVariant.images[0]?.url} alt="productImage" />
       {newPrice !== 'NaN' ? (
         <Price>
-          <span>{`${price}${currency}`}</span>
-          <span>{`${newPrice}${currency}`}</span>
+          <span>{`${price} ${currency}`}</span>
+          <span>{`${newPrice} ${currency}`}</span>
         </Price>
       ) : (
-        <Price>{`${price}${currency}`}</Price>
+        <Price>{`${price} ${currency}`}</Price>
       )}
       <CardContent>
         <h2>{props.cardData.name.ru}</h2>
