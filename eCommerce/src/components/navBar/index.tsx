@@ -90,22 +90,10 @@ export const NavBar = () => {
       >
         <div className="content">
           <MobMenuLogo to={'/'}>
-            <img src="../../icons/lightCart.png" alt="logoIcon" />
+            <img src="../../icons/lightLogo.png" alt="logoIcon" />
             <h2>MotoMax</h2>
           </MobMenuLogo>
           <div className="mob-menu__links">
-            {/* <StyledMobLink to={'/'}>
-              Main
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
-            <StyledMobLink to={'/login'}>
-              Login
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
-            <StyledMobLink to={'/register'}>
-              Register
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink> */}
             {links.map((link, index) => (
             <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
               {link.text}
