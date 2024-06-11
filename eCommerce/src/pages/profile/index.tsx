@@ -38,6 +38,6 @@ export const ProfilePage = () => {
   }
 
   return (
-    <UserPageContainer id={customerData.id}></UserPageContainer>
+    <UserPageContainer id={customerData.id} />
   );
 };

@@ -27,16 +27,27 @@ export const ContentBlock = styled.form`
   margin-top: 2rem;
   button {
     position: absolute;
+    @media (max-width: 768px) {
+      position: static;
+    }
     right: 1rem;
   }
   .row {
     @media (max-width: 768px) {
+      flex-wrap: wrap;
+      button {
+        align-self: flex-end;
+        position: static !important;
+        flex: 1;
+      }
+      &:nth-child(1) {
+      }
       &:not(:nth-child(1)) {
         flex-direction: column;
       }
     }
     display: flex;
-    column-gap: 2rem;
+    gap: 2rem;
     &:not(:nth-child(1)) {
       justify-content: space-between;
     }

@@ -144,13 +144,13 @@ export const UserPageContainer = ({ ...props }) => {
 
       <ContentBlock onSubmit={(e) => {e.preventDefault()}}>
         <div className="top-row">
-          <StyledTitle>Личные данные</StyledTitle>
           <RoundedButton
             onClick={(e: MouseEvent<HTMLButtonElement>) => {
               changeData(e);
             }}
             text="Изменить"
           />
+          <StyledTitle>Личные данные</StyledTitle>
         </div>
         <div className="row">
           <div className="content">
