@@ -98,7 +98,7 @@ export const LoginPage = () => {
           показать
         </Label>
         <ErrorMsg>{states.passwordError}</ErrorMsg>
-        <Button type="submit" text="Login" />
+        <Button type="submit" text="Войти" />
       </FormField>
     </div>
   );
