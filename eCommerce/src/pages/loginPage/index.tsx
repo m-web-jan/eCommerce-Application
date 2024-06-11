@@ -9,20 +9,17 @@ import { getEmailToken } from '../../api/emailToken';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 import { validateEmail, validatePassword } from '../registerPage/validations';
-import { getCookie } from '../../api/cookie';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const emailToken = getCookie('emailToken');
-    if (emailToken) {
+    if (states.isLogged) {
       navigate('/');
     }
   }, [navigate]);
 
   const dispatch = useDispatch();
   const authSelector = (state: RootState) => state.auth;
-
   const states = useSelector((state: RootState) => authSelector(state));
 
   function changeState(type: string, value: string | boolean) {
@@ -51,6 +48,7 @@ export const LoginPage = () => {
       navigate('/');
       changeState('setEmail', '');
       changeState('setPassword', '');
+      changeState('setLogged', true);
     } catch (e: any) {
       changeState('setModalTitle', 'Login failed!');
       changeState('setModalMessage', e.response.data.message);
@@ -69,14 +67,14 @@ export const LoginPage = () => {
         />
       )}
       <FormField action="#" onSubmit={handleSubmit}>
-        <h1>login</h1>
+        <h1>Авторизация</h1>
         <p>
-          I don't have an account.
-          <StyledLink to={'/register'}>Register</StyledLink>
+          У меня нет аккаунта.
+          <StyledLink to={'/register'}>Зарегистрироваться</StyledLink>
         </p>
         <Input
           type="text"
-          placeholder="email"
+          placeholder="почта"
           value={states.email}
           onChange={handleChangeEmail}
           required={true}
@@ -84,7 +82,7 @@ export const LoginPage = () => {
         <ErrorMsg>{states.emailError}</ErrorMsg>
         <Input
           type={states.showPassword ? 'text' : 'password'}
-          placeholder="password"
+          placeholder="пароль"
           value={states.password}
           onChange={handleChangePassword}
           required={true}
@@ -97,10 +95,10 @@ export const LoginPage = () => {
               changeState('setShowPassword', !states.showPassword);
             }}
           />
-          show
+          показать
         </Label>
         <ErrorMsg>{states.passwordError}</ErrorMsg>
-        <Button type="submit" text="Login" />
+        <Button type="submit" text="Войти" />
       </FormField>
     </div>
   );

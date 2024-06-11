@@ -13,7 +13,7 @@ export const StyledHeader = styled.header`
     transition: opacity 0.6s ease-in-out;
   }
   .open {
-    z-index: 1;
+    z-index: 10;
     opacity: 1;
     & > div {
       right: 0;
@@ -45,7 +45,7 @@ export const LogoutButton = styled.div`
     width: 2rem;
     height: 2rem;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 999px) {
     display: none;
   }
 `;
@@ -55,7 +55,6 @@ export const StyledLogo = styled(Link)`
   text-decoration: none;
   color: white;
   align-self: center;
-  padding: 1rem 0;
   h2 {
     align-self: center;
   }
@@ -69,12 +68,13 @@ export const NavBarField = styled.nav`
   display: flex;
   justify-content: center;
   column-gap: 2rem;
-  @media (max-width: 768px) {
+  @media (max-width: 999px) {
     display: none;
   }
 `;
 
 export const StyledLink = styled(Link)`
+  display: ${(props) => (props.hidden ? 'inline' : 'none')};
   padding: 1rem 0;
   text-decoration: none;
   color: white;
@@ -92,8 +92,10 @@ export const StyledLink = styled(Link)`
     left: 50%;
     transform: translate(-50%);
   }
-  &:hover:after {
-    width: 100%;
+  @media (hover: hover) {
+    &:hover:after {
+      width: 100%;
+    }
   }
 `;
 
@@ -103,8 +105,9 @@ export const BurgerIcon = styled.img`
   height: 2rem;
   align-self: center;
   display: none;
-  z-index: 2;
-  @media (max-width: 768px) {
+  z-index: 11;
+  padding: 1rem 0;
+  @media (max-width: 999px) {
     display: block;
   }
 `;
@@ -119,7 +122,7 @@ export const MobMenu = styled.div`
   .content {
     position: fixed;
     top: 0;
-    width: 26rem;
+    width: 20rem;
     height: 100vh;
     background-color: #000000;
     color: white;
@@ -155,11 +158,11 @@ export const MobMenuLogo = styled(Link)`
 `;
 
 export const StyledMobLink = styled(Link)`
+  display: ${(props) => (props.hidden ? 'flex' : 'none')};
   text-decoration: none;
   color: white;
   font-size: 1.5rem;
   padding: 0.75rem 1rem;
-  display: flex;
   justify-content: space-between;
   border-bottom: 1px solid white;
   img {

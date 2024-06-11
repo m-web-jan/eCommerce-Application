@@ -14,16 +14,25 @@ import {
 } from './style';
 import { delCookie, getCookie } from '../../api/cookie';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../types';
 
 export const NavBar = () => {
+  const authSelector = (state: RootState) => state.auth;
+  const states = useSelector((state: RootState) => authSelector(state));
   const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  function changeState(type: string, value: string | boolean) {
+    dispatch({ type: type, payload: value });
+  }
 
   function logoutCustomer() {
     const emailToken = getCookie('emailToken');
     if (emailToken) {
       delCookie('emailToken');
       navigate('/');
+      changeState('setLogged', false);
     }
   }
 
@@ -38,24 +47,34 @@ export const NavBar = () => {
     if (!element.classList.contains('content') && isMenuOpen) showModal(burgerIcon);
   }
 
+  const links = [
+    { to: '/', text: 'Главная', hidden: false },
+    { to: '/catalog', text: 'Каталог', hidden: false },
+    { to: '/profile', text: 'Профиль', hidden: !states.isLogged },
+    { to: '/login', text: 'Войти', hidden: states.isLogged },
+    { to: '/register', text: 'Регистрация', hidden: states.isLogged },
+  ];
+
   return (
     <StyledHeader>
       <Container>
         <StyledLogo to={'/'}>
-          <img src="../../icons/lightCart.png" alt="logoIcon" />
-          <h2>eComm</h2>
+          <img src="../../icons/lightLogo.png" alt="logoIcon" />
+          <h2>MotoMax</h2>
         </StyledLogo>
         <NavBarField>
-          <StyledLink to={'/'}>Main</StyledLink>
-          <StyledLink to={'/login'}>Login</StyledLink>
-          <StyledLink to={'/register'}>Register</StyledLink>
+          {links.map((link, index) => (
+            <StyledLink key={index} hidden={!link.hidden} to={link.to}>
+              {link.text}
+            </StyledLink>
+          ))}
         </NavBarField>
         <LogoutButton onClick={logoutCustomer}>
           <img src="../../icons/logout.png" alt="logoutIcon" />
-          <h2>Logout</h2>
+          <h2>Выйти</h2>
         </LogoutButton>
         <BurgerIcon
-          id='burgerIcon'
+          id="burgerIcon"
           onClick={(e) => {
             showModal(e.target as HTMLImageElement);
           }}
@@ -63,29 +82,27 @@ export const NavBar = () => {
         ></BurgerIcon>
       </Container>
 
-      <MobMenu onClick={(e) => {closeModal(e.target as HTMLElement)}} className={isMenuOpen ? 'open' : 'close'}>
+      <MobMenu
+        onClick={(e) => {
+          closeModal(e.target as HTMLElement);
+        }}
+        className={isMenuOpen ? 'open' : 'close'}
+      >
         <div className="content">
           <MobMenuLogo to={'/'}>
-            <img src="../../icons/lightCart.png" alt="logoIcon" />
-            <h2>eComm</h2>
+            <img src="../../icons/lightLogo.png" alt="logoIcon" />
+            <h2>MotoMax</h2>
           </MobMenuLogo>
           <div className="mob-menu__links">
-            <StyledMobLink to={'/'}>
-              Main
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
+            {links.map((link, index) => (
+            <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
+              {link.text}
             </StyledMobLink>
-            <StyledMobLink to={'/login'}>
-              Login
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
-            <StyledMobLink to={'/register'}>
-              Register
-              <img src="../../icons/arrow.png" alt="arrowIcon" />
-            </StyledMobLink>
+          ))}
           </div>
           <StyledMobLogout onClick={logoutCustomer}>
             <img src="../../icons/logout.png" alt="logoutIcon" />
-            <p>Logout</p>
+            <p>Выйти</p>
           </StyledMobLogout>
         </div>
       </MobMenu>

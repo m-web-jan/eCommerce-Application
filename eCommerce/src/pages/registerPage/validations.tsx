@@ -6,86 +6,80 @@ export const validateEmail = (value: string, dispatch: any) => {
   if (value.trim() !== value) {
     changeState(
       'setEmailError',
-      'Email must not contain leading or trailing whitespace'
+      'Электронная почта не должна содержать пробелов в начале или в конце.'
     );
     return;
   }
   if (!value.includes('@')) {
-    changeState(
-      'setEmailError',
-      'Email address must contain an "@" symbol separating local part and domain name'
-    );
+    changeState('setEmailError', 'Адрес электронной почты должен содержать символ «@».');
     return;
   }
   if (value.split('@').length !== 2) {
-    changeState(
-      'setEmailError',
-      'Email address must contain exactly one "@" symbol separating local part and domain name'
-    );
+    changeState('setEmailError', 'Адрес электронной почты должен содержать ровно один символ «@».');
     return;
   }
   if (!emailPattern.test(value)) {
     changeState(
       'setEmailError',
-      'Email address must be properly formatted (e.g., user@example.com)'
+      'Адрес электронной почты должен быть правильно отформатирован (например, user@example.com).'
     );
     return;
   }
   changeState('setEmailError', '');
 };
 
-export const validatePassword = (value: string, dispatch: any) => {
+export const validatePassword = (value: string, dispatch?: any) => {
   function changeState(type: string, value: string | boolean) {
-    dispatch({ type: type, payload: value });
+    if (dispatch) {
+      dispatch({ type: type, payload: value });
+    }
   }
   const trimmedValue = value.trim();
-  const passwordPattern =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
+  const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d!@#$%^&*]{8,}$/;
   if (trimmedValue.length < 8) {
-    changeState(
-      'setPasswordError',
-      'Password must be at least 8 characters long'
-    );
+    changeState('setPasswordError', 'Пароль должен быть длиной не менее 8 символов');
+    return 'Пароль должен быть длиной не менее 8 символов';
   } else if (!passwordPattern.test(trimmedValue)) {
     changeState(
       'setPasswordError',
-      'Password must contain at least one uppercase letter (A-Z), one lowercase letter (a-z), one digit (0-9), and may contain special characters (!@#$%^&*)'
+      'Пароль должен содержать хотя бы одну заглавную букву (A–Z), одну строчную букву (a–z), одну цифру (0–9) и может содержать специальные символы (!@#$%^&*).'
     );
+    return 'Пароль должен содержать хотя бы одну заглавную букву (A–Z), одну строчную букву (a–z), одну цифру (0–9) и может содержать специальные символы (!@#$%^&*).';
   } else if (value !== trimmedValue) {
-    changeState(
-      'setPasswordError',
-      'Password must not contain leading or trailing whitespace'
-    );
+    changeState('setPasswordError', 'Пароль не должен содержать пробелов в начале или в конце.');
+    return 'Пароль не должен содержать пробелов в начале или в конце.';
   } else {
     changeState('setPasswordError', '');
+    return '';
   }
 };
 
 export const validateField = (value: string) => {
-  const stringPattern = /^[A-Za-z]+$/;
+  const stringPattern = /^[A-Za-z]|[А-Яа-я]+$/;
   if (!value.trim()) {
-    return 'This field is required';
+    return 'Это поле обязательно к заполнению';
   }
   if (value.length < 1) {
-    return 'Must contain at least one character';
+    return 'Должен содержать хотя бы один символ';
   }
   if (!stringPattern.test(value)) {
-    return 'Must contain only letters';
+    return 'Должен содержать только буквы латинского алфавита или кириллицу';
   }
   return '';
 };
 
 export const validateStreet = (value: string) => {
   if (value.length < 1) {
-    return 'Must contain at least one character';
+    return 'Должен содержать хотя бы один символ';
   }
   return '';
 };
 
 export const validatePostalCode = (value: string, country: string) => {
-  const postalCodePatern = country === 'UK' ? /^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0AA)$/ : /^\d{6}$/;
+  const postalCodePatern =
+    country === 'UK' ? /^([A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|GIR ?0AA)$/ : /^\d{6}$/;
   if (!postalCodePatern.test(value)) {
-    return 'Postal code format is invalid';
+    return 'Неверный формат почтового индекса.';
   }
   return '';
 };
@@ -104,7 +98,7 @@ export const validateDob = (value: string, dispatch: any) => {
     age--;
   }
   if (age < minAge) {
-    return `At least ${minAge} years old`;
+    return `Возраст не менее ${minAge} лет.`;
   }
   return '';
 };
