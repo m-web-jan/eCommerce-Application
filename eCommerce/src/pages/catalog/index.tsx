@@ -49,7 +49,12 @@ export const CatalogPage = () => {
 
   return (
     <Catalog>
-      <CatalogMenu isOpen={openCategoryMenu} onClick={() => {setOpenCategoryMenu(!openCategoryMenu)}}>
+      <CatalogMenu
+        className={openCategoryMenu ? 'open' : ''}
+        onClick={() => {
+          setOpenCategoryMenu(!openCategoryMenu);
+        }}
+      >
         <MenuLogo to="/">
           <img src="../../icons/lightLogo.png" alt="logoIcon" />
           <h2>MotoMax</h2>
@@ -69,7 +74,14 @@ export const CatalogPage = () => {
         </ul>
       </CatalogMenu>
       <div className="container">
-        <p className='categories' onClick={() => {setOpenCategoryMenu(!openCategoryMenu)}}>Категории</p>
+        <p
+          className="categories"
+          onClick={() => {
+            setOpenCategoryMenu(!openCategoryMenu);
+          }}
+        >
+          Категории
+        </p>
         <h1>{catalogTitle}</h1>
         <p>{catalogText}</p>
         <CatalogCards>
@@ -78,6 +90,7 @@ export const CatalogPage = () => {
               <ProductCard
                 key={index}
                 link={`/catalog/${card.key}`}
+                productId={card.id}
                 cardData={card.masterData.current}
               />
             ))}

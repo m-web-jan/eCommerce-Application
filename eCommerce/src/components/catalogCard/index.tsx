@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AddCartButton } from '../addButton';
+import { addItem } from '../../helpers/cart/addItem';
+import { checkItemInCart } from '../../helpers/itemInCart';
 
 const Card = styled(Link)`
-  &:hover {
-    transition: .3s;
-    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
-    button {
-      background-color: white;
-      color: black;
+  @media (hover: hover) {
+    &:hover {
+      transition: 0.3s;
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
     }
   }
-  transition: .3s;
+  transition: 0.3s;
   display: block;
   width: 17rem;
   text-decoration: none;
@@ -31,6 +31,12 @@ const Card = styled(Link)`
     position: absolute;
     bottom: 16px;
     width: calc(100% - 32px);
+    @media (hover: hover) {
+    &:hover {
+      background-color: white;
+      color: black;
+    }
+  }
   }
 `;
 const CardContent = styled.div`
@@ -58,14 +64,18 @@ const Price = styled.p`
   }
   span:nth-child(2n) {
     text-decoration: none;
-    color: #E32B2B;
+    color: #e32b2b;
   }
 `;
 
-export const ProductCard = ( {...props} ) => {
+export const ProductCard = ({ ...props }) => {
   let price = (props.cardData?.masterVariant.prices[0]?.value.centAmount / 100).toFixed(2);
-  let newPrice = (props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
+  let newPrice = (
+    props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100
+  ).toFixed(2);
   let currency = props.cardData?.masterVariant.prices[0]?.value.currencyCode;
+
+  checkItemInCart(props.productId);
 
   return (
     <Card to={props.link}>
@@ -81,7 +91,7 @@ export const ProductCard = ( {...props} ) => {
       <CardContent>
         <h2>{props.cardData.name.ru}</h2>
         <p>{props.cardData.description.ru}</p>
-      <AddCartButton text="Добавить в корзину" />
+        <AddCartButton onClick={(e: Event) => {addItem(e, props.productId)}} text="Добавить в корзину" />
       </CardContent>
     </Card>
   );

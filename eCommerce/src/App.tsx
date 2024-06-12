@@ -10,6 +10,7 @@ import { ProfilePage } from './pages/profile';
 import { getCookie } from './api/cookie';
 import { useDispatch } from 'react-redux';
 import { ProductPage } from './pages/product';
+import { CartPage } from './pages/cartPage';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -19,6 +20,7 @@ const links = [
   { path: '/catalog', element: <CatalogPage /> },
   { path: '/catalog/:productKey', element: <ProductPage /> },
   { path: '*', element: <NotFound /> },
+  { path: '/cart', element: <CartPage /> },
 ];
 
 function App() {
