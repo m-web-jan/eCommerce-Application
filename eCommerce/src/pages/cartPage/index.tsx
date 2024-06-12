@@ -3,10 +3,9 @@ import { CartCard } from '../../components/cartCard';
 import { RootState } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyActiveCart } from '../../api/cart/getMyActiveCart';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 export const CartPage = () => {
-  const [cartData, setCartData] = useState([]);
   const dispatch = useDispatch();
   const cartSelector = (state: RootState) => state.cart;
   const states = useSelector((state: RootState) => cartSelector(state));
