@@ -12,8 +12,6 @@ export type INewCustomer = {
   addresses: IDraftAddress[];
   defaultShippingAddress?: number;
   defaultBillingAddress?: number;
-  // shippingAddresses: number[];
-  // billingAddresses: number[];
 };
 
 export type IDraftAddress = {
@@ -28,6 +26,23 @@ export interface RootState {
   auth: IAuthState;
   register: IRegisterState;
   profile: IUserData;
+  cart: ICart;
+}
+
+interface ICart {
+  cartItems: number;
+  totalPrice: number;
+  cartData: ICartData;
+}
+
+interface ICartData {
+  lineItems: IProduct[];
+  totalPrice: {centAmount: number};
+}
+interface IProduct {
+  id: string;
+  name: { ru: string };
+  variant: { images: { url: string }[] };
 }
 
 interface IAuthState {
@@ -145,7 +160,7 @@ interface IVariants {
   images: IImages[];
 }
 interface IPrices {
-  discounted: {value: IValue};
+  discounted: { value: IValue };
   value: IValue;
 }
 interface IValue {

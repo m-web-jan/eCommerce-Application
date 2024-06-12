@@ -11,6 +11,7 @@ import {
   MobMenuLogo,
   StyledMobLink,
   StyledMobLogout,
+  CartButton,
 } from './style';
 import { delCookie, getCookie } from '../../api/cookie';
 import { useState } from 'react';
@@ -69,17 +70,22 @@ export const NavBar = () => {
             </StyledLink>
           ))}
         </NavBarField>
-        <LogoutButton onClick={logoutCustomer}>
-          <img src="../../icons/logout.png" alt="logoutIcon" />
-          <h2>Выйти</h2>
-        </LogoutButton>
-        <BurgerIcon
-          id="burgerIcon"
-          onClick={(e) => {
-            showModal(e.target as HTMLImageElement);
-          }}
-          src="../../icons/burgerMenu.png"
-        ></BurgerIcon>
+        <div className="row">
+          <CartButton to={'/cart'}>
+            <img src="../icons/cart.png" alt="cartIcon" />
+          </CartButton>
+          <LogoutButton onClick={logoutCustomer} hidden={!states.isLogged}>
+            <img src="../../icons/logout.png" alt="logoutIcon" />
+            <h2>Выйти</h2>
+          </LogoutButton>
+          <BurgerIcon
+            id="burgerIcon"
+            onClick={(e) => {
+              showModal(e.target as HTMLImageElement);
+            }}
+            src="../../icons/burgerMenu.png"
+          ></BurgerIcon>
+        </div>
       </Container>
 
       <MobMenu
@@ -95,10 +101,10 @@ export const NavBar = () => {
           </MobMenuLogo>
           <div className="mob-menu__links">
             {links.map((link, index) => (
-            <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
-              {link.text}
-            </StyledMobLink>
-          ))}
+              <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
+                {link.text}
+              </StyledMobLink>
+            ))}
           </div>
           <StyledMobLogout onClick={logoutCustomer}>
             <img src="../../icons/logout.png" alt="logoutIcon" />
