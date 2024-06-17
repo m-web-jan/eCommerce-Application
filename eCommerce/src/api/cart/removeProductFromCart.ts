@@ -8,7 +8,8 @@ export type IRemoveProduct = {
 };
 
 export const removeProduct = async (cartId: string, lineItemId: string, cartVersion: string | number) => {
-  const mailToken = getCookie('emailToken');
+  let token = getCookie('emailToken');
+  if(!token) token = getCookie('anonymousToken');
   const { data } = await publicInstance.post(
     `/me/carts/${cartId}`,
     {
@@ -22,7 +23,7 @@ export const removeProduct = async (cartId: string, lineItemId: string, cartVers
     },
     {
       headers: {
-        Authorization: `Bearer ${mailToken}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );
