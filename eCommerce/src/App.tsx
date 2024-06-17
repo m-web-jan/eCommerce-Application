@@ -11,6 +11,8 @@ import { getCookie } from './api/cookie';
 import { useDispatch } from 'react-redux';
 import { ProductPage } from './pages/product';
 import { CartPage } from './pages/cartPage';
+import { getMyActiveCart } from './api/cart/getMyActiveCart';
+import { useEffect } from 'react';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -28,11 +30,20 @@ function App() {
   function changeState(type: string, value: string | boolean) {
     dispatch({ type: type, payload: value });
   }
+  useEffect(() => {
+    getMyActiveCart()
+      .then((data) => {
+        changeState('setCartItems', data?.lineItems?.length);
+      })
+      .catch((error) => {
+        console.error('Error checking cart:', error);
+      });
+      const emailToken = getCookie('emailToken');
+      if (emailToken) {
+        changeState('setLogged', true);
+      }
+  }, [dispatch]);
 
-  const emailToken = getCookie('emailToken');
-  if (emailToken) {
-    changeState('setLogged', true);
-  }
 
   return (
     <div>

@@ -13,6 +13,7 @@ export const FormField = styled.form`
   }
   button {
     margin-top: 1rem;
+    color: black;
   }
   h2 {
     margin-top: 1rem;

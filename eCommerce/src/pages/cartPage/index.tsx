@@ -1,9 +1,14 @@
-import { Cart, PayBlock } from './style';
+import { Cart, Empty, PayBlock } from './style';
 import { CartCard } from '../../components/cartCard';
 import { RootState } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMyActiveCart } from '../../api/cart/getMyActiveCart';
 import { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
+import { RoundedButton } from '../../components/roundedButton';
+import { deleteMyCart } from '../../api/cart/deleteMyCart';
 
 export const CartPage = () => {
   const dispatch = useDispatch();
@@ -14,7 +19,7 @@ export const CartPage = () => {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCartData = async () => {
       try {
         const data = await getMyActiveCart();
         changeState('setCartData', data);
@@ -22,7 +27,7 @@ export const CartPage = () => {
         console.error('Error fetching products:', error);
       }
     };
-    fetchData();
+    fetchCartData();
   }, []);
 
   useEffect(() => {
@@ -31,25 +36,62 @@ export const CartPage = () => {
     changeState('setCartItems', states.cartData?.lineItems?.length);
   }, [states.cartData]);
 
+  function clearCart() {
+    deleteMyCart(states.cartData?.id, states.cartData?.version)
+    .then((data) => {
+      data.lineItems = [];
+      changeState('setCartData', data);
+    })
+    .catch((error) => {
+      console.error('Error checking item in cart:', error);
+    });
+  }
+
   return (
     <Cart>
-      <h2>
-        Корзина<span>{states.cartItems}</span>
-      </h2>
-      {/* <CartCard itemData={cartData[0]}></CartCard> */}
-      {states.cartData?.lineItems?.map((card, index) => (
-        <CartCard key={index} itemData={card} />
-      ))}
-      <PayBlock>
-        <div className="content">
-          <div className="total">
-            <h2>Итого</h2>
-            <p className="count">{states.cartItems} товара</p>
-          </div>
-          <div className="price">{states.totalPrice} BYN</div>
+      {states.cartData?.lineItems?.length > 0 && (
+        <div className='top'>
+          <h2>
+            Корзина<span>{states.cartItems}</span>
+          </h2>
+          <RoundedButton text='Очистить корзину' onClick={() => {clearCart()}} />
         </div>
-        <button>Оплатить</button>
-      </PayBlock>
+      )}
+      {states.cartData?.lineItems?.map((card, index) => (
+        <CartCard key={index} itemData={card} cart={states?.cartData} changeState={changeState} />
+      ))}
+      {states.cartData?.lineItems?.length > 0 && (
+        <PayBlock>
+          <div className="content">
+            <div className="total">
+              <h2>Итого</h2>
+              <p className="count">{states.cartItems} товара</p>
+            </div>
+            <div className="price">{states.totalPrice} BYN</div>
+          </div>
+          <button>Оплатить</button>
+        </PayBlock>
+      )}
+      {states.cartData?.lineItems?.length === 0 && (
+        <Empty>
+          <img src="../images/emptyCart.png" alt="" />
+          <h2>Ваша корзина пуста</h2>
+          <p>Похоже, вы еще не сделали свой выбор...</p>
+          <Link to="/catalog">Вернуться к покупкам</Link>
+        </Empty>
+      )}
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </Cart>
   );
 };

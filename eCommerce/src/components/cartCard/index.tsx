@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { getTypeById } from '../../api/getTypeById';
 import { useEffect, useState } from 'react';
+import { removeProduct } from '../../api/cart/removeProductFromCart';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { changeProductCount } from '../../api/cart/changeProductCount';
 
 const Card = styled.div`
   background-color: #dcdcdc;
@@ -8,10 +12,21 @@ const Card = styled.div`
   padding: 1rem;
   display: flex;
   margin-top: 1rem;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    justify-content: center;
+    .price {
+      margin: 0 !important;
+      .oldPrice {
+        text-align: left !important;
+      }
+    }
+  }
   & > img {
     margin-right: 1rem;
     width: 150px;
     border-radius: 10px;
+    align-self: self-start;
   }
   .content {
     h3 {
@@ -78,9 +93,49 @@ export const CartCard = ({ ...props }) => {
   }, []);
 
   let price = (props.itemData?.price?.value?.centAmount / 100).toFixed(2);
-  let newPrice = (
-    props.itemData?.price?.discounted?.value?.centAmount / 100
-  ).toFixed(2);
+  let newPrice = (props.itemData?.price?.discounted?.value?.centAmount / 100).toFixed(2);
+
+  const notify = () => {
+    toast.success('Товар был удален', {
+      position: 'top-center',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+  };
+
+  const delFromCart = async () => {
+    notify();
+    try {
+      const newItems = await removeProduct(
+        props.cart?.id,
+        props?.itemData?.id,
+        props.cart?.version
+      );
+      props.changeState('setCartData', newItems);
+    } catch (error) {
+      console.error('Error removing product:', error);
+    }
+  };
+
+  const changeQuantity = async (quantity: string, action: '+' | '-') => {
+    let newQuantity = parseInt(quantity) + (action === '+' ? 1 : -1);
+    try {
+      const newItems = await changeProductCount(
+        props.cart?.id,
+        props?.itemData?.id,
+        props.cart?.version,
+        newQuantity
+      );
+      props.changeState('setCartData', newItems);
+    } catch (error) {
+      console.error('Error removing product:', error);
+    }
+  };
 
   return (
     <Card>
@@ -90,11 +145,23 @@ export const CartCard = ({ ...props }) => {
         <h4>{typeData}</h4>
         <div className="controls">
           <div className="countBtns">
-            <img src="../icons/minus.png" alt="Icon" />
-            <p>1</p>
-            <img src="../icons/plus.png" alt="Icon" />
+            <img
+              src="../icons/minus.png"
+              alt="Icon"
+              onClick={() => {
+                changeQuantity(props?.itemData?.quantity, '-');
+              }}
+            />
+            <p>{props?.itemData?.quantity}</p>
+            <img
+              src="../icons/plus.png"
+              alt="Icon"
+              onClick={() => {
+                changeQuantity(props?.itemData?.quantity, '+');
+              }}
+            />
           </div>
-          <img src="../icons/bin.png" alt="Icon" className="bin" />
+          <img src="../icons/bin.png" alt="Icon" className="bin" onClick={delFromCart} />
         </div>
       </div>
       <div className="price">

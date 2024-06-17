@@ -196,3 +196,30 @@ export const ProductOptions = styled.div`
     }
   }
 `;
+export const RemoveBtn = styled.button`
+  user-select: none;
+  width: 100%;
+  border-radius: 50px;
+  margin-top: 1rem;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: white;
+  color: black;
+  border: 2px solid white;
+  transition: 0.3s;
+  cursor: pointer;
+  &:disabled {
+    background-color: gray;
+    border: 2px solid gray;
+    pointer-events: none;
+  }
+  @media (hover: hover) {
+    &:hover {
+      color: white;
+      background-color: black;
+      transition: 0.3s;
+    }
+  }
+`;

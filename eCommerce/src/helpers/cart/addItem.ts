@@ -1,14 +1,15 @@
 import { addProductToMyCart } from "../../api/cart/addProductToMyCart";
 import { getMyActiveCart } from "../../api/cart/getMyActiveCart";
 
-export async function addItem(e: Event, productId: string) {
+export async function addItem(e: Event, productId: string, dispatch: any) {
   e.preventDefault();
 
   const cartData = await getMyActiveCart();
-  const addData = await addProductToMyCart({
+  await addProductToMyCart({
     productId: productId,
     cartId: cartData.id,
     cartVersion: cartData.version,
   });
-  console.log(addData);
+
+  dispatch({ type: 'addItem', payload: 1 });
 }

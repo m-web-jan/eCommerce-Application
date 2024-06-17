@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const AddButton = styled.button`
+  user-select: none;
   margin-top: 3rem;
   text-align: center;
   padding: 10px 0;
@@ -13,6 +14,11 @@ const AddButton = styled.button`
   transition: 0.3s;
   width: 100%;
   cursor: pointer;
+  &:disabled {
+    background-color: gray;
+    border: 2px solid gray;
+    pointer-events: none;
+  }
   @media (hover: hover) {
     &:hover {
       color: white;
