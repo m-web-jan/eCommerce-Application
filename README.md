@@ -1,12 +1,12 @@
 # MotoMax - eCommerce-Application
 
-[MotoMax]([https://lazzone-ecommerce.netlify.app/](https://motomax.netlify.app/)) a platform that brings the excitement of motorcycle shopping into the digital world. It is a comprehensive online store that offers a dynamic and seamless experience for motorcycle enthusiasts, providing everything from bikes and accessories to gear and parts.
+[MotoMax](https://motomax.netlify.app/) a platform that brings the excitement of motorcycle shopping into the digital world. It is a comprehensive online store that offers a dynamic and seamless experience for motorcycle enthusiasts, providing everything from bikes and accessories to gear and parts.
 
 ----
 
 # Deploy
 You can view the full version of the application here
-[MotoMax]([https://lazzone-ecommerce.netlify.app/](https://motomax.netlify.app/))
+[MotoMax](https://motomax.netlify.app/)
 
 ![Главная страница](https://github.com/m-web-jan/eCommerce-Application/assets/109690616/bf4afec8-7258-40dd-ba10-7fcf884378b5)
 
