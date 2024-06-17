@@ -55,9 +55,22 @@ export const LogoutButton = styled.div`
 export const CartButton = styled(Link)`
   display: flex;
   align-self: center;
+  position: relative;
   img {
     width: 2rem;
     height: 2rem;
+  }
+  p {
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    border-radius: 25px;
+    width: 20px;
+    text-align: center;
+    font-weight: 500;
+    position: absolute;
+    left: -10px;
+    bottom: -5px;
   }
 `;
 export const StyledLogo = styled(Link)`

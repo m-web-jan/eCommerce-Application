@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { AddCartButton } from '../addButton';
 import { addItem } from '../../helpers/cart/addItem';
 import { checkItemInCart } from '../../helpers/itemInCart';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
 
 const Card = styled(Link)`
   @media (hover: hover) {
@@ -23,7 +27,7 @@ const Card = styled(Link)`
     object-fit: contain;
   }
   position: relative;
-  button {
+  &>div>button {
     margin-top: 0;
     background-color: black;
     color: white;
@@ -32,11 +36,11 @@ const Card = styled(Link)`
     bottom: 16px;
     width: calc(100% - 32px);
     @media (hover: hover) {
-    &:hover {
-      background-color: white;
-      color: black;
+      &:hover {
+        background-color: white;
+        color: black;
+      }
     }
-  }
   }
 `;
 const CardContent = styled.div`
@@ -69,14 +73,47 @@ const Price = styled.p`
 `;
 
 export const ProductCard = ({ ...props }) => {
+  const dispatch = useDispatch();
+  const [inCart, setInCart] = useState(false);
+
   let price = (props.cardData?.masterVariant.prices[0]?.value.centAmount / 100).toFixed(2);
   let newPrice = (
     props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100
   ).toFixed(2);
   let currency = props.cardData?.masterVariant.prices[0]?.value.currencyCode;
 
-  checkItemInCart(props.productId);
+  checkItemInCart(props.productId, props.cartData)
+    .then((isInCart) => {
+      setInCart(isInCart?.exists);
+    })
+    .catch((error) => {
+      console.error('Error checking item in cart:', error);
+    });
 
+    const handleAddToCart = async (e: Event, productId: string) => {
+      e.preventDefault();
+      try {
+        const addButton = e.target as HTMLButtonElement;
+        addButton.disabled = true;
+        notify();
+        await addItem(e, productId, dispatch);
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
+      }
+    };
+
+  const notify = () => {
+    toast.success('Товар был добавлен', {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  };
   return (
     <Card to={props.link}>
       <img src={props.cardData.masterVariant.images[0]?.url} alt="productImage" />
@@ -91,8 +128,13 @@ export const ProductCard = ({ ...props }) => {
       <CardContent>
         <h2>{props.cardData.name.ru}</h2>
         <p>{props.cardData.description.ru}</p>
-        <AddCartButton onClick={(e: Event) => {addItem(e, props.productId)}} text="Добавить в корзину" />
+        <AddCartButton
+          disabled={inCart}
+          onClick={(e: Event) => handleAddToCart(e, props.productId)}
+          text="Добавить в корзину"
+        />
       </CardContent>
+      
     </Card>
   );
 };

@@ -1,13 +1,5 @@
-import { getMyActiveCart } from '../api/cart/getMyActiveCart';
-
-let cart: any;
-let gotCart = false;
-
-export async function checkItemInCart(productId: string) {
-  if (!gotCart) {
-    gotCart = true;
-    cart = await getMyActiveCart();
-    console.log(cart);
-  }
-  console.log(productId);
+export async function checkItemInCart(productId: string, cart: any) {
+  const foundItem = cart?.lineItems?.find((item: any) => item.productId === productId);
+  return foundItem ? { exists: true, itemId: foundItem.id } : { exists: false, itemId: null };
 }
+

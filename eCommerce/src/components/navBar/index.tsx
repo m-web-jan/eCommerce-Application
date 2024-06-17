@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 
 export const NavBar = () => {
+  const cartSelector = (state: RootState) => state.cart;
+  const cartStates = useSelector((state: RootState) => cartSelector(state));
   const authSelector = (state: RootState) => state.auth;
   const states = useSelector((state: RootState) => authSelector(state));
   const navigate = useNavigate();
@@ -73,6 +75,7 @@ export const NavBar = () => {
         <div className="row">
           <CartButton to={'/cart'}>
             <img src="../icons/cart.png" alt="cartIcon" />
+            <p>{cartStates.cartItems}</p>
           </CartButton>
           <LogoutButton onClick={logoutCustomer} hidden={!states.isLogged}>
             <img src="../../icons/logout.png" alt="logoutIcon" />

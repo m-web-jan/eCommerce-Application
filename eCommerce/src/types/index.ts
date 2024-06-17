@@ -30,12 +30,15 @@ export interface RootState {
 }
 
 interface ICart {
+  openCategoryMenu: boolean;
   cartItems: number;
   totalPrice: number;
   cartData: ICartData;
 }
 
 interface ICartData {
+  id: string;
+  version: string;
   lineItems: IProduct[];
   totalPrice: {centAmount: number};
 }

@@ -30,11 +30,18 @@ export const MainBanner = styled.div`
     padding: 1rem 0;
     color: white;
     font-size: 1rem;
-    background-color: #fa453c;
+    background-color: #FCC022;
     border-radius: 10px;
     display: block;
     width: 200px;
     margin: 0 auto;
+    transition: all.3s;
+    @media (hover: hover) {
+      &:hover {
+        background-color: #d29f1e;
+        transition: all.3s;
+      }
+    }
   }
 `;
 export const Cards = styled.div`
@@ -76,7 +83,7 @@ export const Cards = styled.div`
       position: relative;
       .image-back {
         position: absolute;
-        background-color: #fa453c;
+        background-color: #FCC022;
         width: 100%;
         height: 100%;
         left: -20px;
@@ -96,7 +103,7 @@ export const Cards = styled.div`
       h2 {
         font-size: 3rem;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid #fa453c;
+        border-bottom: 1px solid #FCC022;
       }
       p {
         margin-top: 1.5rem;
