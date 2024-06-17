@@ -12,7 +12,9 @@ export const addProductToMyCart = async ({
   cartId,
   cartVersion,
 }: IAddProductToCartAction) => {
-  const mailToken = getCookie('emailToken');
+  let token = getCookie('emailToken');
+  if(!token) token = getCookie('anonymousToken');
+
   const { data } = await publicInstance.post(
     `/me/carts/${cartId}`,
     {
@@ -28,7 +30,7 @@ export const addProductToMyCart = async ({
     },
     {
       headers: {
-        Authorization: `Bearer ${mailToken}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );

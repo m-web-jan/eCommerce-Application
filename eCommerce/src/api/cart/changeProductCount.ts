@@ -7,7 +7,9 @@ export const changeProductCount = async (
   cartVersion: string | number,
   newQuantity: string | number,
 ) => {
-  const mailToken = getCookie('emailToken');
+  let token = getCookie('emailToken');
+  if(!token) token = getCookie('anonymousToken');
+
   const { data } = await publicInstance.post(
     `/me/carts/${cartId}`,
     {
@@ -22,7 +24,7 @@ export const changeProductCount = async (
     },
     {
       headers: {
-        Authorization: `Bearer ${mailToken}`,
+        Authorization: `Bearer ${token}`,
       },
     }
   );

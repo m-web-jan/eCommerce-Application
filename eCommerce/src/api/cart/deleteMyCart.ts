@@ -3,13 +3,14 @@ import { getCookie } from '../cookie';
 import { createMyCart } from './createMyCart';
 
 export const deleteMyCart = async (cartId: string, myCartVersion: string) => {
-  const mailToken = getCookie('emailToken');
+  let token = getCookie('emailToken');
+  if(!token) token = getCookie('anonymousToken');
   const { data } = await publicInstance.delete(`/me/carts/${cartId}`, {
     params: {
       version: myCartVersion,
     },
     headers: {
-      Authorization: `Bearer ${mailToken}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   await createMyCart();
