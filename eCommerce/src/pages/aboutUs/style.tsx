@@ -4,13 +4,20 @@ export const About = styled.div`
   padding: 1rem 2rem;
   max-width: 1000px;
   margin: 0 auto;
-  `;
+  @media (max-width: 768px) {
+    padding: 1rem 1rem;
+  }
+`;
 
 export const PersonalInfo = styled.div`
   margin-top: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    margin-top: 20px;
+  }
   .content {
     h2 {
       font-size: 4rem;
@@ -18,7 +25,7 @@ export const PersonalInfo = styled.div`
     h3 {
       font-size: 2rem;
       span {
-        color: #FCC022;
+        color: #fcc022;
       }
     }
     p {
@@ -30,7 +37,7 @@ export const PersonalInfo = styled.div`
       color: white;
       font-size: 1rem;
       padding: 0.5rem 0;
-      background-color: #FCC022;
+      background-color: #fcc022;
       margin-top: 1rem;
       display: block;
       max-width: 100px;
@@ -46,8 +53,11 @@ export const PersonalInfo = styled.div`
   }
   img {
     width: 400px;
+    @media (max-width: 768px) {
+      width: 80%;
+    }
   }
-`
+`;
 
 export const Courses = styled.div`
   margin-top: 3rem;
@@ -57,6 +67,10 @@ export const Courses = styled.div`
     border-bottom: 1px solid black;
     text-transform: uppercase;
     align-items: end;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: start;
+    }
     img {
       padding-bottom: 1rem;
       width: 195px;
@@ -75,4 +89,4 @@ export const Courses = styled.div`
     list-style-position: inside;
   }
   margin-bottom: 100px;
-`
+`;
