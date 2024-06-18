@@ -13,6 +13,7 @@ import { ProductPage } from './pages/product';
 import { CartPage } from './pages/cartPage';
 import { getMyActiveCart } from './api/cart/getMyActiveCart';
 import { useEffect } from 'react';
+import { AboutPage } from './pages/aboutUs';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -20,6 +21,7 @@ const links = [
   { path: '/register', element: <RegisterPage /> },
   { path: '/profile', element: <ProfilePage /> },
   { path: '/catalog', element: <CatalogPage /> },
+  { path: '/aboutus', element: <AboutPage /> },
   { path: '/catalog/:productKey', element: <ProductPage /> },
   { path: '*', element: <NotFound /> },
   { path: '/cart', element: <CartPage /> },

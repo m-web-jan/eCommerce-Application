@@ -53,6 +53,7 @@ export const NavBar = () => {
   const links = [
     { to: '/', text: 'Главная', hidden: false },
     { to: '/catalog', text: 'Каталог', hidden: false },
+    { to: '/aboutus', text: 'О нас', hidden: false },
     { to: '/profile', text: 'Профиль', hidden: !states.isLogged },
     { to: '/login', text: 'Войти', hidden: states.isLogged },
     { to: '/register', text: 'Регистрация', hidden: states.isLogged },
