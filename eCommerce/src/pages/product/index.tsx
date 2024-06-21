@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { StyledContainer } from "./style";
-import { DetailedProduct } from "../../components/DetailedProduct";
 import { useEffect, useState } from "react";
 import { getMyActiveCart } from "../../api/cart/getMyActiveCart";
+import { DetailedProduct } from "../../components/DetailedProduct";
 
 export const ProductPage = () => {
   const [cartData, setCartData] = useState(null);

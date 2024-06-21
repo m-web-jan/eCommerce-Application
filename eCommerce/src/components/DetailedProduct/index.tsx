@@ -93,15 +93,13 @@ export const DetailedProduct = ({ ...props }) => {
       console.error('Error adding item to cart:', error);
     }
     setInCart(true);
-    await getMyActiveCart()
-    .then((data) => {
+    await getMyActiveCart().then((data) => {
       props.cartData.version = data?.version;
       props.cartData = data;
-    })
-    await checkItemInCart(productId, props.cartData)
-    .then((data) => {
+    });
+    await checkItemInCart(productId, props?.cartData).then((data) => {
       setItemId(data?.itemId);
-    })
+    });
   };
 
   const productPrice = (productData?.masterVariant.prices[0]?.value.centAmount! / 100).toFixed(2);
@@ -116,7 +114,7 @@ export const DetailedProduct = ({ ...props }) => {
 
   async function removeFromCart() {
     try {
-      await removeProduct(props.cartData?.id, itemId, props.cartData?.version);
+      await removeProduct(props?.cartData?.id, itemId, props?.cartData?.version);
       notifyDel();
       dispatch({ type: 'addItem', payload: -1 });
       setInCart(false);
@@ -163,7 +161,7 @@ export const DetailedProduct = ({ ...props }) => {
       </ProductSlider>
       <ProductContent>
         <p>{productType}</p>
-        <h1>{productData?.name.ru}</h1>
+        <h1>{productData?.name?.ru}</h1>
         <h2>Цена:</h2>
         <ProductPrice>
           {newPrice !== 'NaN' ? (
