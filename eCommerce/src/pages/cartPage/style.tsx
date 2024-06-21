@@ -4,7 +4,7 @@ export const Cart = styled.div`
   padding: 0 1rem;
   max-width: 600px;
   margin: 0 auto;
-  &>.top {
+  & > .top {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,7 +23,7 @@ export const Cart = styled.div`
 export const PayBlock = styled.div`
   margin: 4rem 0;
   padding: 1rem;
-  background-color: #DCDCDC;
+  background-color: #dcdcdc;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -61,10 +61,13 @@ export const PayBlock = styled.div`
       }
     }
   }
-`
+`;
 
 export const Empty = styled.div`
-  margin-top: 3rem;
+  @media (max-width: 768px) {
+    margin: 5rem 0;
+  }
+  margin: 3rem 0;
   text-align: center;
   img {
     width: 300px;
@@ -92,21 +95,21 @@ export const Empty = styled.div`
       font-size: 1rem;
       margin-top: 1rem;
     }
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: 20px;
-    background-color: #FCC022;
+    background-color: #fcc022;
     color: white;
     text-decoration: none;
     display: inline-block;
     margin-top: 2rem;
-    border: 2px solid #FCC022;
+    border: 2px solid #fcc022;
     transition: all.3s;
     @media (hover: hover) {
       &:hover {
         transition: all.3s;
         background-color: white;
-        color: #FCC022;
+        color: #fcc022;
       }
     }
   }
-`
+`;

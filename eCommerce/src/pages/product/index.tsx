@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { StyledContainer } from "./style";
-import { DetailedProduct } from "../../components/DetailedProduct";
+import { DetailedProduct } from "../../components/detailedProduct";
 import { useEffect, useState } from "react";
 import { getMyActiveCart } from "../../api/cart/getMyActiveCart";
 

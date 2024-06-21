@@ -3,7 +3,7 @@ export function getProductColors(productData: any) {
   colors.push(productData?.masterVariant.attributes[0]?.value.label);
 
   productData?.variants.forEach((variant: any) => {
-    if (variant.attributes[0].name === 'color') {
+    if (variant.attributes[0]?.name === 'color') {
       colors.push(variant.attributes[0].value.label);
     }
   });
