@@ -1,12 +1,11 @@
-import { IResult, RootState } from '../../types';
-import { useCallback, useEffect, useState } from 'react';
+import { IResult } from '../../types';
+import { useEffect, useState } from 'react';
 import { ProductCard } from '../../components/catalogCard';
 import { Catalog, CatalogCards, CatalogMenu, MenuLogo } from './style';
 import { allProducts } from '../../api/getAllProducts';
 import { getProductsByCategory } from '../../api/getCategory';
 import { getCategoryByKey } from '../../api/getCategoryByKey';
 import { getMyActiveCart } from '../../api/cart/getMyActiveCart';
-import { useDispatch, useSelector } from 'react-redux';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 
@@ -17,12 +16,11 @@ export const CatalogPage = React.memo(() => {
     'В нашем интернет-магазине вы найдете всё необходимое для безопасной и комфортной езды: шлемы, мотокомбинезоны, боты и аксессуары. Мы предлагаем высококачественную мотоэкипировку от ведущих брендов, чтобы вы могли наслаждаться каждой поездкой, зная, что вы надежно защищены. Откройте для себя мир мотоэкипировки с MotoMax!'
   );
   const [cartData, setCartData] = useState({});
-  const dispatch = useDispatch();
-  const states = useSelector((state: RootState) => state.cart);
 
-  const changeState = useCallback((type: string, value: string | boolean | number) => {
-    dispatch({ type: type, payload: value });
-  }, [dispatch]);
+  function openCategoriesList() {
+    let catalogMenu = document.querySelector('#catalogMenu') as HTMLElement;
+    catalogMenu.classList.toggle('open');
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,30 +36,24 @@ export const CatalogPage = React.memo(() => {
     fetchData();
   }, []);
 
-  const changeCategory = useCallback(async (categoryKey: string) => {
+  const changeCategory = async (categoryKey: string) => {
     try {
       const categoryData = await getCategoryByKey(categoryKey);
       setCatalogTitle(categoryData?.name?.ru);
       setCatalogText(categoryData?.description?.ru);
       const data = await getProductsByCategory(categoryData?.id);
       setCatalogData(data);
-      // changeState('setOpenCategoryMenu', false); // Закрываем меню после изменения категории
     } catch (error) {
       console.error('Error fetching products:', error);
     }
-  }, [changeState]);
-
-  useEffect(() => {
-    console.log('Menu state updated:', states.openCategoryMenu);
-  }, [states.openCategoryMenu]);
+  }
 
   return (
     <Catalog>
       <CatalogMenu
-        className={states.openCategoryMenu ? 'open' : ''}
+        id='catalogMenu'
         onClick={() => {
-          console.log('Closing menu');
-          changeState('setOpenCategoryMenu', false);
+          openCategoriesList()
         }}
       >
         <MenuLogo to="/">
@@ -75,7 +67,6 @@ export const CatalogPage = React.memo(() => {
             { text: 'Комбинезоны', key: 'suits' },
             { text: 'Боты', key: 'boots' },
             { text: 'Аксессуары', key: 'accessories' },
-            { text: 'Масло', key: 'oil' },
           ].map((category, index) => (
             <li
               key={index}
@@ -93,9 +84,7 @@ export const CatalogPage = React.memo(() => {
         <p
           className="categories"
           onClick={() => {
-            console.log('Before toggle:', states.openCategoryMenu);
-            changeState('setOpenCategoryMenu', !states.openCategoryMenu);
-            console.log('After toggle:', states.openCategoryMenu);
+            openCategoriesList();
           }}
         >
           Категории
