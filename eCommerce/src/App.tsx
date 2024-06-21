@@ -14,6 +14,7 @@ import { CartPage } from './pages/cartPage';
 import { getMyActiveCart } from './api/cart/getMyActiveCart';
 import { useEffect } from 'react';
 import { AboutPage } from './pages/aboutUs';
+import { Footer } from './components/footer';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -55,6 +56,7 @@ function App() {
           <Route key={index} path={link.path} element={link.element} />
         ))}
       </Routes>
+      <Footer />
     </div>
   );
 }

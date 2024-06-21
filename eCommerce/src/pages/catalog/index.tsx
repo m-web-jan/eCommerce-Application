@@ -45,7 +45,7 @@ export const CatalogPage = React.memo(() => {
       setCatalogText(categoryData?.description?.ru);
       const data = await getProductsByCategory(categoryData?.id);
       setCatalogData(data);
-      changeState('setOpenCategoryMenu', false); // Закрываем меню после изменения категории
+      // changeState('setOpenCategoryMenu', false); // Закрываем меню после изменения категории
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -75,6 +75,7 @@ export const CatalogPage = React.memo(() => {
             { text: 'Комбинезоны', key: 'suits' },
             { text: 'Боты', key: 'boots' },
             { text: 'Аксессуары', key: 'accessories' },
+            { text: 'Масло', key: 'oil' },
           ].map((category, index) => (
             <li
               key={index}
