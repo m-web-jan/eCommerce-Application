@@ -165,8 +165,14 @@ export const CartCard = ({ ...props }) => {
         </div>
       </div>
       <div className="price">
-        <p className="price">{price} BYN</p>
-        {newPrice !== 'NaN' && <p className="oldPrice">{newPrice} BYN</p>}
+        {newPrice !== 'NaN' ? (
+          <>
+            <p className="price">{newPrice} BYN</p>
+            <p className="oldPrice">{price} BYN</p>
+          </>
+        ) : (
+          <p className="price">{price} BYN</p>
+        )}
       </div>
     </Card>
   );
