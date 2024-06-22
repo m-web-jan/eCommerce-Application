@@ -67,11 +67,13 @@ export const CatalogPage = React.memo(() => {
             { text: 'Комбинезоны', key: 'suits' },
             { text: 'Боты', key: 'boots' },
             { text: 'Аксессуары', key: 'accessories' },
+            { text: 'Моторезина', key: 'tires' },
+            { text: 'Перчатки', key: 'gloves' },
+            { text: 'Масла и фильтра', key: 'oil' },
           ].map((category, index) => (
             <li
               key={index}
               onClick={() => {
-                console.log('Changing category:', category.key);
                 changeCategory(category.key);
               }}
             >
