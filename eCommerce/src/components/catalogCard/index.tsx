@@ -127,8 +127,8 @@ export const ProductCard = ({ ...props }) => {
         <Price>{`${price} ${currency}`}</Price>
       )}
       <CardContent>
-        <h2>{props.cardData.name.ru}</h2>
-        <p>{props.cardData.description.ru}</p>
+        <h2>{props?.cardData?.name?.ru}</h2>
+        <p>{props?.cardData?.description?.ru}</p>
         <AddCartButton
           disabled={inCart}
           onClick={(e: Event) => handleAddToCart(e, props.productId)}
