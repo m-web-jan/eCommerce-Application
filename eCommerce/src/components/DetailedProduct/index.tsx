@@ -184,7 +184,7 @@ export const DetailedProduct = ({ ...props }) => {
         </ProductPrice>
         <h2>Описание товара:</h2>
         <h3>{productData?.description?.ru}</h3>
-        <ProductOptions style={{ display: `${sizes[0] && colors[0] ? 'flex' : 'none'}` }}>
+        <ProductOptions style={{ display: `${sizes[0] || colors[0] ? 'flex' : 'none'}` }}>
           <div className="colors" style={{ display: `${colors[0] ? 'flex' : 'none'}` }}>
             <h2>Цвет:</h2>
             {colors.map((color, index) => (

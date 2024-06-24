@@ -97,6 +97,13 @@ export const NavBarField = styled.nav`
 `;
 export const StyledLink = styled(Link)`
   display: ${(props) => (props.hidden ? 'inline' : 'none')};
+  @media (hover: hover) {
+    &:hover {
+      color: rgb(252, 192, 34);
+      transition: all.3s;
+    }
+  }
+  transition: all.3s;
   padding: 1rem 0;
   text-decoration: none;
   color: white;
@@ -109,7 +116,7 @@ export const StyledLink = styled(Link)`
     display: block;
     width: 0;
     height: 3px;
-    background: white;
+    background: rgb(252, 192, 34);
     transition: 0.3s;
     left: 50%;
     transform: translate(-50%);

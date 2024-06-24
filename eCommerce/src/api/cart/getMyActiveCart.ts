@@ -4,8 +4,10 @@ import { getCookie } from '../cookie';
 import { checkExistMyCarts } from './checkMyCart';
 
 export const getMyActiveCart = async () => {
+  
   let token = getCookie('emailToken');
   const check = await checkExistMyCarts();
+  console.log(check);
   if (!check) {
     await createMyCart();
   }

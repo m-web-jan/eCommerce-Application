@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Cards, MainBanner } from './style';
+import { Cards, MainBanner, Supply } from './style';
 
 export const MainPage = () => {
   return (
@@ -12,6 +12,26 @@ export const MainPage = () => {
         </p>
         <Link to="/catalog">Перейти в каталог</Link>
       </MainBanner>
+      <Supply>
+        <h2>Новые поступления</h2>
+        <div className="video">
+          <video src="../public/deliveryOfGoods.mp4" autoPlay loop muted></video>
+          <div className="blur"></div>
+          <p className="content">
+            <b>03.07.2024 КРУПНАЯ ПОСТАВКА</b>
+            <br />
+            ШЛЕМОВ THUNDER 4
+            <br />
+            <b>07.07.2024 БОЛЬШАЯ ПОСТАВКА</b>
+            <br />
+            МОТОЭКИПИРОВКИ
+            <br />
+            <b>15.07.2024 ПОСТАВКА РАСХОДНИКОВ</b>
+            <br />
+            МАСЛА, ФИЛЬТРА, СМАЗКА ЦЕПИ
+          </p>
+        </div>
+      </Supply>
       <Cards>
         <div className="card">
           <div className="image">
