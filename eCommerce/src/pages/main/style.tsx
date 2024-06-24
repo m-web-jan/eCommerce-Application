@@ -30,7 +30,7 @@ export const MainBanner = styled.div`
     padding: 1rem 0;
     color: white;
     font-size: 1rem;
-    background-color: #FCC022;
+    background-color: #fcc022;
     border-radius: 10px;
     display: block;
     width: 200px;
@@ -83,7 +83,7 @@ export const Cards = styled.div`
       position: relative;
       .image-back {
         position: absolute;
-        background-color: #FCC022;
+        background-color: #fcc022;
         width: 100%;
         height: 100%;
         left: -20px;
@@ -103,11 +103,55 @@ export const Cards = styled.div`
       h2 {
         font-size: 3rem;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid #FCC022;
+        border-bottom: 1px solid #fcc022;
       }
       p {
         margin-top: 1.5rem;
       }
+    }
+  }
+`;
+
+export const Supply = styled.div`
+  margin-top: 4rem;
+  h2 {
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .video {
+    position: relative;
+    video {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    p {
+      @media (max-width: 768px) {
+        font-size: 20px;
+        left: 16px;
+      }
+
+      position: absolute;
+      top: 16px;
+      left: 125px;
+      font-size: 32px;
+      color: white;
+      b {
+        color: #fcc022;
+      }
+    }
+    .blur {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      background-color: rgba(0, 0, 0, 0.25);
+      height: 300px;
     }
   }
 `;
