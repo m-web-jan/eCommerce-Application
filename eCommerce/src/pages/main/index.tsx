@@ -15,7 +15,7 @@ export const MainPage = () => {
       <Supply>
         <h2>Новые поступления</h2>
         <div className="video">
-          <video src="../public/deliveryOfGoods.mp4" autoPlay loop muted></video>
+          <video src="../deliveryOfGoods.mp4" autoPlay loop muted></video>
           <div className="blur"></div>
           <p className="content">
             <b>03.07.2024 КРУПНАЯ ПОСТАВКА</b>
