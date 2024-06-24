@@ -15,6 +15,8 @@ import { getMyActiveCart } from './api/cart/getMyActiveCart';
 import { useEffect } from 'react';
 import { AboutPage } from './pages/aboutUs';
 import { Footer } from './components/footer';
+import { getCustomerData } from './api/getCustomerDetails';
+import { addShipingAdress } from './api/cart/addShipingAddres';
 
 const links = [
   { path: '/', element: <MainPage /> },
@@ -35,18 +37,25 @@ function App() {
   }
   useEffect(() => {
     getMyActiveCart()
-      .then((data) => {
-        changeState('setCartItems', data?.lineItems?.length);
+      .then((data1) => {
+        changeState('setCartItems', data1?.lineItems?.length);
+        getCustomerData()
+          .then((data) => {
+            addShipingAdress(data?.addresses[0], data1?.id, data1?.version).then((data) => {
+            });
+          })
+          .catch((error) => {
+            console.error('Error checking cart:', error);
+          });
       })
       .catch((error) => {
         console.error('Error checking cart:', error);
       });
-      const emailToken = getCookie('emailToken');
-      if (emailToken) {
-        changeState('setLogged', true);
-      }
+    const emailToken = getCookie('emailToken');
+    if (emailToken) {
+      changeState('setLogged', true);
+    }
   }, [dispatch]);
-
 
   return (
     <div>

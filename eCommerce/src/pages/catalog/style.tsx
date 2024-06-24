@@ -73,6 +73,11 @@ export const CatalogMenu = styled.div`
     flex-direction: column;
     column-gap: 0.5rem;
     li {
+      @media (hover: hover) {
+        &:hover {
+          color: rgb(252, 192, 34);
+        }
+      }
       cursor: pointer;
       color: white;
       font-size: 1.5rem;

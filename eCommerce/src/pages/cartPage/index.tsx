@@ -9,6 +9,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { RoundedButton } from '../../components/roundedButton';
 import { deleteMyCart } from '../../api/cart/deleteMyCart';
+import { createOrder } from '../../api/cart/createOrder';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createMyCart } from '../../api/cart/createMyCart';
 
 export const CartPage = () => {
   const dispatch = useDispatch();
@@ -18,15 +22,15 @@ export const CartPage = () => {
     dispatch({ type: type, payload: value });
   }
 
+  const fetchCartData = async () => {
+    try {
+      const data = await getMyActiveCart();
+      changeState('setCartData', data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
   useEffect(() => {
-    const fetchCartData = async () => {
-      try {
-        const data = await getMyActiveCart();
-        changeState('setCartData', data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
     fetchCartData();
   }, []);
 
@@ -46,6 +50,29 @@ export const CartPage = () => {
       console.error('Error checking item in cart:', error);
     });
   }
+
+  function formOrder() {
+    fetchCartData()
+    .then(() => {
+      createOrder(states.cartData?.id, states.cartData?.version);
+      notify();
+      clearCart();
+      createMyCart();
+    })
+  }
+
+  const notify = () => {
+    toast.success('Ваш заказ успешно оформлен. Представитель магазина свяжется с вами в ближайшее время.', {
+      position: 'top-center',
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    });
+  };
 
   return (
     <Cart>
@@ -69,7 +96,7 @@ export const CartPage = () => {
             </div>
             <div className="price">{states.totalPrice} BYN</div>
           </div>
-          <button>Оплатить</button>
+          <button onClick={formOrder}>Оформить заказ</button>
         </PayBlock>
       )}
       {states.cartData?.lineItems?.length === 0 && (

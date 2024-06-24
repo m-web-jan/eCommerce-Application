@@ -135,7 +135,6 @@ export const ProductCard = ({ ...props }) => {
           text="Добавить в корзину"
         />
       </CardContent>
-      
     </Card>
   );
 };

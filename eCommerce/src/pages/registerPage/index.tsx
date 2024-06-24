@@ -94,7 +94,6 @@ export const RegisterPage = () => {
       changeState('setShowSuccessModal', true);
       changeState('setRegistration', true);
       changeState('setDefaultShippingAddress', false);
-      console.log(response.customer);
     } catch (e: any) {
       changeState('setModalTitle', 'Registration failed!');
       changeState('setModalMessage', e.response.data.message);
