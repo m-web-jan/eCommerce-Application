@@ -41,7 +41,7 @@ function App() {
         changeState('setCartItems', data1?.lineItems?.length);
         getCustomerData()
           .then((data) => {
-            addShipingAdress(data?.addresses[0], data1?.id, data1?.version).then((data) => {
+            addShipingAdress(data?.addresses[0], data1?.id, data1?.version).then(() => {
             });
           })
           .catch((error) => {
