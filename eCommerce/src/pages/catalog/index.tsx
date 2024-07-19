@@ -5,19 +5,30 @@ import { Catalog, CatalogCards, CatalogMenu, MenuLogo } from './style';
 import { allProducts } from '../../api/getAllProducts';
 import { getProductsByCategory } from '../../api/getCategory';
 import { getCategoryByKey } from '../../api/getCategoryByKey';
+import { getMyActiveCart } from '../../api/cart/getMyActiveCart';
+import React from 'react';
+import { ToastContainer } from 'react-toastify';
 
-export const CatalogPage = () => {
+export const CatalogPage = React.memo(() => {
   const [catalogData, setCatalogData] = useState<IResult[] | null>(null);
-  const [openCategoryMenu, setOpenCategoryMenu] = useState(false);
   const [catalogTitle, setCatalogTitle] = useState('Мотоэкипировка');
   const [catalogText, setCatalogText] = useState(
     'В нашем интернет-магазине вы найдете всё необходимое для безопасной и комфортной езды: шлемы, мотокомбинезоны, боты и аксессуары. Мы предлагаем высококачественную мотоэкипировку от ведущих брендов, чтобы вы могли наслаждаться каждой поездкой, зная, что вы надежно защищены. Откройте для себя мир мотоэкипировки с MotoMax!'
   );
+  const [cartData, setCartData] = useState({});
+
+  function openCategoriesList() {
+    let catalogMenu = document.querySelector('#catalogMenu') as HTMLElement;
+    catalogMenu.classList.toggle('open');
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await allProducts();
         setCatalogData(data);
+        const response = await getMyActiveCart();
+        setCartData(response);
       } catch (error) {
         console.error('Error fetching products:', error);
       }
@@ -25,38 +36,41 @@ export const CatalogPage = () => {
     fetchData();
   }, []);
 
-  const changeCategory = (categoryKey: string) => {
-    const fetchData = async () => {
-      try {
-        const categoryData = await getCategoryByKey(categoryKey);
-        setCatalogTitle(categoryData?.name?.ru);
-        setCatalogText(categoryData?.description?.ru);
-        const data = await getProductsByCategory(categoryData?.id);
-        setCatalogData(data);
-      } catch (error) {
-        console.error('Error fetching products:', error);
-      }
-    };
-    fetchData();
-  };
-
-  const categories = [
-    { text: 'Шлема', key: 'helmet' },
-    { text: 'Комбинезоны', key: 'suits' },
-    { text: 'Боты', key: 'boots' },
-    { text: 'Аксессуары', key: 'accessories' },
-  ];
+  const changeCategory = async (categoryKey: string) => {
+    try {
+      const categoryData = await getCategoryByKey(categoryKey);
+      setCatalogTitle(categoryData?.name?.ru);
+      setCatalogText(categoryData?.description?.ru);
+      const data = await getProductsByCategory(categoryData?.id);
+      setCatalogData(data);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  }
 
   return (
     <Catalog>
-      <CatalogMenu isOpen={openCategoryMenu} onClick={() => {setOpenCategoryMenu(!openCategoryMenu)}}>
+      <CatalogMenu
+        id='catalogMenu'
+        onClick={() => {
+          openCategoriesList()
+        }}
+      >
         <MenuLogo to="/">
           <img src="../../icons/lightLogo.png" alt="logoIcon" />
           <h2>MotoMax</h2>
         </MenuLogo>
         <p>Категории:</p>
         <ul>
-          {categories.map((category, index) => (
+          {[
+            { text: 'Шлема', key: 'helmet' },
+            { text: 'Комбинезоны', key: 'suits' },
+            { text: 'Боты', key: 'boots' },
+            { text: 'Аксессуары', key: 'accessories' },
+            { text: 'Моторезина', key: 'tires' },
+            { text: 'Перчатки', key: 'gloves' },
+            { text: 'Масла и фильтра', key: 'oil' },
+          ].map((category, index) => (
             <li
               key={index}
               onClick={() => {
@@ -69,20 +83,44 @@ export const CatalogPage = () => {
         </ul>
       </CatalogMenu>
       <div className="container">
-        <p className='categories' onClick={() => {setOpenCategoryMenu(!openCategoryMenu)}}>Категории</p>
+        <p
+          className="categories"
+          onClick={() => {
+            openCategoriesList();
+          }}
+        >
+          Категории
+        </p>
         <h1>{catalogTitle}</h1>
         <p>{catalogText}</p>
         <CatalogCards>
-          {catalogData &&
+          {catalogData ? (
             catalogData.map((card, index) => (
               <ProductCard
                 key={index}
                 link={`/catalog/${card.key}`}
+                cartData={cartData}
+                productId={card.id}
                 cardData={card.masterData.current}
               />
-            ))}
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
         </CatalogCards>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </Catalog>
   );
-};
+});

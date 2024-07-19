@@ -29,11 +29,14 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: black;
+  .row {
+    display: flex;
+    column-gap: 1rem;
+  }
 `;
-
 export const LogoutButton = styled.div`
+  display: ${(props) => (props.hidden ? 'none' : 'flex')};
   cursor: pointer;
-  display: flex;
   column-gap: 5px;
   text-decoration: none;
   color: white;
@@ -47,6 +50,27 @@ export const LogoutButton = styled.div`
   }
   @media (max-width: 999px) {
     display: none;
+  }
+`;
+export const CartButton = styled(Link)`
+  display: flex;
+  align-self: center;
+  position: relative;
+  img {
+    width: 2rem;
+    height: 2rem;
+  }
+  p {
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    border-radius: 25px;
+    width: 20px;
+    text-align: center;
+    font-weight: 500;
+    position: absolute;
+    left: -10px;
+    bottom: -5px;
   }
 `;
 export const StyledLogo = styled(Link)`
@@ -63,7 +87,6 @@ export const StyledLogo = styled(Link)`
     height: 2rem;
   }
 `;
-
 export const NavBarField = styled.nav`
   display: flex;
   justify-content: center;
@@ -72,9 +95,15 @@ export const NavBarField = styled.nav`
     display: none;
   }
 `;
-
 export const StyledLink = styled(Link)`
   display: ${(props) => (props.hidden ? 'inline' : 'none')};
+  @media (hover: hover) {
+    &:hover {
+      color: rgb(252, 192, 34);
+      transition: all.3s;
+    }
+  }
+  transition: all.3s;
   padding: 1rem 0;
   text-decoration: none;
   color: white;
@@ -87,7 +116,7 @@ export const StyledLink = styled(Link)`
     display: block;
     width: 0;
     height: 3px;
-    background: white;
+    background: rgb(252, 192, 34);
     transition: 0.3s;
     left: 50%;
     transform: translate(-50%);
@@ -98,7 +127,6 @@ export const StyledLink = styled(Link)`
     }
   }
 `;
-
 export const BurgerIcon = styled.img`
   cursor: pointer;
   width: 2rem;
@@ -111,7 +139,6 @@ export const BurgerIcon = styled.img`
     display: block;
   }
 `;
-
 export const MobMenu = styled.div`
   position: fixed;
   width: 100%;
@@ -140,7 +167,6 @@ export const MobMenu = styled.div`
     }
   }
 `;
-
 export const MobMenuLogo = styled(Link)`
   display: flex;
   column-gap: 5px;
@@ -156,7 +182,6 @@ export const MobMenuLogo = styled(Link)`
     height: 2rem;
   }
 `;
-
 export const StyledMobLink = styled(Link)`
   display: ${(props) => (props.hidden ? 'flex' : 'none')};
   text-decoration: none;
@@ -169,7 +194,6 @@ export const StyledMobLink = styled(Link)`
     width: 1.5rem;
   }
 `;
-
 export const StyledMobLogout = styled.div`
   cursor: pointer;
   display: flex;

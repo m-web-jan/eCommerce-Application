@@ -88,13 +88,12 @@ export const RegisterPage = () => {
       };
       if (states.asDefaultShipping) newCustomer.defaultShippingAddress = 0;
       if (states.asDefaultBilling) newCustomer.defaultBillingAddress = 1;
-      const response = await registration(newCustomer);
+      await registration(newCustomer);
       changeState('setModalTitle', 'Registration Successful!');
       changeState('setModalMessage', 'Customer successfully created');
       changeState('setShowSuccessModal', true);
       changeState('setRegistration', true);
       changeState('setDefaultShippingAddress', false);
-      console.log(response.customer);
     } catch (e: any) {
       changeState('setModalTitle', 'Registration failed!');
       changeState('setModalMessage', e.response.data.message);

@@ -11,6 +11,7 @@ import {
   MobMenuLogo,
   StyledMobLink,
   StyledMobLogout,
+  CartButton,
 } from './style';
 import { delCookie, getCookie } from '../../api/cookie';
 import { useState } from 'react';
@@ -18,6 +19,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../types';
 
 export const NavBar = () => {
+  const cartSelector = (state: RootState) => state.cart;
+  const cartStates = useSelector((state: RootState) => cartSelector(state));
   const authSelector = (state: RootState) => state.auth;
   const states = useSelector((state: RootState) => authSelector(state));
   const navigate = useNavigate();
@@ -50,6 +53,7 @@ export const NavBar = () => {
   const links = [
     { to: '/', text: 'Главная', hidden: false },
     { to: '/catalog', text: 'Каталог', hidden: false },
+    { to: '/aboutus', text: 'О нас', hidden: false },
     { to: '/profile', text: 'Профиль', hidden: !states.isLogged },
     { to: '/login', text: 'Войти', hidden: states.isLogged },
     { to: '/register', text: 'Регистрация', hidden: states.isLogged },
@@ -69,17 +73,23 @@ export const NavBar = () => {
             </StyledLink>
           ))}
         </NavBarField>
-        <LogoutButton onClick={logoutCustomer}>
-          <img src="../../icons/logout.png" alt="logoutIcon" />
-          <h2>Выйти</h2>
-        </LogoutButton>
-        <BurgerIcon
-          id="burgerIcon"
-          onClick={(e) => {
-            showModal(e.target as HTMLImageElement);
-          }}
-          src="../../icons/burgerMenu.png"
-        ></BurgerIcon>
+        <div className="row">
+          <CartButton to={'/cart'}>
+            <img src="../icons/cart.png" alt="cartIcon" />
+            <p>{cartStates.cartItems}</p>
+          </CartButton>
+          <LogoutButton onClick={logoutCustomer} hidden={!states.isLogged}>
+            <img src="../../icons/logout.png" alt="logoutIcon" />
+            <h2>Выйти</h2>
+          </LogoutButton>
+          <BurgerIcon
+            id="burgerIcon"
+            onClick={(e) => {
+              showModal(e.target as HTMLImageElement);
+            }}
+            src="../../icons/burgerMenu.png"
+          ></BurgerIcon>
+        </div>
       </Container>
 
       <MobMenu
@@ -95,10 +105,10 @@ export const NavBar = () => {
           </MobMenuLogo>
           <div className="mob-menu__links">
             {links.map((link, index) => (
-            <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
-              {link.text}
-            </StyledMobLink>
-          ))}
+              <StyledMobLink key={index} hidden={!link.hidden} to={link.to}>
+                {link.text}
+              </StyledMobLink>
+            ))}
           </div>
           <StyledMobLogout onClick={logoutCustomer}>
             <img src="../../icons/logout.png" alt="logoutIcon" />

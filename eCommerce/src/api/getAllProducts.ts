@@ -8,7 +8,7 @@ export const allProducts = async () => {
   const authToken = await getAuthToken();
 
   const response = await publicInstance.get(
-    `${CTP_API_URL}/${CTP_PROJECT_KEY}/products`,
+    `${CTP_API_URL}/${CTP_PROJECT_KEY}/products?limit=150`,
     {
       headers: {
         Authorization: `Bearer ${authToken}`,

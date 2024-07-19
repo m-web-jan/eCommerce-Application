@@ -1,29 +1,34 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { AddCartButton } from '../addButton';
+import { addItem } from '../../helpers/cart/addItem';
+import { checkItemInCart } from '../../helpers/itemInCart';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
 
 const Card = styled(Link)`
-  &:hover {
-    transition: .3s;
-    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
-    button {
-      background-color: white;
-      color: black;
+  @media (hover: hover) {
+    &:hover {
+      transition: 0.3s;
+      box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
     }
   }
-  transition: .3s;
+  transition: 0.3s;
   display: block;
   width: 17rem;
   text-decoration: none;
   color: black;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  min-height: 500px;
   img {
     width: 100%;
     height: 50%;
     object-fit: contain;
   }
   position: relative;
-  button {
+  &>div>button {
     margin-top: 0;
     background-color: black;
     color: white;
@@ -31,6 +36,12 @@ const Card = styled(Link)`
     position: absolute;
     bottom: 16px;
     width: calc(100% - 32px);
+    @media (hover: hover) {
+      &:hover {
+        background-color: white;
+        color: black;
+      }
+    }
   }
 `;
 const CardContent = styled.div`
@@ -58,15 +69,52 @@ const Price = styled.p`
   }
   span:nth-child(2n) {
     text-decoration: none;
-    color: #E32B2B;
+    color: #e32b2b;
   }
 `;
 
-export const ProductCard = ( {...props} ) => {
+export const ProductCard = ({ ...props }) => {
+  const dispatch = useDispatch();
+  const [inCart, setInCart] = useState(false);
+
   let price = (props.cardData?.masterVariant.prices[0]?.value.centAmount / 100).toFixed(2);
-  let newPrice = (props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100).toFixed(2);
+  let newPrice = (
+    props.cardData?.masterVariant.prices[0]?.discounted?.value.centAmount / 100
+  ).toFixed(2);
   let currency = props.cardData?.masterVariant.prices[0]?.value.currencyCode;
 
+  checkItemInCart(props.productId, props.cartData)
+    .then((isInCart) => {
+      setInCart(isInCart?.exists);
+    })
+    .catch((error) => {
+      console.error('Error checking item in cart:', error);
+    });
+
+    const handleAddToCart = async (e: Event, productId: string) => {
+      e.preventDefault();
+      try {
+        const addButton = e.target as HTMLButtonElement;
+        addButton.disabled = true;
+        notify();
+        await addItem(e, productId, dispatch);
+      } catch (error) {
+        console.error('Error adding item to cart:', error);
+      }
+    };
+
+  const notify = () => {
+    toast.success('Товар был добавлен', {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
+  };
   return (
     <Card to={props.link}>
       <img src={props.cardData.masterVariant.images[0]?.url} alt="productImage" />
@@ -79,9 +127,13 @@ export const ProductCard = ( {...props} ) => {
         <Price>{`${price} ${currency}`}</Price>
       )}
       <CardContent>
-        <h2>{props.cardData.name.ru}</h2>
-        <p>{props.cardData.description.ru}</p>
-      <AddCartButton text="Добавить в корзину" />
+        <h2>{props?.cardData?.name?.ru}</h2>
+        <p>{props?.cardData?.description?.ru}</p>
+        <AddCartButton
+          disabled={inCart}
+          onClick={(e: Event) => handleAddToCart(e, props.productId)}
+          text="Добавить в корзину"
+        />
       </CardContent>
     </Card>
   );

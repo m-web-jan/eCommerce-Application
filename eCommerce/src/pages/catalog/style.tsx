@@ -53,7 +53,7 @@ export const CatalogCards = styled.div`
   justify-content: center;
 `;
 
-export const CatalogMenu = styled.div<{ isOpen: boolean }>`
+export const CatalogMenu = styled.div`
   position: fixed;
   z-index: 99;
   background-color: black;
@@ -73,13 +73,21 @@ export const CatalogMenu = styled.div<{ isOpen: boolean }>`
     flex-direction: column;
     column-gap: 0.5rem;
     li {
+      @media (hover: hover) {
+        &:hover {
+          color: rgb(252, 192, 34);
+        }
+      }
       cursor: pointer;
       color: white;
       font-size: 1.5rem;
     }
   }
   @media (max-width: 767px) {
-    left: ${(props) => (props.isOpen ? '0' : '-252px')};
+    left: -252px;
+    &.open {
+      left: 0;
+    }
   }
 `;
 
